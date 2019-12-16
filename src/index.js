@@ -21,6 +21,12 @@ import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 
+import { Provider } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import promiseMiddleware from "redux-promise";
+import thunkMiddleware from "redux-thunk";
+import { createStore, applyMiddleware } from "redux";
+
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss?v=1.1.0";
 import "assets/demo/demo.css";

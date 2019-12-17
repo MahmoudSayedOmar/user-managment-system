@@ -179,19 +179,13 @@ class Header extends React.Component {
                   </p>
                 </DropdownToggle>
                 <DropdownMenu right>
-                  {/* <NavLink
-                    to="/admin/user-page"
-                    className="nav-link"
-                    activeClassName="active"
-                  >
-                    View Profile
-                  </NavLink> */}
-                  <DropdownItem tag="a" href="/admin/user-page">
-                    View Profile
-                  </DropdownItem>
-                  <DropdownItem tag="a" href="/logout">
-                    Logout
-                  </DropdownItem>
+                  <Link to="/admin/user-page">
+                    <DropdownItem>View Profile</DropdownItem>
+                  </Link>
+
+                  <Link to="/logout">
+                    <DropdownItem>Log Out</DropdownItem>
+                  </Link>
                 </DropdownMenu>
               </Dropdown>
             </Nav>

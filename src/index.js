@@ -33,15 +33,22 @@ import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 import AdminLayout from "layouts/Admin.jsx";
+import { combinedReducer } from "./State/combinedReducer";
 
+const store = createStore(
+  combinedReducer,
+  composeWithDevTools(applyMiddleware(promiseMiddleware, thunkMiddleware))
+);
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Redirect to="/admin/dashboard" />
-    </Switch>
-  </Router>,
+  <Provider store={store}>
+    <Router history={hist}>
+      <Switch>
+        <Route path="/admin" render={props => <AdminLayout {...props} />} />
+        <Redirect to="/admin/dashboard" />
+      </Switch>
+    </Router>
+  </Provider>,
   document.getElementById("root")
 );

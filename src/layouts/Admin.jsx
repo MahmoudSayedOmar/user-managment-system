@@ -26,6 +26,9 @@ import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
 import routes from "routes.js";
+import * as actions from "../State/Layout/actions";
+
+import { connect } from "react-redux";
 
 var ps;
 
@@ -36,6 +39,7 @@ class Dashboard extends React.Component {
     this.mainPanel = React.createRef();
   }
   componentDidMount() {
+    this.props.onInitFunction("mo7sen");
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
       document.body.classList.toggle("perfect-scrollbar-on");
@@ -76,4 +80,17 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+function mapStateToProps(state) {
+  console.log(state.layout.homeValue, "value");
+  return {
+    homeData: state.layout.homeValue
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onInitFunction: mainObject => dispatch(actions.initFunction(mainObject))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

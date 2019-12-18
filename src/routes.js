@@ -17,6 +17,7 @@
 
 */
 import Dashboard from "views/Dashboard.jsx";
+import corporate from "views/Corporate/Corporate.jsx";
 import Notifications from "views/Notifications.jsx";
 import Icons from "views/Icons.jsx";
 import Typography from "views/Typography.jsx";
@@ -25,6 +26,14 @@ import Maps from "views/Map.jsx";
 import UserPage from "views/User.jsx";
 
 var routes = [
+  {
+    path: "/corporate/corporate",
+    name: "Corporates",
+    icon: "nc-icon nc-bank",
+    component: corporate,
+    layout: "/admin"
+  },
+
   {
     path: "/dashboard",
     name: "Dashboard",

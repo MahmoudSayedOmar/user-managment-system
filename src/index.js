@@ -33,8 +33,8 @@ import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 import AdminLayout from "layouts/Admin.jsx";
-import { combinedReducer } from "./State/combinedReducer";
-
+import { combinedReducer } from "./State/reducer";
+import "antd/dist/antd.css";
 const store = createStore(
   combinedReducer,
   composeWithDevTools(applyMiddleware(promiseMiddleware, thunkMiddleware))

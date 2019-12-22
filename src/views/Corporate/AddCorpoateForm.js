@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Form,
-  Input,
-  Modal,
-  Select,
-  Icon,
-  InputNumber,
-  Tooltip,
-  Radio
-} from "antd";
+import { Form, Input, Modal, Select } from "antd";
 const Option = Select.Option;
 
 const FormItem = Form.Item;
@@ -35,20 +26,18 @@ export default Form.create()(
         labelCol: { span: 8 },
         wrapperCol: { span: 15 }
       };
+
       const onlyNumbers = (rule, value, callback) => {
-        if (!value || !isNaN(value)) {
-          callback("Numbers only please");
+        if (value && isNaN(value)) {
+          callback("Numbers Only Please");
+          return;
+        } else if (value && value < 0) {
+          callback("it can't be negative number");
+          return;
         } else {
           callback();
         }
-        console.log(value, "we are here");
-        if (!value || !isNaN(value)) {
-          callback();
-          return;
-        }
-        callback("Numbers only please");
       };
-
       let FormItems = (
         <Form>
           <FormItem {...formItemLayout} label="Corporate Name">
@@ -87,40 +76,25 @@ export default Form.create()(
                 { required: true, message: "Please input your postal code!" },
                 { validator: onlyNumbers }
               ]
-            })(<InputNumber />)}
+            })(<Input placeholder="Postal Code" />)}
           </Form.Item>
-          <FormItem {...formItemLayout} label="VRAM/instance (GB)">
-            {getFieldDecorator("gpu_memory", {
-              initialValue: 1
-            })(<InputNumber />)}
-          </FormItem>
-
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                Processing&nbsp;
-                <Tooltip
-                  title={
-                    <span>
-                      <p>Performance: faster processing </p>
-                      <p> Quality: accurate processing</p>
-                    </span>
-                  }
-                >
-                  <Icon type="question-circle-o" />
-                </Tooltip>
-              </span>
-            }
-          >
-            {getFieldDecorator("compress", {
-              initialValue: false
-            })(
-              <Radio.Group>
-                <Radio value={false}>Quality</Radio>
-                <Radio value={true}>Perfomance</Radio>
-              </Radio.Group>
-            )}
+          <Form.Item {...formItemLayout} label="Phone Number">
+            {getFieldDecorator("corporatePhoneNumber", {
+              rules: [
+                { required: true, message: "Please Enter Phone Number!" },
+                { validator: onlyNumbers }
+              ]
+            })(<Input placeholder="Phone Number" />)}
+          </Form.Item>
+          <FormItem {...formItemLayout} label="Compnay #Reg.">
+            {getFieldDecorator("corporateRegisterationNumber", {
+              rules: [
+                {
+                  required: true,
+                  message: "Please Enter Corporate Registeration Number!"
+                }
+              ]
+            })(<Input placeholder="Registeration Number" />)}
           </FormItem>
         </Form>
       );

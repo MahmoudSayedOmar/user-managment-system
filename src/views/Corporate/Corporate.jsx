@@ -21,36 +21,133 @@ import React from "react";
 
 // reactstrap components
 import { Card, CardBody, Row, Col } from "reactstrap";
-import { Button, Layout } from "antd";
+import { Button, Table } from "antd";
 
 // core components
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
 import "./Corporate.css";
+import AddCorpoateForm from "./AddCorpoateForm.js";
+const dataSource = [
+  {
+    key: "1",
+    name: "Company 1",
+    phoneNumber: 32,
+    address: "10 Downing Street",
+    actions: "edit | Disable"
+  },
+  {
+    key: "2",
+    name: "Company 2",
+    phoneNumber: 432343242,
+    address: "10 Downing Street",
+    actions: "edit | Enable"
+  }
+];
 
+const columns = [
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name"
+  },
+  {
+    title: "Address",
+    dataIndex: "address",
+    key: "address"
+  },
+  {
+    title: "Phone Number",
+    dataIndex: "phoneNumber",
+    key: "phoneNumber"
+  },
+  {
+    title: "Actions",
+    dataIndex: "actions",
+    key: "actions"
+  }
+];
 class Corporate extends React.Component {
+  onAddCorporateModal = () => {
+    console.log("we are here");
+    // let pluginChoosen = this.props.vsPlugin || "";
+
+    this.refs.addSettingsForm.resetFields();
+    this.refs.addSettingsForm.setFieldsValue({
+      // plugins: pluginChoosen.plugins,
+      // chunkSize: pluginChoosen.chunkSize,
+      // stitch_plugin: pluginChoosen.stitch_plugin,
+      // memory: pluginChoosen.memory,
+      // gpu_memory: pluginChoosen.gpu_memory,
+      // compress: pluginChoosen.compress
+    });
+
+    this.setState({
+      showAddCorporateModal: true
+    });
+  };
+  onCancelSettingsModal = () => {
+    this.setState({
+      showAddCorporateModal: false
+    });
+  };
+  onAddCorporate = values => {
+    console.log(values, "values");
+    // this.props.onAddSettingsPlugin({
+    //   plugins: plugin.plugins,
+    //   stitch_plugin: plugin.stitch_plugin,
+    //   chunkSize: plugin.chunkSize,
+    //   memory: plugin.memory,
+    //   gpu_memory: plugin.gpu_memory,
+    //   compress: plugin.compress
+    // });
+
+    this.setState({
+      showAddCorporateModal: false
+    });
+  };
+  state = {
+    showAddCorporateModal: false
+  };
   render() {
     return (
       <>
         <div className="content">
           <Row>
             <Col md="12">
-              <Card className="demo-icons">
+              <Card>
                 <CardBody className="all-icons">
                   <div className="eachCompnentButtonSection">
                     <div className="buttonRight">
-                      <Button type="primary" size="small">
+                      <Button
+                        type="primary"
+                        size="small"
+                        onClick={() => this.onAddCorporateModal()}
+                      >
                         Add Corporate
                       </Button>
                     </div>
                   </div>
                   <div className="eachCompnentButtonSection">
-                    all company goes here
+                    <Table
+                      dataSource={dataSource}
+                      columns={columns}
+                      pagination={false}
+                    />
                   </div>
                 </CardBody>
               </Card>
             </Col>
           </Row>
-          <FixedPlugin />
+          {/* <FixedPlugin />  this is for search when be*/}
+          <AddCorpoateForm
+            title="Corporate"
+            onCancel={this.onCancelSettingsModal}
+            onOk={this.onAddCorporate}
+            visible={this.state.showAddCorporateModal}
+            ref="addSettingsForm"
+            media={this.props.medias}
+            plugins={this.props.plugins}
+          />
         </div>
       </>
     );

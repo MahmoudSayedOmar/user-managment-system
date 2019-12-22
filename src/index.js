@@ -40,6 +40,7 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(promiseMiddleware, thunkMiddleware))
 );
 const hist = createBrowserHistory();
+//
 
 ReactDOM.render(
   <Provider store={store}>

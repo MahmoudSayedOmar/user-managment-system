@@ -21,33 +21,18 @@ import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 
-<<<<<<< HEAD
-=======
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import promiseMiddleware from "redux-promise";
 import thunkMiddleware from "redux-thunk";
 import { createStore, applyMiddleware } from "redux";
 
->>>>>>> companySection
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss?v=1.1.0";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 import AdminLayout from "layouts/Admin.jsx";
-<<<<<<< HEAD
-
-const hist = createBrowserHistory();
-
-ReactDOM.render(
-  <Router history={hist}>
-    <Switch>
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Redirect to="/admin/dashboard" />
-    </Switch>
-  </Router>,
-=======
 import { combinedReducer } from "./State/reducer";
 import "antd/dist/antd.css";
 const store = createStore(
@@ -66,6 +51,5 @@ ReactDOM.render(
       </Switch>
     </Router>
   </Provider>,
->>>>>>> companySection
   document.getElementById("root")
 );

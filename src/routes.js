@@ -17,10 +17,7 @@
 
 */
 import Dashboard from "views/Dashboard.jsx";
-<<<<<<< HEAD
-=======
 import corporate from "views/Corporate/Corporate.jsx";
->>>>>>> companySection
 import Notifications from "views/Notifications.jsx";
 import Icons from "views/Icons.jsx";
 import Typography from "views/Typography.jsx";
@@ -38,7 +35,6 @@ var routes = [
   },
 
   {
-
     path: "/dashboard",
     name: "Dashboard",
     icon: "nc-icon nc-bank",

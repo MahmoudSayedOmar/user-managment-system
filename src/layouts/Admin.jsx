@@ -25,7 +25,6 @@ import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
-import routes from "routes.js";
 import { onShowCompnay } from "../State/Layout/action-creator";
 
 import routes from "routes.js";
@@ -47,7 +46,6 @@ class Dashboard extends React.Component {
       companyName: "sharbat",
       companyTel: "434534534543"
     });
-
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
       document.body.classList.toggle("perfect-scrollbar-on");
@@ -88,7 +86,6 @@ class Dashboard extends React.Component {
   }
 }
 
-
 function mapStateToProps(state) {
   console.log(state.company, "company");
   return {
@@ -106,4 +103,3 @@ function mapDispatchToProps(dispatch: Dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
-

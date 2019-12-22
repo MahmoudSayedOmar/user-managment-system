@@ -139,9 +139,7 @@ class Header extends React.Component {
                 <span className="navbar-toggler-bar bar3" />
               </button>
             </div>
-
             {this.getBrand()}
-
           </div>
           <NavbarToggler onClick={this.toggle}>
             <span className="navbar-toggler-bar navbar-kebab" />
@@ -176,19 +174,6 @@ class Header extends React.Component {
                     className="avatar"
                     src={require("assets/img/mike.jpg")}
                   />
-<<<<<<< HEAD
-                  <p>
-                    <span className="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem tag="a" href="/admin/user-page">
-                    View Profile
-                  </DropdownItem>
-                  <DropdownItem tag="a" href="/logout">
-                    Logout
-                  </DropdownItem>
-=======
                 </DropdownToggle>
                 <DropdownMenu right>
                   <Link to="/admin/user-page">
@@ -198,7 +183,6 @@ class Header extends React.Component {
                   <Link to="/logout">
                     <DropdownItem>Log Out</DropdownItem>
                   </Link>
->>>>>>> companySection
                 </DropdownMenu>
               </Dropdown>
             </Nav>

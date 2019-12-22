@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Modal, Select } from "antd";
+import { Form, Input, Modal, Select, Upload, Button, Icon } from "antd";
 const Option = Select.Option;
 
 const FormItem = Form.Item;
@@ -19,7 +19,13 @@ export default Form.create()(
         }
       });
     };
-
+    normFile = e => {
+      console.log("Upload event:", e);
+      if (Array.isArray(e)) {
+        return e;
+      }
+      return e && e.fileList;
+    };
     render() {
       const { getFieldDecorator } = this.props.form;
       const formItemLayout = {
@@ -96,6 +102,19 @@ export default Form.create()(
               ]
             })(<Input placeholder="Registeration Number" />)}
           </FormItem>
+          <Form.Item {...formItemLayout} label="Upload">
+            {getFieldDecorator("upload", {
+              rules: [{ required: true }],
+              valuePropName: "fileList",
+              getValueFromEvent: this.normFile
+            })(
+              <Upload name="logo" action="/upload.do" listType="picture">
+                <Button>
+                  <Icon type="upload" /> Click to upload
+                </Button>
+              </Upload>
+            )}
+          </Form.Item>
         </Form>
       );
       return (

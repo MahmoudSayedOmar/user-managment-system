@@ -33,14 +33,14 @@ const dataSource = [
     name: "Company 1",
     phoneNumber: 32,
     address: "10 Downing Street",
-    actions: "edit | Disable"
+    actions: "edit | Disable | Add Application"
   },
   {
     key: "2",
     name: "Company 2",
     phoneNumber: 432343242,
     address: "10 Downing Street",
-    actions: "edit | Enable"
+    actions: "edit | Enable | Add Application"
   }
 ];
 

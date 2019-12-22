@@ -1,5 +1,5 @@
-import { compnayInitialState } from "./Layout/state";
+import { companiesInitialState } from "./Layout/state";
 
 export const initialState = {
-  company: compnayInitialState
+  companies: companiesInitialState
 };

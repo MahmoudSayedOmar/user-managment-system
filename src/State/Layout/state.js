@@ -1,10 +1,14 @@
-import { companyDto } from "../../proxy/dtos/company";
+import { companiesDto } from "../../proxy/dtos/company";
 
-export interface companyState {
-  company: companyDto;
+export interface companiesState {
+  companies: companiesDto;
 }
 
-export const compnayInitialState: companyState = {
+export const companiesInitialState: companiesState = {
   //company: null
-  company: [{ companyName: "sharbat", companyTel: "434534534543" }]
+  companies: [
+    { companyName: "sharbat", companyTel: "434534534543" },
+    { companyName: "sharbatdadf", companyTel: "434534534543" },
+    { companyName: "sharbat", companyTel: "434534534543" }
+  ]
 };

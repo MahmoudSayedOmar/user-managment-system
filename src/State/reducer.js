@@ -1,4 +1,4 @@
 import { combineReducers } from "redux";
-import { companyReducer } from "./Layout/reducer";
+import { companiesReducer } from "./Layout/reducer";
 
-export const combinedReducer = combineReducers({ company: companyReducer });
+export const combinedReducer = combineReducers({ companies: companiesReducer });

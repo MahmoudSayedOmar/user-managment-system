@@ -1,28 +1,28 @@
 import * as types from "./actions";
 
-export type ON_VIEW_COMPANY_ACTION = { type: String };
-export type ON_VIEW_COMPANY_SUCCESS_ACTION = { type: String, payload: any };
-export type ON_VIEW_COMPANY_FAIL_ACTION = { type: String, payload: any };
+export type ON_VIEW_COMPANIES_ACTION = { type: String };
+export type ON_VIEW_COMPANIES_SUCCESS_ACTION = { type: String, payload: any };
+export type ON_VIEW_COMPANIES_FAIL_ACTION = { type: String, payload: any };
 
-export async function onShowCompnay(company: CompanyModel) {
+export async function onShowCompanies() {
   return async dispatch => {
-    dispatch(onViewCompanySuccess(company));
+    //dispatch(onViewCompaniesSuccess());
   };
 }
 
-export function onViewCompany(): ON_VIEW_COMPANY_ACTION {
-  return { type: types.ON_VIEW_COMPANY };
+export function onViewCompanies(): ON_VIEW_COMPANIES_ACTION {
+  return { type: types.ON_VIEW_COMPANIES };
 }
 
-export function onViewCompanySuccess(
+export function onViewCompaniesSuccess(
   company: CompanyModel
-): ON_VIEW_COMPANY_SUCCESS_ACTION {
-  return { type: types.ON_VIEW_COMPANY_SUCCESS, payload: company };
+): ON_VIEW_COMPANIES_SUCCESS_ACTION {
+  return { type: types.ON_VIEW_COMPANIES_SUCCESS, payload: company };
 }
 
-export function onViewCompanyFail(): ON_VIEW_COMPANY_FAIL_ACTION {
+export function onViewCompaniesFail(): ON_VIEW_COMPANIES_FAIL_ACTION {
   return {
-    type: types.ON_VIEW_COMPANY_FAIL,
+    type: types.ON_VIEW_COMPANIES_FAIL,
     payload: "connection error"
   };
 }

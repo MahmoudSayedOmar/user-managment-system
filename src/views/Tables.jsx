@@ -44,7 +44,8 @@ class Tables extends React.Component {
                   <Table responsive>
                     <thead className="text-primary">
                       <tr>
-                        <th>Name</th>
+                        <th>Name name </th>
+
                         <th>Country</th>
                         <th>City</th>
                         <th className="text-right">Salary</th>

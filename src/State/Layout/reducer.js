@@ -23,7 +23,7 @@ export function companiesReducer(
     case types.ON_VIEW_COMPANIES_SUCCESS: {
       return {
         ...state,
-        company: action.payload
+        companies: action.payload
       };
     }
     case types.ON_VIEW_COMPANIES_FAIL: {

@@ -15,9 +15,9 @@ export function onViewCompanies(): ON_VIEW_COMPANIES_ACTION {
 }
 
 export function onViewCompaniesSuccess(
-  company: CompanyModel
+  companies: CompaniesModel
 ): ON_VIEW_COMPANIES_SUCCESS_ACTION {
-  return { type: types.ON_VIEW_COMPANIES_SUCCESS, payload: company };
+  return { type: types.ON_VIEW_COMPANIES_SUCCESS, payload: companies };
 }
 
 export function onViewCompaniesFail(): ON_VIEW_COMPANIES_FAIL_ACTION {

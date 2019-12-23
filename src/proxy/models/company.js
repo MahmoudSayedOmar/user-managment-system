@@ -1,4 +1,4 @@
-export interface CompanyModel {
+export interface CompaniesModel {
   companyName: String;
   companyTel: String;
 }

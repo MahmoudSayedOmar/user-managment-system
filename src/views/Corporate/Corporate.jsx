@@ -21,52 +21,64 @@ import React from "react";
 
 // reactstrap components
 import { Card, CardBody, Row, Col } from "reactstrap";
-import { Button, Table } from "antd";
+import { Button, Table, Popconfirm, Tooltip, Icon } from "antd";
+
+import { Dispatch, bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
 // core components
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
 import "./Corporate.css";
 import AddCorpoateForm from "./AddCorpoateForm.js";
-const dataSource = [
-  {
-    key: "1",
-    name: "Company 1",
-    phoneNumber: 32,
-    address: "10 Downing Street",
-    actions: "edit | Disable | Add Application"
-  },
-  {
-    key: "2",
-    name: "Company 2",
-    phoneNumber: 432343242,
-    address: "10 Downing Street",
-    actions: "edit | Enable | Add Application"
-  }
-];
+// const dataSource = [
+//   {
+//     key: "1",
+//     name: "Company 1",
+//     phoneNumber: 32,
+//     address: "10 Downing Street",
+//     actions: "edit | Disable | Add Application"
+//   },
+//   {
+//     key: "2",
+//     name: "Company 2",
+//     phoneNumber: 432343242,
+//     address: "10 Downing Street",
+//     actions: "edit | Enable | Add Application"
+//   }
+// ];
 
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name"
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-    key: "address"
-  },
-  {
-    title: "Phone Number",
-    dataIndex: "phoneNumber",
-    key: "phoneNumber"
-  },
-  {
-    title: "Actions",
-    dataIndex: "actions",
-    key: "actions"
-  }
-];
+// const columns = [
+//   {
+//     title: "Name",
+//     dataIndex: "name",
+//     key: "name"
+//   },
+//   {
+//     title: "Address",
+//     dataIndex: "address",
+//     key: "address"
+//   },
+//   {
+//     title: "Phone Number",
+//     dataIndex: "phoneNumber",
+//     key: "phoneNumber"
+//   },
+//   {
+//     title: "Actions",
+//     dataIndex: "actions",
+//     key: "actions"
+//   }
+// ];
 class Corporate extends React.Component {
+  onEditRow = id => {
+    // console.log("we are here id");
+    console.log(id, "edit id");
+  };
+  onDeleteRow = id => {
+    // console.log("we are here id");
+    console.log(id, "delete id");
+  };
+
   onAddCorporateModal = () => {
     console.log("we are here");
     // let pluginChoosen = this.props.vsPlugin || "";
@@ -108,7 +120,59 @@ class Corporate extends React.Component {
   state = {
     showAddCorporateModal: false
   };
+  columns = [
+    {
+      title: "Media Name",
+      dataIndex: "name",
+      key: "name"
+    },
+    {
+      title: "Phone ",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber"
+    },
+
+    {
+      title: "Address",
+      key: "address",
+      dataIndex: "address"
+    },
+
+    {
+      title: "Actions",
+      dataIndex: "actions",
+      key: "actions",
+      render: eachKey => (
+        <span>
+          {" "}
+          <Popconfirm
+            title="Are you sure delete this Result?"
+            onConfirm={() => this.onDeleteRow(eachKey)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Icon
+              type="delete"
+              style={{ fontSize: "20px", cursor: "pointer" }}
+              // onClick={() => this.onDeleteRow()}
+            />
+          </Popconfirm>
+          <Icon
+            type="edit"
+            style={{
+              fontSize: "20px",
+
+              cursor: "pointer",
+              paddingLeft: "5px"
+            }}
+            onClick={() => this.onEditRow(eachKey)}
+          />
+        </span>
+      )
+    }
+  ];
   render() {
+    console.log(this.props.allCompanies, "all compannies");
     return (
       <>
         <div className="content">
@@ -129,8 +193,8 @@ class Corporate extends React.Component {
                   </div>
                   <div className="eachCompnentButtonSection">
                     <Table
-                      dataSource={dataSource}
-                      columns={columns}
+                      columns={this.columns}
+                      dataSource={this.props.allCompanies}
                       pagination={false}
                     />
                   </div>
@@ -154,4 +218,20 @@ class Corporate extends React.Component {
   }
 }
 
-export default Corporate;
+function mapStateToProps(state) {
+  console.log(state.companies, "company");
+  return {
+    allCompanies: state.companies.companies
+  };
+}
+
+function mapDispatchToProps(dispatch: Dispatch) {
+  return bindActionCreators(
+    {
+      // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
+    },
+    dispatch
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Corporate);

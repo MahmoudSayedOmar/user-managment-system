@@ -25,50 +25,12 @@ import { Button, Table, Popconfirm, Tooltip, Icon } from "antd";
 
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-
+import { onAddCorporate } from "State/Layout/action-creator";
 // core components
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
 import "./Corporate.css";
 import AddCorpoateForm from "./AddCorpoateForm.js";
-// const dataSource = [
-//   {
-//     key: "1",
-//     name: "Company 1",
-//     phoneNumber: 32,
-//     address: "10 Downing Street",
-//     actions: "edit | Disable | Add Application"
-//   },
-//   {
-//     key: "2",
-//     name: "Company 2",
-//     phoneNumber: 432343242,
-//     address: "10 Downing Street",
-//     actions: "edit | Enable | Add Application"
-//   }
-// ];
 
-// const columns = [
-//   {
-//     title: "Name",
-//     dataIndex: "name",
-//     key: "name"
-//   },
-//   {
-//     title: "Address",
-//     dataIndex: "address",
-//     key: "address"
-//   },
-//   {
-//     title: "Phone Number",
-//     dataIndex: "phoneNumber",
-//     key: "phoneNumber"
-//   },
-//   {
-//     title: "Actions",
-//     dataIndex: "actions",
-//     key: "actions"
-//   }
-// ];
 class Corporate extends React.Component {
   onEditRow = id => {
     // console.log("we are here id");
@@ -104,6 +66,13 @@ class Corporate extends React.Component {
   };
   onAddCorporate = values => {
     console.log(values, "values");
+    this.props.onAddCorporate({
+      key: this.props.allCompanies.length + 1,
+      corporateName: values.corporateName,
+      corporatePhoneNumber: values.corporatePhoneNumber,
+      corporateAddress: values.corporateAddress,
+      actions: { id: this.props.allCompanies.length + 1, active: false }
+    });
     // this.props.onAddSettingsPlugin({
     //   plugins: plugin.plugins,
     //   stitch_plugin: plugin.stitch_plugin,
@@ -122,20 +91,20 @@ class Corporate extends React.Component {
   };
   columns = [
     {
-      title: "Media Name",
-      dataIndex: "name",
-      key: "name"
+      title: "corporate Name",
+      dataIndex: "corporateName",
+      key: "corporateName"
     },
     {
-      title: "Phone ",
-      dataIndex: "phoneNumber",
-      key: "phoneNumber"
+      title: "Phone",
+      dataIndex: "corporatePhoneNumber",
+      key: "corporatePhoneNumber"
     },
 
     {
       title: "Address",
-      key: "address",
-      dataIndex: "address"
+      key: "corporateAddress",
+      dataIndex: "corporateAddress"
     },
 
     {
@@ -144,35 +113,46 @@ class Corporate extends React.Component {
       key: "actions",
       render: eachKey => (
         <span>
-          {" "}
-          <Popconfirm
-            title="Are you sure delete this Result?"
-            onConfirm={() => this.onDeleteRow(eachKey)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Icon
-              type="delete"
-              style={{ fontSize: "20px", cursor: "pointer" }}
-              // onClick={() => this.onDeleteRow()}
-            />
-          </Popconfirm>
           <Icon
             type="edit"
             style={{
               fontSize: "20px",
 
               cursor: "pointer",
-              paddingLeft: "5px"
+              paddingRight: "5px"
             }}
-            onClick={() => this.onEditRow(eachKey)}
+            onClick={() => this.onEditRow(eachKey.id)}
           />
+          {!eachKey.active ? (
+            <Popconfirm
+              title="Are you sure delete this Result?"
+              onConfirm={() => this.onDeleteRow(eachKey.id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Tooltip placement="top" title="Activate">
+                <Icon
+                  type="eye-invisible"
+                  style={{ fontSize: "20px", cursor: "pointer" }}
+                  // onClick={() => this.onDeleteRow()}
+                />
+              </Tooltip>
+            </Popconfirm>
+          ) : (
+            <Tooltip placement="top" title="DeActivate">
+              <Icon
+                type="eye"
+                style={{ fontSize: "20px", cursor: "pointer" }}
+                onClick={() => this.onEditRow(eachKey.id)}
+              />
+            </Tooltip>
+          )}
         </span>
       )
     }
   ];
   render() {
-    console.log(this.props.allCompanies, "all compannies");
+    console.log(this.props.allCompanies.length, "all compannies");
     return (
       <>
         <div className="content">
@@ -229,6 +209,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
       // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
+      onAddCorporate
     },
     dispatch
   );

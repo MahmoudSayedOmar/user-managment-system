@@ -18,14 +18,11 @@
 */
 import React, { Component } from "react";
 
-import { Button } from "reactstrap";
-
 class FixedPlugin extends Component {
   constructor(props) {
     super(props);
     this.state = {
       classes: "dropdown"
-
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -41,7 +38,6 @@ class FixedPlugin extends Component {
       <div className="fixed-plugin">
         <div className={this.state.classes}>
           <div onClick={this.handleClick}>
-
             <i className="fa  fa-search fa-2x" />
           </div>
           <div className="dropdown-menu show">
@@ -65,7 +61,6 @@ class FixedPlugin extends Component {
               search Goes hsere <br />
             </div>
           </div>
-
         </div>
       </div>
     );

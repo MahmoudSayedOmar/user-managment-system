@@ -9,17 +9,17 @@ export const companiesInitialState: companiesState = {
   companies: [
     {
       key: "1",
-      name: "Company 1",
-      phoneNumber: 32,
-      address: "10 Downing Street",
-      actions: 1
+      corporateName: "Company 1",
+      corporatePhoneNumber: 32,
+      corporateAddress: "10 Downing Street",
+      actions: { id: "1", active: true }
     },
     {
       key: "2",
-      name: "Company 2",
-      phoneNumber: 432343242,
-      address: "10 Downing Street",
-      actions: "2"
+      corporateName: "Company 2",
+      corporatePhoneNumber: 432343242,
+      corporateAddress: "10 Downing Street",
+      actions: { id: "2", active: false }
     }
   ]
 };

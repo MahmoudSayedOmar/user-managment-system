@@ -9,6 +9,9 @@ import { companiesInitialState, companiesState } from "./state.js";
 type Action =
   | actions.ON_VIEW_COMPIES_ACTION
   | actions.ON_VIEW_COMPANIES_SUCCESS_ACTION
+  | actions.ON_VIEW_COMPANIES_FAIL_ACTION
+  | actions.ON_ADD_COMPANY_ACTION
+  | actions.ON_ADD_COMPANY_SUCCESS_ACTION
   | actions.ON_VIEW_COMPANIES_FAIL_ACTION;
 export function companiesReducer(
   state: companiesState = companiesInitialState,
@@ -27,6 +30,24 @@ export function companiesReducer(
       };
     }
     case types.ON_VIEW_COMPANIES_FAIL: {
+      return {
+        ...state
+      };
+    }
+
+    case types.ON_ADD_COMPANY_ACTION: {
+      return {
+        ...state,
+        loading:true
+      };
+    }
+    case types.ON_ADD_COMPANY_SUCCESS: {
+      return {
+        ...state,
+        companies: action.payload
+      };
+    }
+    case types.ON_ADD_COMPANY_FAIL: {
       return {
         ...state
       };

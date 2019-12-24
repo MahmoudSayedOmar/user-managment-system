@@ -1,6 +1,6 @@
 import React from "react";
-import { Form, Input, Modal, Select, Upload, Button, Icon } from "antd";
-const Option = Select.Option;
+import { Form, Input, Modal, Upload, Button, Icon } from "antd";
+// const Option = Select.Option;
 
 const FormItem = Form.Item;
 

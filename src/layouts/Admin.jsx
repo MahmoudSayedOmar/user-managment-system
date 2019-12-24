@@ -29,7 +29,6 @@ import routes from "routes.js";
 // import * as actions from "../State/Layout/actions";
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { formatCountdown } from "antd/lib/statistic/utils";
 
 var ps;
 

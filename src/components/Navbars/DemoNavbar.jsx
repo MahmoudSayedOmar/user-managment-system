@@ -22,20 +22,14 @@ import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
-  NavItem,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Container,
-  InputGroup,
-  InputGroupText,
-  InputGroupAddon,
-  Input
+  Container
 } from "reactstrap";
-import { NavLink } from "react-router-dom";
+
 import routes from "routes.js";
 
 class Header extends React.Component {

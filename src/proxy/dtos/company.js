@@ -1,4 +1,7 @@
 export class CompaniesDto {
-  companyName: String;
-  companyTel: String;
+  key: String;
+  corporateName: String;
+  corporatePhoneNumber: String;
+  corporateAddress: String;
+  actions: Object;
 }

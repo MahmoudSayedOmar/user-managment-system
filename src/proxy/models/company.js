@@ -1,4 +1,7 @@
 export interface CompaniesModel {
-  companyName: String;
-  companyTel: String;
+  key: String;
+  corporateName: String;
+  corporatePhoneNumber: String;
+  corporateAddress: String;
+  actions: Object;
 }

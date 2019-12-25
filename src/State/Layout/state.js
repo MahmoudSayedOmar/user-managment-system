@@ -12,6 +12,11 @@ export const companiesInitialState: companiesState = {
       corporateName: "Company 1",
       corporatePhoneNumber: 32,
       corporateAddress: "10 Downing Street",
+      corporateCountry: "Egypt",
+      corporateCity: "Cairo",
+      corporatePostalCode: "1175",
+      corporateRegisterationNumber: "Reg. Number11",
+
       actions: { id: "1", active: true }
     },
     {
@@ -19,6 +24,10 @@ export const companiesInitialState: companiesState = {
       corporateName: "Company 2",
       corporatePhoneNumber: 432343242,
       corporateAddress: "10 Downing Street",
+      corporateCountry: "United State",
+      corporateCity: "New York",
+      corporatePostalCode: "4375",
+      corporateRegisterationNumber: "Reg. Number22",
       actions: { id: "2", active: false }
     }
   ]

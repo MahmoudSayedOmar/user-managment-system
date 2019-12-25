@@ -46,6 +46,9 @@ export default Form.create()(
       };
       let FormItems = (
         <Form>
+          {getFieldDecorator("key")(<Input type="hidden" />)}
+          {getFieldDecorator("corporateActive")(<Input type="hidden" />)}
+
           <FormItem {...formItemLayout} label="Corporate Name">
             {getFieldDecorator("corporateName", {
               rules: [
@@ -104,7 +107,7 @@ export default Form.create()(
           </FormItem>
           <Form.Item {...formItemLayout} label="Upload">
             {getFieldDecorator("upload", {
-              rules: [{ required: true }],
+              // rules: [{ required: true }],
               valuePropName: "fileList",
               getValueFromEvent: this.normFile
             })(

@@ -25,28 +25,73 @@ import { Button, Table, Popconfirm, Tooltip, Icon } from "antd";
 
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { onAddCorporate } from "State/Layout/action-creator";
+import { onAddCorporate, onUpdateCorporate } from "State/Layout/action-creator";
 // core components
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
 import "./Corporate.css";
 import AddCorpoateForm from "./AddCorpoateForm.js";
 
 class Corporate extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showAddCorporateModal: false,
+      modalTitle: "Add Corporate"
+    };
+  }
+
   onEditRow = id => {
-    // console.log("we are here id");
-    console.log(id, "edit id");
+    const toEditCorporate = this.props.allCompanies.find(i => i.key === id);
+
+    // this.refs.addCorporateForm.setFieldsValue(toEditCorporate);
+    this.setState({ modalTitle: "Edit " + toEditCorporate.corporateName });
+    this.refs.addCorporateForm.setFieldsValue({
+      key: toEditCorporate.key,
+      corporateName: toEditCorporate.corporateName,
+      corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
+      corporateAddress: toEditCorporate.corporateAddress,
+      corporateCountry: toEditCorporate.corporateCountry,
+      corporateCity: toEditCorporate.corporateCity,
+      corporatePostalCode: toEditCorporate.corporatePostalCode,
+      corporateRegisterationNumber:
+        toEditCorporate.corporateRegisterationNumber,
+      corporateActive: toEditCorporate.actions.active
+    });
+
+    this.setState({
+      showAddCorporateModal: true
+    });
   };
-  onDeleteRow = id => {
+  onActivateDeActivate = id => {
     // console.log("we are here id");
     console.log(id, "delete id");
+    const toEditCorporate = this.props.allCompanies.find(i => i.key === id);
+    console.log(toEditCorporate.actions.active, "editable one");
+
+    this.props.onUpdateCorporate({
+      key: toEditCorporate.key,
+      corporateName: toEditCorporate.corporateName,
+      corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
+      corporateAddress: toEditCorporate.corporateAddress,
+      corporateCountry: toEditCorporate.corporateCountry,
+      corporateCity: toEditCorporate.corporateCity,
+      corporatePostalCode: toEditCorporate.corporatePostalCode,
+      corporateRegisterationNumber:
+        toEditCorporate.corporateRegisterationNumber,
+      actions: {
+        id: toEditCorporate.key,
+        active: !toEditCorporate.actions.active
+      }
+    });
   };
 
   onAddCorporateModal = () => {
     console.log("we are here");
     // let pluginChoosen = this.props.vsPlugin || "";
 
-    this.refs.addSettingsForm.resetFields();
-    this.refs.addSettingsForm.setFieldsValue({
+    this.refs.addCorporateForm.resetFields();
+    this.refs.addCorporateForm.setFieldsValue({
       // plugins: pluginChoosen.plugins,
       // chunkSize: pluginChoosen.chunkSize,
       // stitch_plugin: pluginChoosen.stitch_plugin,
@@ -56,23 +101,45 @@ class Corporate extends React.Component {
     });
 
     this.setState({
+      modalTitle: "Add Corporate",
       showAddCorporateModal: true
     });
   };
   onCancelSettingsModal = () => {
     this.setState({
+      modalTitle: "Add Corporate",
       showAddCorporateModal: false
     });
   };
   onAddCorporate = values => {
     console.log(values, "values");
-    this.props.onAddCorporate({
-      key: this.props.allCompanies.length + 1,
-      corporateName: values.corporateName,
-      corporatePhoneNumber: values.corporatePhoneNumber,
-      corporateAddress: values.corporateAddress,
-      actions: { id: this.props.allCompanies.length + 1, active: false }
-    });
+    if (values.key && values.key !== "") {
+      this.props.onUpdateCorporate({
+        key: values.key,
+        corporateName: values.corporateName,
+        corporatePhoneNumber: values.corporatePhoneNumber,
+        corporateAddress: values.corporateAddress,
+        corporateCountry: values.corporateCountry,
+        corporateCity: values.corporateCity,
+        corporatePostalCode: values.corporatePostalCode,
+        corporateRegisterationNumber: values.corporateRegisterationNumber,
+        actions: { id: values.key, active: values.corporateActive }
+      });
+    } else {
+      this.props.onAddCorporate({
+        key: this.props.allCompanies.length + 1,
+        corporateName: values.corporateName,
+        corporatePhoneNumber: values.corporatePhoneNumber,
+        corporateAddress: values.corporateAddress,
+        corporateCountry: values.corporateCountry,
+        corporateCity: values.corporateCity,
+        corporatePostalCode: values.corporatePostalCode,
+        corporateRegisterationNumber: values.corporateRegisterationNumber,
+        actions: { id: this.props.allCompanies.length + 1, active: false }
+      });
+    }
+
+    this.refs.addCorporateForm.resetFields();
     // this.props.onAddSettingsPlugin({
     //   plugins: plugin.plugins,
     //   stitch_plugin: plugin.stitch_plugin,
@@ -86,15 +153,26 @@ class Corporate extends React.Component {
       showAddCorporateModal: false
     });
   };
-  state = {
-    showAddCorporateModal: false
-  };
+
   columns = [
     {
       title: "corporate Name",
       dataIndex: "corporateName",
       key: "corporateName"
     },
+    {
+      title: "Country - City",
+      dataIndex: "corporateCountry",
+      key: "corporateCountry",
+      render: (country, row) => (
+        <span>{country + " - " + row.corporateCity}</span>
+      )
+    },
+    // {
+    //   title: "corporate City",
+    //   dataIndex: "corporateCity",
+    //   key: "corporateCity"
+    // },
     {
       title: "Phone",
       dataIndex: "corporatePhoneNumber",
@@ -123,36 +201,37 @@ class Corporate extends React.Component {
             }}
             onClick={() => this.onEditRow(eachKey.id)}
           />
-          {!eachKey.active ? (
+          {eachKey.active ? (
             <Popconfirm
-              title="Are you sure delete this Result?"
-              onConfirm={() => this.onDeleteRow(eachKey.id)}
+              title="Are you sure deActivate this Company?"
+              onConfirm={() => this.onActivateDeActivate(eachKey.id)}
               okText="Yes"
               cancelText="No"
             >
-              <Tooltip placement="top" title="Activate">
+              <Tooltip placement="top" title="DeActivate">
                 <Icon
-                  type="eye-invisible"
+                  type="eye"
                   style={{ fontSize: "20px", cursor: "pointer" }}
                   // onClick={() => this.onDeleteRow()}
                 />
               </Tooltip>
             </Popconfirm>
           ) : (
-            <Tooltip placement="top" title="DeActivate">
+            <Tooltip placement="top" title="Activate">
               <Icon
-                type="eye"
+                type="eye-invisible"
                 style={{ fontSize: "20px", cursor: "pointer" }}
-                onClick={() => this.onEditRow(eachKey.id)}
+                onClick={() => this.onActivateDeActivate(eachKey.id)}
               />
             </Tooltip>
           )}
+          <Icon type="more" style={{ fontSize: "20px", cursor: "pointer" }} />
         </span>
       )
     }
   ];
   render() {
-    console.log(this.props.allCompanies.length, "all compannies");
+    // console.log(this.props.allCompanies.length, "all compannies");
     return (
       <>
         <div className="content">
@@ -184,11 +263,11 @@ class Corporate extends React.Component {
           </Row>
           {/* <FixedPlugin />  this is for search when be*/}
           <AddCorpoateForm
-            title="Corporate"
+            title={this.state.modalTitle}
             onCancel={this.onCancelSettingsModal}
             onOk={this.onAddCorporate}
             visible={this.state.showAddCorporateModal}
-            ref="addSettingsForm"
+            ref="addCorporateForm"
             media={this.props.medias}
             plugins={this.props.plugins}
           />
@@ -199,7 +278,7 @@ class Corporate extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.companies, "company");
+  console.log(state.companies.companies, "company");
   return {
     allCompanies: state.companies.companies
   };
@@ -209,7 +288,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
       // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
-      onAddCorporate
+      onAddCorporate,
+      onUpdateCorporate
     },
     dispatch
   );

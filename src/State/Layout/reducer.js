@@ -38,7 +38,7 @@ export function companiesReducer(
     case types.ON_ADD_COMPANY_ACTION: {
       return {
         ...state,
-        loading:true
+        loading: true
       };
     }
     case types.ON_ADD_COMPANY_SUCCESS: {
@@ -48,6 +48,23 @@ export function companiesReducer(
       };
     }
     case types.ON_ADD_COMPANY_FAIL: {
+      return {
+        ...state
+      };
+    }
+    case types.ON_UPDATE_COMPANY_ACTION: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
+    case types.ON_UPDATE_COMPANY_SUCCESS: {
+      return {
+        ...state,
+        companies: action.payload
+      };
+    }
+    case types.ON_UPDATE_COMPANY_FAIL: {
       return {
         ...state
       };

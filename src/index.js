@@ -34,6 +34,7 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import {LoginScreen} from "./Screens/login-screen"
 import AdminLayout from "layouts/Admin.jsx";
 import { combinedReducer } from "./State/reducer";
+import { DefaultApplicationsScreen  } from "./Screens/default-applications-screen"
 import "antd/dist/antd.css";
 const store = createStore(
   combinedReducer,
@@ -46,7 +47,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={hist}>
       <Switch>
-        <Route path="/login" component={LoginScreen} />
+        <Route path="/login" component={LoginScreen} />        
         <Route path="/admin" render={props => <AdminLayout {...props} />} />
         <Redirect to="/admin/dashboard" />
       </Switch>

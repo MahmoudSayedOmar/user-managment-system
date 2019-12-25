@@ -24,6 +24,7 @@ import Typography from "views/Typography.jsx";
 import TableList from "views/Tables.jsx";
 import Maps from "views/Map.jsx";
 import UserPage from "views/User.jsx";
+import {DefaultApplicationsScreen} from "./Screens/default-applications-screen"
 
 var routes = [
   {
@@ -81,6 +82,13 @@ var routes = [
     name: "Typography",
     icon: "nc-icon nc-caps-small",
     component: Typography,
+    layout: "/admin"
+  },
+  {
+    path: "/defaultapps",
+    name: "Default Applications",
+    icon: "nc-icon nc-caps-small",
+    component: DefaultApplicationsScreen,
     layout: "/admin"
   }
 ];

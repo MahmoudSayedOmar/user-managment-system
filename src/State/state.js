@@ -1,12 +1,17 @@
 import { compnayInitialState } from "./Layout/state";
 
-import { AuthorizationInitialState } from "./Authorization/state"
+import { AuthorizationInitialState , AuthorizationState } from "./Authorization/state"
+
+import { defaultApplicationInitialState,defaultApplicationState } from "./DefaultApplications/state"
+
 export type State = {
-  authorization:AuthorizationInitialState,
-  company: compnayInitialState
+  authorization:AuthorizationState,
+  company: compnayInitialState,
+  defaultApplications:defaultApplicationState
 };
 
 export const initialState = {
   authorization:AuthorizationInitialState,
-  company: compnayInitialState
+  company: compnayInitialState,
+  defaultApplications:defaultApplicationInitialState,
 };

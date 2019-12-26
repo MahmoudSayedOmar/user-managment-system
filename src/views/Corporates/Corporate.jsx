@@ -33,6 +33,7 @@ import {
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
 import "./Corporate.css";
 import AddCorpoateForm from "./AddCorpoateForm";
+import { onViewCompanies } from "State/Corporates/action-creator";
 
 class Corporate extends React.Component {
   constructor(props) {
@@ -42,6 +43,10 @@ class Corporate extends React.Component {
       showAddCorporateModal: false,
       modalTitle: "Add Corporate"
     };
+  }
+
+  componentDidMount() {
+    this.props.onViewCompanies();
   }
 
   onEditRow = id => {
@@ -174,66 +179,66 @@ class Corporate extends React.Component {
       title: "Address",
       key: "address",
       dataIndex: "address"
-    },
-
-    {
-      title: "Actions",
-      dataIndex: "actions",
-      key: "actions",
-      render: eachKey => (
-        <span>
-          <Icon
-            type="edit"
-            style={{
-              fontSize: "20px",
-
-              cursor: "pointer",
-              paddingRight: "5px"
-            }}
-            onClick={() => this.onEditRow(eachKey.id)}
-          />
-          {eachKey.active ? (
-            <Popconfirm
-              title="Are you sure deActivate this Company?"
-              onConfirm={() => this.onActivateDeActivate(eachKey.id)}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Tooltip placement="top" title="DeActivate">
-                <Icon
-                  type="eye"
-                  style={{
-                    paddingRight: "5px",
-                    fontSize: "20px",
-                    cursor: "pointer"
-                  }}
-                  // onClick={() => this.onDeleteRow()}
-                />
-              </Tooltip>
-            </Popconfirm>
-          ) : (
-            <Tooltip placement="top" title="Activate">
-              <Icon
-                type="eye-invisible"
-                style={{
-                  paddingRight: "5px",
-                  fontSize: "20px",
-                  cursor: "pointer"
-                }}
-                onClick={() => this.onActivateDeActivate(eachKey.id)}
-              />
-            </Tooltip>
-          )}
-
-          <Tooltip placement="top" title="Corporate Applications">
-            <Icon
-              type="file-add"
-              style={{ fontSize: "20px", cursor: "pointer" }}
-            />
-          </Tooltip>
-        </span>
-      )
     }
+
+    // {
+    //   title: "Actions",
+    //   dataIndex: "actions",
+    //   key: "actions",
+    //   render: eachKey => (
+    //     <span>
+    //       <Icon
+    //         type="edit"
+    //         style={{
+    //           fontSize: "20px",
+
+    //           cursor: "pointer",
+    //           paddingRight: "5px"
+    //         }}
+    //         onClick={() => this.onEditRow(eachKey.id)}
+    //       />
+    //       {eachKey.active ? (
+    //         <Popconfirm
+    //           title="Are you sure deActivate this Company?"
+    //           onConfirm={() => this.onActivateDeActivate(eachKey.id)}
+    //           okText="Yes"
+    //           cancelText="No"
+    //         >
+    //           <Tooltip placement="top" title="DeActivate">
+    //             <Icon
+    //               type="eye"
+    //               style={{
+    //                 paddingRight: "5px",
+    //                 fontSize: "20px",
+    //                 cursor: "pointer"
+    //               }}
+    //               // onClick={() => this.onDeleteRow()}
+    //             />
+    //           </Tooltip>
+    //         </Popconfirm>
+    //       ) : (
+    //         <Tooltip placement="top" title="Activate">
+    //           <Icon
+    //             type="eye-invisible"
+    //             style={{
+    //               paddingRight: "5px",
+    //               fontSize: "20px",
+    //               cursor: "pointer"
+    //             }}
+    //             onClick={() => this.onActivateDeActivate(eachKey.id)}
+    //           />
+    //         </Tooltip>
+    //       )}
+
+    //       <Tooltip placement="top" title="Corporate Applications">
+    //         <Icon
+    //           type="file-add"
+    //           style={{ fontSize: "20px", cursor: "pointer" }}
+    //         />
+    //       </Tooltip>
+    //     </span>
+    //   )
+    // }
   ];
 
   render() {
@@ -293,6 +298,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
+      onViewCompanies,
       // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
       onAddCorporate,
       onUpdateCorporate

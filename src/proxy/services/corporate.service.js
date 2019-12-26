@@ -1,14 +1,12 @@
 import { BASE_URL } from "../../http-client/constants";
-import { UserLoginModel } from "../../proxy";
 
 import axios from "axios";
 
-export class AuthProxyService {
-  async login(user: UserLoginModel) {
+export class CorporateService {
+  async get() {
     return await axios({
-      method: "post",
-      url: `${BASE_URL}auth/login`,
-      data: user,
+      method: "get",
+      url: `${BASE_URL}corporates/get`,
       config: {
         headers: {
           "Access-Control-Allow-Origin": "*",

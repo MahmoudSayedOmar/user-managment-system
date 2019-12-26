@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Modal, Upload, Button, Icon } from "antd";
+import { Form, Input, Modal, Upload, Button, Icon, Radio } from "antd";
 // const Option = Select.Option;
 
 const FormItem = Form.Item;
@@ -49,46 +49,40 @@ export default Form.create()(
           {getFieldDecorator("key")(<Input type="hidden" />)}
           {getFieldDecorator("corporateActive")(<Input type="hidden" />)}
 
-          <FormItem {...formItemLayout} label="Corporate Name">
-            {getFieldDecorator("corporateName", {
-              rules: [
-                { required: true, message: "Please Write Corporate Name!" }
-              ]
-            })(<Input placeholder="Corporate Name" />)}
+          <FormItem {...formItemLayout} label="First Name">
+            {getFieldDecorator("userFirstName", {
+              rules: [{ required: true, message: "Please Write First Name!" }]
+            })(<Input placeholder="First Name" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="Country">
-            {getFieldDecorator("corporateCountry", {
-              rules: [
-                { required: true, message: "Please Write Corporate Country!" }
-              ]
-            })(<Input placeholder="Corporate Country" />)}
+          <FormItem {...formItemLayout} label="Middle Name">
+            {getFieldDecorator("userMiddletName", {
+              rules: [{ required: true, message: "Please Write Middle Name!" }]
+            })(<Input placeholder="Middle Name" />)}
           </FormItem>
 
-          <FormItem {...formItemLayout} label="City">
-            {getFieldDecorator("corporateCity", {
-              rules: [
-                { required: true, message: "Please Write Corporate City!" }
-              ]
-            })(<Input placeholder="Corporate City" />)}
+          <FormItem {...formItemLayout} label="Last Name">
+            {getFieldDecorator("userLastName", {
+              rules: [{ required: true, message: "Please Write Last Name!" }]
+            })(<Input placeholder="Last Name " />)}
           </FormItem>
 
-          <FormItem {...formItemLayout} label="Address">
-            {getFieldDecorator("corporateAddress", {
+          <FormItem {...formItemLayout} label="Email-Address">
+            {getFieldDecorator("userEmail", {
               rules: [
-                { required: true, message: "Please Write Corporate Address!" }
+                {
+                  type: "email",
+                  message: "The input is not valid E-mail!"
+                },
+                {
+                  required: true,
+                  message: "Please input your E-mail!"
+                }
               ]
-            })(<Input placeholder="Corporate Address" />)}
+            })(<Input placeholder="E-mail Address" />)}
           </FormItem>
-          <Form.Item {...formItemLayout} label="Posal Code">
-            {getFieldDecorator("corporatePostalCode", {
-              rules: [
-                { required: true, message: "Please input your postal code!" },
-                { validator: onlyNumbers }
-              ]
-            })(<Input placeholder="Postal Code" />)}
-          </Form.Item>
-          <Form.Item {...formItemLayout} label="Phone Number">
-            {getFieldDecorator("corporatePhoneNumber", {
+
+          <Form.Item {...formItemLayout} label="Mobile Number">
+            {getFieldDecorator("userMobile", {
               rules: [
                 { required: true, message: "Please Enter Phone Number!" },
                 { validator: onlyNumbers }
@@ -96,14 +90,15 @@ export default Form.create()(
             })(<Input placeholder="Phone Number" />)}
           </Form.Item>
           <FormItem {...formItemLayout} label="Compnay #Reg.">
-            {getFieldDecorator("corporateRegisterationNumber", {
-              rules: [
-                {
-                  required: true,
-                  message: "Please Enter Corporate Registeration Number!"
-                }
-              ]
-            })(<Input placeholder="Registeration Number" />)}
+            {getFieldDecorator("userGender", {
+              rules: [{ required: true, message: "Please Choose a Gender" }]
+            })(
+              <Radio.Group>
+                <Radio value="male">male</Radio>
+                <Radio value="female">female</Radio>
+                <Radio value="c">item 3</Radio>
+              </Radio.Group>
+            )}
           </FormItem>
           <Form.Item {...formItemLayout} label="Upload">
             {getFieldDecorator("upload", {

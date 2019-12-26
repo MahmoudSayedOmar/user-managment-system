@@ -29,14 +29,14 @@ import { onAddCorporate, onUpdateCorporate } from "State/Layout/action-creator";
 // core components
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
 import "./Users.css";
-import AddCorpoateForm from "./AddCorpoateForm.js";
+import AddUserForm from "./AddUserForm.js";
 
 class Users extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      showAddCorporateModal: false,
+      showAddUserModal: true,
       modalTitle: "Add Corporate"
     };
   }
@@ -44,9 +44,9 @@ class Users extends React.Component {
   onEditRow = id => {
     const toEditCorporate = this.props.allCompanies.find(i => i.key === id);
 
-    // this.refs.addCorporateForm.setFieldsValue(toEditCorporate);
+    // this.refs.addUserForm.setFieldsValue(toEditCorporate);
     this.setState({ modalTitle: "Edit " + toEditCorporate.corporateName });
-    this.refs.addCorporateForm.setFieldsValue({
+    this.refs.addUserForm.setFieldsValue({
       key: toEditCorporate.key,
       corporateName: toEditCorporate.corporateName,
       corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
@@ -60,7 +60,7 @@ class Users extends React.Component {
     });
 
     this.setState({
-      showAddCorporateModal: true
+      showAddUserModal: true
     });
   };
   onActivateDeActivate = id => {
@@ -86,12 +86,12 @@ class Users extends React.Component {
     });
   };
 
-  onAddCorporateModal = () => {
+  onAddUserModal = () => {
     console.log("we are here");
     // let pluginChoosen = this.props.vsPlugin || "";
 
-    this.refs.addCorporateForm.resetFields();
-    this.refs.addCorporateForm.setFieldsValue({
+    this.refs.addUserForm.resetFields();
+    this.refs.addUserForm.setFieldsValue({
       // plugins: pluginChoosen.plugins,
       // chunkSize: pluginChoosen.chunkSize,
       // stitch_plugin: pluginChoosen.stitch_plugin,
@@ -102,13 +102,13 @@ class Users extends React.Component {
 
     this.setState({
       modalTitle: "Add User",
-      showAddCorporateModal: true
+      showAddUserModal: true
     });
   };
   onCancelSettingsModal = () => {
     this.setState({
       modalTitle: "Add User",
-      showAddCorporateModal: false
+      showAddUserModal: false
     });
   };
   onAddCorporate = values => {
@@ -139,7 +139,7 @@ class Users extends React.Component {
       });
     }
 
-    this.refs.addCorporateForm.resetFields();
+    this.refs.addUserForm.resetFields();
     // this.props.onAddSettingsPlugin({
     //   plugins: plugin.plugins,
     //   stitch_plugin: plugin.stitch_plugin,
@@ -150,21 +150,11 @@ class Users extends React.Component {
     // });
 
     this.setState({
-      showAddCorporateModal: false
+      showAddUserModal: false
     });
   };
 
   columns = [
-    {
-      title: "",
-      dataIndex: "",
-      key: "",
-      render: () => {
-        for (var i = 1; i <= this.props.allUsers.length; i++) {
-          return <span>{i}</span>;
-        }
-      }
-    },
     {
       title: "Name",
       dataIndex: "userFirstName",
@@ -268,7 +258,7 @@ class Users extends React.Component {
                       <Button
                         type="primary"
                         size="small"
-                        onClick={() => this.onAddCorporateModal()}
+                        onClick={() => this.onAddUserModal()}
                       >
                         Add User
                       </Button>
@@ -286,12 +276,12 @@ class Users extends React.Component {
             </Col>
           </Row>
           {/* <FixedPlugin />  this is for search when be*/}
-          <AddCorpoateForm
+          <AddUserForm
             title={this.state.modalTitle}
             onCancel={this.onCancelSettingsModal}
             onOk={this.onAddCorporate}
-            visible={this.state.showAddCorporateModal}
-            ref="addCorporateForm"
+            visible={this.state.showAddUserModal}
+            ref="addUserForm"
             media={this.props.medias}
             plugins={this.props.plugins}
           />

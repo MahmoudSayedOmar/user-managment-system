@@ -25,11 +25,14 @@ import { Button, Table, Popconfirm, Tooltip, Icon } from "antd";
 
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { onAddCorporate, onUpdateCorporate } from "State/Layout/action-creator";
+import {
+  onAddCorporate,
+  onUpdateCorporate
+} from "State/Corporates/action-creator";
 // core components
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
 import "./Corporate.css";
-import AddCorpoateForm from "./AddCorpoateForm.js";
+import AddCorpoateForm from "./AddCorpoateForm";
 
 class Corporate extends React.Component {
   constructor(props) {
@@ -63,6 +66,7 @@ class Corporate extends React.Component {
       showAddCorporateModal: true
     });
   };
+
   onActivateDeActivate = id => {
     // console.log("we are here id");
     console.log(id, "delete id");
@@ -105,49 +109,43 @@ class Corporate extends React.Component {
       showAddCorporateModal: true
     });
   };
+
   onCancelSettingsModal = () => {
     this.setState({
       modalTitle: "Add Corporate",
       showAddCorporateModal: false
     });
   };
+
   onAddCorporate = values => {
     console.log(values, "values");
     if (values.key && values.key !== "") {
       this.props.onUpdateCorporate({
-        key: values.key,
-        corporateName: values.corporateName,
-        corporatePhoneNumber: values.corporatePhoneNumber,
-        corporateAddress: values.corporateAddress,
-        corporateCountry: values.corporateCountry,
-        corporateCity: values.corporateCity,
-        corporatePostalCode: values.corporatePostalCode,
-        corporateRegisterationNumber: values.corporateRegisterationNumber,
+        id: values.key,
+        name: values.corporateName,
+        phoneNo: values.corporatePhoneNumber,
+        address: values.corporateAddress,
+        country: values.corporateCountry,
+        city: values.corporateCity,
+        zip: values.corporatePostalCode,
+        registerationNo: values.corporateRegisterationNumber,
         actions: { id: values.key, active: values.corporateActive }
       });
     } else {
       this.props.onAddCorporate({
-        key: this.props.allCompanies.length + 1,
-        corporateName: values.corporateName,
-        corporatePhoneNumber: values.corporatePhoneNumber,
-        corporateAddress: values.corporateAddress,
-        corporateCountry: values.corporateCountry,
-        corporateCity: values.corporateCity,
-        corporatePostalCode: values.corporatePostalCode,
-        corporateRegisterationNumber: values.corporateRegisterationNumber,
+        id: this.props.allCompanies.length + 1,
+        name: values.corporateName,
+        phoneNo: values.corporatePhoneNumber,
+        address: values.corporateAddress,
+        country: values.corporateCountry,
+        city: values.corporateCity,
+        zip: values.corporatePostalCode,
+        registerationNo: values.corporateRegisterationNumber,
         actions: { id: this.props.allCompanies.length + 1, active: false }
       });
     }
 
     this.refs.addCorporateForm.resetFields();
-    // this.props.onAddSettingsPlugin({
-    //   plugins: plugin.plugins,
-    //   stitch_plugin: plugin.stitch_plugin,
-    //   chunkSize: plugin.chunkSize,
-    //   memory: plugin.memory,
-    //   gpu_memory: plugin.gpu_memory,
-    //   compress: plugin.compress
-    // });
 
     this.setState({
       showAddCorporateModal: false
@@ -156,33 +154,26 @@ class Corporate extends React.Component {
 
   columns = [
     {
-      title: "corporate Name",
-      dataIndex: "corporateName",
-      key: "corporateName"
+      title: "Corporate Name",
+      dataIndex: "name",
+      key: "name"
     },
     {
       title: "Country - City",
-      dataIndex: "corporateCountry",
-      key: "corporateCountry",
-      render: (country, row) => (
-        <span>{country + " - " + row.corporateCity}</span>
-      )
+      dataIndex: "country",
+      key: "country",
+      render: (country, row) => <span>{country + " - " + row.city}</span>
     },
-    // {
-    //   title: "corporate City",
-    //   dataIndex: "corporateCity",
-    //   key: "corporateCity"
-    // },
     {
       title: "Phone",
-      dataIndex: "corporatePhoneNumber",
-      key: "corporatePhoneNumber"
+      dataIndex: "phoneNo",
+      key: "phoneNo"
     },
 
     {
       title: "Address",
-      key: "corporateAddress",
-      dataIndex: "corporateAddress"
+      key: "address",
+      dataIndex: "address"
     },
 
     {
@@ -244,8 +235,8 @@ class Corporate extends React.Component {
       )
     }
   ];
+
   render() {
-    // console.log(this.props.allCompanies.length, "all compannies");
     return (
       <>
         <div className="content">
@@ -266,6 +257,7 @@ class Corporate extends React.Component {
                   </div>
                   <div className="eachCompnentButtonSection">
                     <Table
+                      rowKey="id"
                       columns={this.columns}
                       dataSource={this.props.allCompanies}
                       pagination={false}

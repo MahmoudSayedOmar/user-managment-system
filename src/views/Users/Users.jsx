@@ -25,7 +25,10 @@ import { Button, Table, Popconfirm, Tooltip, Icon } from "antd";
 
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { onAddCorporate, onUpdateCorporate } from "State/Layout/action-creator";
+import {
+  onAddCorporate,
+  onUpdateCorporate
+} from "State/Corporates/action-creator";
 // core components
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
 import "./Users.css";

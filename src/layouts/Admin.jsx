@@ -26,7 +26,6 @@ import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
 import routes from "routes.js";
-// import * as actions from "../State/Layout/actions";
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 

@@ -1,8 +1,8 @@
 // import { handleActions } from "redux-actions";
 
-import * as actions from "./action-creator.js";
-import * as types from "./actions.js";
-import { companiesInitialState, companiesState } from "./state.js";
+import * as actions from "./action-creator";
+import * as types from "./actions";
+import { companiesInitialState, companiesState } from "./state";
 
 // types is your main object under state, so when call it will be state.types.company
 

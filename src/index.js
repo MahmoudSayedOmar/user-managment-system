@@ -31,7 +31,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss?v=1.1.0";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import {LoginScreen} from "./Screens/login-screen"
+import { LoginScreen } from "./views/login-screen";
 import AdminLayout from "layouts/Admin.jsx";
 import { combinedReducer } from "./State/reducer";
 import "antd/dist/antd.css";

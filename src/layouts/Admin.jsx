@@ -25,13 +25,10 @@ import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
-import { onShowCompnay } from "../State/Layout/action-creator";
-
 import routes from "routes.js";
 // import * as actions from "../State/Layout/actions";
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { formatCountdown } from "antd/lib/statistic/utils";
 
 var ps;
 
@@ -42,10 +39,6 @@ class Dashboard extends React.Component {
     this.mainPanel = React.createRef();
   }
   componentDidMount() {
-    this.props.onShowCompnay({
-      companyName: "sharbat",
-      companyTel: "434534534543"
-    });
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
       document.body.classList.toggle("perfect-scrollbar-on");
@@ -87,16 +80,16 @@ class Dashboard extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.company, "company");
+  // console.log(state.companies, "company");
   return {
-    homeData: state.company
+    homeData: state.companies
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
-      onShowCompnay //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
+      // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
     },
     dispatch
   );

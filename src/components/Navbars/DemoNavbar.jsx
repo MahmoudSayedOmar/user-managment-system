@@ -22,20 +22,14 @@ import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
-  NavItem,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Container,
-  InputGroup,
-  InputGroupText,
-  InputGroupAddon,
-  Input
+  Container
 } from "reactstrap";
-import { NavLink } from "react-router-dom";
+
 import routes from "routes.js";
 
 class Header extends React.Component {
@@ -139,7 +133,9 @@ class Header extends React.Component {
                 <span className="navbar-toggler-bar bar3" />
               </button>
             </div>
-            {this.getBrand()}
+            <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+              {this.getBrand()}
+            </span>
           </div>
           <NavbarToggler onClick={this.toggle}>
             <span className="navbar-toggler-bar navbar-kebab" />

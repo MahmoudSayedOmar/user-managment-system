@@ -28,10 +28,10 @@ import { connect } from "react-redux";
 import { onAddCorporate, onUpdateCorporate } from "State/Layout/action-creator";
 // core components
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
-import "./Corporate.css";
+import "./Users.css";
 import AddCorpoateForm from "./AddCorpoateForm.js";
 
-class Corporate extends React.Component {
+class Users extends React.Component {
   constructor(props) {
     super(props);
 
@@ -101,13 +101,13 @@ class Corporate extends React.Component {
     });
 
     this.setState({
-      modalTitle: "Add Corporate",
+      modalTitle: "Add User",
       showAddCorporateModal: true
     });
   };
   onCancelSettingsModal = () => {
     this.setState({
-      modalTitle: "Add Corporate",
+      modalTitle: "Add User",
       showAddCorporateModal: false
     });
   };
@@ -156,27 +156,37 @@ class Corporate extends React.Component {
 
   columns = [
     {
-      title: "corporate Name",
-      dataIndex: "corporateName",
-      key: "corporateName"
+      title: "",
+      dataIndex: "",
+      key: "",
+      render: () => {
+        for (var i = 1; i <= this.props.allUsers.length; i++) {
+          return <span>{i}</span>;
+        }
+      }
     },
     {
-      title: "Country - City",
-      dataIndex: "corporateCountry",
-      key: "corporateCountry",
-      render: (country, row) => (
-        <span>{country + " - " + row.corporateCity}</span>
-      )
+      title: "Name",
+      dataIndex: "userFirstName",
+      key: "userFirstName",
+      render: (userFirstName, row) => {
+        return (
+          <span>
+            {userFirstName + " " + row.userMiddleName + " " + row.userLastName}
+          </span>
+        );
+      }
     },
-    // {
-    //   title: "corporate City",
-    //   dataIndex: "corporateCity",
-    //   key: "corporateCity"
-    // },
     {
-      title: "Phone",
-      dataIndex: "corporatePhoneNumber",
-      key: "corporatePhoneNumber"
+      title: "E-mail",
+      dataIndex: "userEmail",
+      key: "userEmail"
+    },
+
+    {
+      title: "Mobile",
+      dataIndex: "userMobile",
+      key: "userMobile"
     },
 
     {
@@ -260,14 +270,14 @@ class Corporate extends React.Component {
                         size="small"
                         onClick={() => this.onAddCorporateModal()}
                       >
-                        Add Corporate
+                        Add User
                       </Button>
                     </div>
                   </div>
                   <div className="eachCompnentButtonSection">
                     <Table
                       columns={this.columns}
-                      dataSource={this.props.allCompanies}
+                      dataSource={this.props.allUsers}
                       pagination={false}
                     />
                   </div>
@@ -292,8 +302,9 @@ class Corporate extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.companies.companies, "company");
+  console.log(state.users.users, "users");
   return {
+    allUsers: state.users.users,
     allCompanies: state.companies.companies
   };
 }
@@ -309,4 +320,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Corporate);
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

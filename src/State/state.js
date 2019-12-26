@@ -1,5 +1,7 @@
 import { companiesInitialState } from "./Layout/state";
+import { usersInitialState } from "./Users/state";
 
 export const initialState = {
-  companies: companiesInitialState
+  companies: companiesInitialState,
+  users: usersInitialState
 };

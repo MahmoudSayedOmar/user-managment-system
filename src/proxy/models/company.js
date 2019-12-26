@@ -1,5 +1,5 @@
 export interface CompaniesModel {
-  id: String;
+  key: String;
   corporateName: String;
   corporateCountry: String;
   corporateCity: String;

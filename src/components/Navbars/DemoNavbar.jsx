@@ -133,7 +133,9 @@ class Header extends React.Component {
                 <span className="navbar-toggler-bar bar3" />
               </button>
             </div>
-            {this.getBrand()}
+            <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+              {this.getBrand()}
+            </span>
           </div>
           <NavbarToggler onClick={this.toggle}>
             <span className="navbar-toggler-bar navbar-kebab" />

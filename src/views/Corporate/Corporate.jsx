@@ -266,6 +266,7 @@ class Corporate extends React.Component {
                   </div>
                   <div className="eachCompnentButtonSection">
                     <Table
+                      key="key"
                       columns={this.columns}
                       dataSource={this.props.allCompanies}
                       pagination={false}

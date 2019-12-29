@@ -1,7 +1,16 @@
 import React from "react";
-import { Form, Input, Modal, Upload, Button, Icon, Radio } from "antd";
+import {
+  Form,
+  Input,
+  Modal,
+  Upload,
+  Button,
+  Icon,
+  Radio,
+  DatePicker
+} from "antd";
 // const Option = Select.Option;
-
+import moment from "moment";
 const FormItem = Form.Item;
 
 export default Form.create()(
@@ -14,8 +23,9 @@ export default Form.create()(
 
     onOk = () => {
       this.props.form.validateFields((err, values) => {
+        console.log(values, "values");
         if (!err) {
-          this.props.onOk(values);
+          // this.props.onOk(values);
         }
       });
     };
@@ -54,6 +64,7 @@ export default Form.create()(
               rules: [{ required: true, message: "Please Write First Name!" }]
             })(<Input placeholder="First Name" />)}
           </FormItem>
+
           <FormItem {...formItemLayout} label="Middle Name">
             {getFieldDecorator("userMiddletName", {
               rules: [{ required: true, message: "Please Write Middle Name!" }]
@@ -64,6 +75,24 @@ export default Form.create()(
             {getFieldDecorator("userLastName", {
               rules: [{ required: true, message: "Please Write Last Name!" }]
             })(<Input placeholder="Last Name " />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Date Of Birth">
+            {getFieldDecorator("userDOB", {
+              rules: [
+                { required: true, message: "Please Choose a date of birth" }
+              ]
+            })(<DatePicker defaultValue={moment()} format="DD/MM/YYYY" />)}
+          </FormItem>
+
+          <FormItem {...formItemLayout} label="Gender">
+            {getFieldDecorator("userGender", {
+              rules: [{ required: true, message: "Please Choose a Gender" }]
+            })(
+              <Radio.Group>
+                <Radio value="male">male</Radio>
+                <Radio value="female">female</Radio>
+              </Radio.Group>
+            )}
           </FormItem>
 
           <FormItem {...formItemLayout} label="Email-Address">
@@ -89,24 +118,27 @@ export default Form.create()(
               ]
             })(<Input placeholder="Phone Number" />)}
           </Form.Item>
-          <FormItem {...formItemLayout} label="Compnay #Reg.">
-            {getFieldDecorator("userGender", {
-              rules: [{ required: true, message: "Please Choose a Gender" }]
+
+          <FormItem {...formItemLayout} label="Validation By">
+            {getFieldDecorator("userGeuserValidationTypender", {
+              rules: [
+                { required: true, message: "Please choose validation Type" }
+              ]
             })(
               <Radio.Group>
-                <Radio value="male">male</Radio>
-                <Radio value="female">female</Radio>
-                <Radio value="c">item 3</Radio>
+                <Radio value="sms">SMS</Radio>
+                <Radio value="mail">E-Mail</Radio>
               </Radio.Group>
             )}
           </FormItem>
-          <Form.Item {...formItemLayout} label="Upload">
+
+          <Form.Item {...formItemLayout} label="Photo">
             {getFieldDecorator("upload", {
               // rules: [{ required: true }],
               valuePropName: "fileList",
               getValueFromEvent: this.normFile
             })(
-              <Upload name="logo" action="/upload.do" listType="picture">
+              <Upload name="userPhoto" action="/upload.do" listType="picture">
                 <Button>
                   <Icon type="upload" /> Click to upload
                 </Button>

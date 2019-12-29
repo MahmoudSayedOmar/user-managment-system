@@ -1,5 +1,5 @@
 import * as types from "./actions";
-import { corporateService } from '../../proxy/services'
+import { corporateService } from "../../proxy/services";
 
 export type ON_VIEW_COMPANIES_ACTION = { type: String };
 export type ON_VIEW_COMPANIES_SUCCESS_ACTION = { type: String, payload: any };
@@ -12,6 +12,14 @@ export type ON_ADD_COMPANY_FAIL_ACTION = { type: String, payload: any };
 export type ON_UPDATE_COMPANY_ACTION = { type: String };
 export type ON_UPDATE_COMPANY_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_UPDATE_COMPANY_FAIL_ACTION = { type: String, payload: any };
+
+export type ON_VIEW_APPLICATION_ACTION = { type: String };
+export type ON_VIEW_APPLICATION_SUCCESS_ACTION = { type: String, payload: any };
+export type ON_VIEW_APPLICATION_FAIL_ACTION = { type: String, payload: any };
+
+export type ON_ADD_APPLICATION_ACTION = { type: String, payload: any };
+export type ON_ADD_APPLICATION_SUCCESS_ACTION = { type: String, payload: any };
+export type ON_ADD_APPLICATION_FAIL_ACTION = { type: String, payload: any };
 
 // export async function onShowCompanies() {
 //   return async dispatch => {
@@ -58,7 +66,7 @@ export async function onViewCompanies(): ON_VIEW_COMPANIES_ACTION {
       dispatch(onViewCompaniesFail());
     }
     // console.log(json)
-  }
+  };
 }
 export function onViewCompaniesSuccess(
   companies: CompaniesModel
@@ -103,4 +111,33 @@ export function onUpdateCompnayFail(): ON_UPDATE_COMPANY_FAIL_ACTION {
     type: types.ON_UPDATE_COMPANY_FAIL,
     payload: "connection error"
   };
+}
+
+export function onViewApplicationsSuccess(
+  applications: any
+): ON_VIEW_APPLICATION_SUCCESS_ACTION {
+  return {
+    type: types.ON_VIEW_SUCCESS_APPLICATIONS_BY_CORPORATE_ID,
+    payload: applications
+  };
+}
+
+export function onViewApplicationsFail(): ON_VIEW_APPLICATION_FAIL_ACTION {
+  return {
+    type: types.ON_VIEW_SUCCESS_APPLICATIONS_BY_CORPORATE_ID,
+    payload: "Faild to load All application"
+  };
+}
+
+export function onAddApplication(application: any): ON_ADD_APPLICATION_ACTION {
+  return { type: types.ON_ADD_Application_ACTION, payload: application };
+}
+
+export function onAddApplicationSuccess(): ON_ADD_APPLICATION_SUCCESS_ACTION {
+  const success = "Application  Added Successfuly";
+  return { type: types.ON_ADD_Application_ACTION, payload: success };
+}
+export function onAddApplicationFail(): ON_ADD_APPLICATION_FAIL_ACTION {
+  const errorMessage = "Faild To add";
+  return { type: types.ON_ADD_Application_ACTION, payload: errorMessage };
 }

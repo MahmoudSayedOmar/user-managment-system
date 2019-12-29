@@ -8,4 +8,15 @@ export class CompaniesDto {
   corporatePostalCode: String;
   corporateRegisterationNumber: String;
   actions: Object;
+  applications: Application[];
+}
+
+export class Module {
+  name: String;
+}
+export class Application {
+  name: String;
+  corporateId: Number;
+  baseAPPId: Number;
+  modules: Module[];
 }

@@ -7,10 +7,10 @@ import {
   Button,
   Icon,
   Radio,
-  DatePicker
+  DatePicker,
+  Select
 } from "antd";
-// const Option = Select.Option;
-import moment from "moment";
+
 const FormItem = Form.Item;
 
 export default Form.create()(
@@ -23,9 +23,9 @@ export default Form.create()(
 
     onOk = () => {
       this.props.form.validateFields((err, values) => {
-        console.log(values, "values");
+        // console.log(values, "values");
         if (!err) {
-          // this.props.onOk(values);
+          this.props.onOk(values);
         }
       });
     };
@@ -37,7 +37,8 @@ export default Form.create()(
       return e && e.fileList;
     };
     render() {
-      const { getFieldDecorator } = this.props.form;
+      const Option = Select.Option;
+      const { getFieldDecorator, getFieldValue } = this.props.form;
       const formItemLayout = {
         labelCol: { span: 8 },
         wrapperCol: { span: 15 }
@@ -56,36 +57,36 @@ export default Form.create()(
       };
       let FormItems = (
         <Form>
-          {getFieldDecorator("key")(<Input type="hidden" />)}
-          {getFieldDecorator("corporateActive")(<Input type="hidden" />)}
-
+          <FormItem style={{ display: "none" }}>
+            {getFieldDecorator("id")(<Input type="hidden" />)}
+          </FormItem>
           <FormItem {...formItemLayout} label="First Name">
-            {getFieldDecorator("userFirstName", {
+            {getFieldDecorator("fName", {
               rules: [{ required: true, message: "Please Write First Name!" }]
             })(<Input placeholder="First Name" />)}
           </FormItem>
-
           <FormItem {...formItemLayout} label="Middle Name">
-            {getFieldDecorator("userMiddletName", {
+            {getFieldDecorator("mName", {
               rules: [{ required: true, message: "Please Write Middle Name!" }]
             })(<Input placeholder="Middle Name" />)}
           </FormItem>
-
           <FormItem {...formItemLayout} label="Last Name">
-            {getFieldDecorator("userLastName", {
+            {getFieldDecorator("lName", {
               rules: [{ required: true, message: "Please Write Last Name!" }]
-            })(<Input placeholder="Last Name " />)}
+            })(<Input placeholder="Last Name" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="Date Of Birth">
-            {getFieldDecorator("userDOB", {
+            {getFieldDecorator("dateOfBirth", {
               rules: [
-                { required: true, message: "Please Choose a date of birth" }
+                {
+                  required: true,
+                  message: "Please Choose a date of birth"
+                }
               ]
-            })(<DatePicker defaultValue={moment()} format="DD/MM/YYYY" />)}
+            })(<DatePicker format="MM/DD/YYYY" />)}
           </FormItem>
-
           <FormItem {...formItemLayout} label="Gender">
-            {getFieldDecorator("userGender", {
+            {getFieldDecorator("sex", {
               rules: [{ required: true, message: "Please Choose a Gender" }]
             })(
               <Radio.Group>
@@ -94,9 +95,8 @@ export default Form.create()(
               </Radio.Group>
             )}
           </FormItem>
-
           <FormItem {...formItemLayout} label="Email-Address">
-            {getFieldDecorator("userEmail", {
+            {getFieldDecorator("email", {
               rules: [
                 {
                   type: "email",
@@ -109,18 +109,16 @@ export default Form.create()(
               ]
             })(<Input placeholder="E-mail Address" />)}
           </FormItem>
-
           <Form.Item {...formItemLayout} label="Mobile Number">
-            {getFieldDecorator("userMobile", {
+            {getFieldDecorator("mobileNumber", {
               rules: [
                 { required: true, message: "Please Enter Phone Number!" },
                 { validator: onlyNumbers }
               ]
-            })(<Input placeholder="Phone Number" />)}
+            })(<Input placeholder="Mobile Number" />)}
           </Form.Item>
-
           <FormItem {...formItemLayout} label="Validation By">
-            {getFieldDecorator("userGeuserValidationTypender", {
+            {getFieldDecorator("validateBy", {
               rules: [
                 { required: true, message: "Please choose validation Type" }
               ]
@@ -131,7 +129,21 @@ export default Form.create()(
               </Radio.Group>
             )}
           </FormItem>
-
+          <Form.Item {...formItemLayout} label="Default Language">
+            {getFieldDecorator("defaultLanguage", {
+              rules: [
+                { required: true, message: "Please select default Language!" }
+              ]
+            })(
+              <Select
+                placeholder="default Language"
+                // onChange={this.handleSelectChange}
+              >
+                <Option value="english">English</Option>
+                <Option value="arabic">Arabic</Option>
+              </Select>
+            )}
+          </Form.Item>
           <Form.Item {...formItemLayout} label="Photo">
             {getFieldDecorator("upload", {
               // rules: [{ required: true }],
@@ -145,6 +157,15 @@ export default Form.create()(
               </Upload>
             )}
           </Form.Item>
+
+          {getFieldValue("imageURL") && getFieldValue("imageURL") !== "" ? (
+            <Form.Item {...formItemLayout}>"image url"</Form.Item>
+          ) : (
+            ""
+          )}
+          <FormItem style={{ display: "none" }}>
+            {getFieldDecorator("imageURL")(<Input type="hidden" />)}
+          </FormItem>
         </Form>
       );
       return (

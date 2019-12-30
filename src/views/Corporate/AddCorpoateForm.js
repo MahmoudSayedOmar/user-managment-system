@@ -46,8 +46,7 @@ export default Form.create()(
       };
       let FormItems = (
         <Form>
-          {getFieldDecorator("key")(<Input type="hidden" />)}
-          {getFieldDecorator("corporateActive")(<Input type="hidden" />)}
+          {getFieldDecorator("id")(<Input type="hidden" />)}
 
           <FormItem {...formItemLayout} label="Corporate Name">
             {getFieldDecorator("corporateName", {

@@ -1,15 +1,15 @@
 export class UsersDto {
-  key: String;
-  userFirstName: String;
-  userMiddleName: String;
-  userLastName: String;
-  userValidationType: String;
-  userEmail: String;
-  userDOB: Date;
+  id: String;
+  fName: String;
+  mName: String;
+  lName: String;
+  validateBy: String;
+  email: String;
+  dateOfBirth: Date;
   userPhoto: String;
-  userGender: String;
-  userMobile: String;
-  userDefaultLanguage: String;
+  sex: String;
+  mobileNumber: String;
+  defaultLanguage: String;
   userTypes: Array;
   userRoles: Array;
   actions: Object;

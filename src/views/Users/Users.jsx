@@ -25,8 +25,9 @@ import { Button, Table, Popconfirm, Tooltip, Icon } from "antd";
 
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { onAddCorporate, onUpdateCorporate } from "State/Layout/action-creator";
+import { onAddUser } from "State/Users/action-creator";
 // core components
+import moment from "moment";
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
 import "./Users.css";
 import AddUserForm from "./AddUserForm.js";
@@ -36,36 +37,39 @@ class Users extends React.Component {
     super(props);
 
     this.state = {
-      showAddUserModal: true,
-      modalTitle: "Add Corporate"
+      showAddUserModal: false,
+      modalTitle: "Add User"
     };
   }
 
   onEditRow = id => {
-    const toEditCorporate = this.props.allCompanies.find(i => i.key === id);
-
-    // this.refs.addUserForm.setFieldsValue(toEditCorporate);
-    this.setState({ modalTitle: "Edit " + toEditCorporate.corporateName });
-    this.refs.addUserForm.setFieldsValue({
-      key: toEditCorporate.key,
-      corporateName: toEditCorporate.corporateName,
-      corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
-      corporateAddress: toEditCorporate.corporateAddress,
-      corporateCountry: toEditCorporate.corporateCountry,
-      corporateCity: toEditCorporate.corporateCity,
-      corporatePostalCode: toEditCorporate.corporatePostalCode,
-      corporateRegisterationNumber:
-        toEditCorporate.corporateRegisterationNumber,
-      corporateActive: toEditCorporate.actions.active
-    });
+    const toEditUser = this.props.allUsers.find(i => i.id === id);
 
     this.setState({
       showAddUserModal: true
     });
+    this.setState({
+      modalTitle: "Edit " + toEditUser.fName + " " + toEditUser.mName
+    });
+    console.log(toEditUser, "toEditUser");
+    this.refs.addUserForm.setFieldsValue({
+      //  ...toEditUser,
+      id: toEditUser.i,
+      fName: toEditUser.fName,
+      mName: toEditUser.mName,
+      lName: toEditUser.lName,
+      validateBy: toEditUser.validateBy,
+      email: toEditUser.email,
+      dateOfBirth: moment(toEditUser.dateOfBirth),
+      imageURL: toEditUser.photo,
+      sex: toEditUser.sex,
+      mobileNumber: toEditUser.mobileNumber,
+      defaultLanguage: toEditUser.defaultLanguage
+    });
   };
   onActivateDeActivate = id => {
     // console.log("we are here id");
-    console.log(id, "delete id");
+    // console.log(id, "delete id");
     const toEditCorporate = this.props.allCompanies.find(i => i.key === id);
     console.log(toEditCorporate.actions.active, "editable one");
 
@@ -87,21 +91,8 @@ class Users extends React.Component {
   };
 
   onAddUserModal = () => {
-    console.log("we are here");
-    // let pluginChoosen = this.props.vsPlugin || "";
-
     this.refs.addUserForm.resetFields();
-    this.refs.addUserForm.setFieldsValue({
-      // plugins: pluginChoosen.plugins,
-      // chunkSize: pluginChoosen.chunkSize,
-      // stitch_plugin: pluginChoosen.stitch_plugin,
-      // memory: pluginChoosen.memory,
-      // gpu_memory: pluginChoosen.gpu_memory,
-      // compress: pluginChoosen.compress
-    });
-
     this.setState({
-      modalTitle: "Add User",
       showAddUserModal: true
     });
   };
@@ -111,44 +102,46 @@ class Users extends React.Component {
       showAddUserModal: false
     });
   };
-  onAddCorporate = values => {
+  onAddUser = values => {
+    // moment.unix(media._source.plugin_output.time_max).format("hh:mm:ss a");
+    let dateOfBirth = moment(values.dateOfBirth).format("MM/DD/YYYY");
+    console.log(moment(values.dateOfBirth).format("MM/DD/YYYY"), "values");
+    // moment(value).unix()
     console.log(values, "values");
     if (values.key && values.key !== "") {
       this.props.onUpdateCorporate({
-        key: values.key,
-        corporateName: values.corporateName,
-        corporatePhoneNumber: values.corporatePhoneNumber,
-        corporateAddress: values.corporateAddress,
-        corporateCountry: values.corporateCountry,
-        corporateCity: values.corporateCity,
-        corporatePostalCode: values.corporatePostalCode,
-        corporateRegisterationNumber: values.corporateRegisterationNumber,
-        actions: { id: values.key, active: values.corporateActive }
+        id: values.id,
+        fName: values.fName,
+        mName: values.mName,
+        lName: values.lName,
+        email: values.email,
+        dateOfBirth: dateOfBirth,
+        sex: values.sex,
+        mobileNumber: values.mobileNumber,
+        defaultLanguage: values.defaultLanguage,
+        validateBy: values.validateBy,
+        photo: values.photo,
+        actions: { id: values.id, active: values.corporateActive }
       });
     } else {
-      this.props.onAddCorporate({
-        key: this.props.allCompanies.length + 1,
-        corporateName: values.corporateName,
-        corporatePhoneNumber: values.corporatePhoneNumber,
-        corporateAddress: values.corporateAddress,
-        corporateCountry: values.corporateCountry,
-        corporateCity: values.corporateCity,
-        corporatePostalCode: values.corporatePostalCode,
-        corporateRegisterationNumber: values.corporateRegisterationNumber,
-        actions: { id: this.props.allCompanies.length + 1, active: false }
+      this.props.onAddUser({
+        id: this.props.allUsers.length + 1,
+        fName: values.fName,
+        mName: values.mName,
+        lName: values.lName,
+        email: values.email,
+        // dateOfBirth: moment(values.dateOfBirth).format("MM/DD/YYYY"),
+        dateOfBirth: dateOfBirth,
+        sex: values.sex,
+        mobileNumber: values.mobileNumber,
+        defaultLanguage: values.defaultLanguage,
+        validateBy: values.validateBy,
+        photo: values.photo,
+        actions: { id: this.props.allUsers.length + 1, active: false }
       });
     }
 
     this.refs.addUserForm.resetFields();
-    // this.props.onAddSettingsPlugin({
-    //   plugins: plugin.plugins,
-    //   stitch_plugin: plugin.stitch_plugin,
-    //   chunkSize: plugin.chunkSize,
-    //   memory: plugin.memory,
-    //   gpu_memory: plugin.gpu_memory,
-    //   compress: plugin.compress
-    // });
-
     this.setState({
       showAddUserModal: false
     });
@@ -157,32 +150,22 @@ class Users extends React.Component {
   columns = [
     {
       title: "Name",
-      dataIndex: "userFirstName",
-      key: "userFirstName",
-      render: (userFirstName, row) => {
-        return (
-          <span>
-            {userFirstName + " " + row.userMiddleName + " " + row.userLastName}
-          </span>
-        );
+      dataIndex: "fName",
+      key: "fName",
+      render: (fName, row) => {
+        return <span>{fName + " " + row.mName + " " + row.lName}</span>;
       }
     },
     {
       title: "E-mail",
-      dataIndex: "userEmail",
-      key: "userEmail"
+      dataIndex: "email",
+      key: "email"
     },
 
     {
       title: "Mobile",
-      dataIndex: "userMobile",
-      key: "userMobile"
-    },
-
-    {
-      title: "Address",
-      key: "corporateAddress",
-      dataIndex: "corporateAddress"
+      dataIndex: "mobileNumber",
+      key: "mobileNumber"
     },
 
     {
@@ -233,19 +216,14 @@ class Users extends React.Component {
               />
             </Tooltip>
           )}
-
-          <Tooltip placement="top" title="Corporate Applications">
-            <Icon
-              type="file-add"
-              style={{ fontSize: "20px", cursor: "pointer" }}
-            />
-          </Tooltip>
         </span>
       )
     }
   ];
   render() {
     // console.log(this.props.allCompanies.length, "all compannies");
+    // console.log(moment("01/01/2019").format());
+
     return (
       <>
         <div className="content">
@@ -266,6 +244,7 @@ class Users extends React.Component {
                   </div>
                   <div className="eachCompnentButtonSection">
                     <Table
+                      rowKey="id"
                       columns={this.columns}
                       dataSource={this.props.allUsers}
                       pagination={false}
@@ -279,7 +258,7 @@ class Users extends React.Component {
           <AddUserForm
             title={this.state.modalTitle}
             onCancel={this.onCancelSettingsModal}
-            onOk={this.onAddCorporate}
+            onOk={this.onAddUser}
             visible={this.state.showAddUserModal}
             ref="addUserForm"
             media={this.props.medias}
@@ -303,8 +282,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
       // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
-      onAddCorporate,
-      onUpdateCorporate
+      onAddUser
+      // onUpdateCorporate
     },
     dispatch
   );

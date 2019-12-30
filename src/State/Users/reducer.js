@@ -9,7 +9,10 @@ import { usersInitialState, usersState } from "./state.js";
 type Action =
   | actions.ON_VIEW_USERS_ACTION
   | actions.ON_VIEW_USERS_SUCCESS_ACTION
-  | actions.ON_VIEW_USERS_FAIL_ACTION;
+  | actions.ON_VIEW_USERS_FAIL_ACTION
+  | actions.ON_ADD_USERS_FAIL_ACTION
+  | actions.ON_ADD_USERS_FAIL_ACTION
+  | actions.ON_ADD_USERS_FAIL_ACTION;
 export function usersReducer(
   state: usersState = usersInitialState,
   action: Action
@@ -27,6 +30,23 @@ export function usersReducer(
       };
     }
     case types.ON_VIEW_USERS_FAIL: {
+      return {
+        ...state
+      };
+    }
+    case types.ON_ADD_USER_ACTION: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
+    case types.ON_ADD_USER_SUCCESS: {
+      return {
+        ...state,
+        companies: action.payload
+      };
+    }
+    case types.ON_ADD_USER_FAIL: {
       return {
         ...state
       };

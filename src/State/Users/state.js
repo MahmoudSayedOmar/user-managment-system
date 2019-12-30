@@ -6,38 +6,39 @@ export interface usersState {
 
 export const usersInitialState: usersState = {
   //company: null
+
   users: [
     {
-      key: "1",
-      userFirstName: "Peter",
-      userMiddleName: "Atef",
-      userLastName: "Tawfik",
-      userValidationType: "sms",
-      userEmail: "peter.tawfik@medafinvestment.com",
-      userDOB: "19-19-2019",
-      userPhoto: "String",
-      userGender: "Male",
-      userMobile: "0122456456456",
-      userDefaultLanguage: "Eng",
+      id: "1",
+      fName: "Peter",
+      mName: "Atef",
+      lName: "Tawfik",
+      validateBy: "sms",
+      email: "peter.tawfik@medafinvestment.com",
+      dateOfBirth: "12/10/2019",
+      photo: "String",
+      sex: "female",
+      mobileNumber: "0122456456456",
+      defaultLanguage: "english",
       userTypes: ["one", "two"],
       userRoles: ["ABC", "EFG"],
       actions: { id: "1", active: true }
     },
     {
-      key: "2",
-      userFirstName: "Peter",
-      userMiddleName: "Atef",
-      userLastName: "Tawfik",
-      userValidationType: "sms",
-      userEmail: "peter.tawfik@medafinvestment.com",
-      userDOB: "19-19-2019",
-      userPhoto: "String",
-      userGender: "Male",
-      userMobile: "0122456456456",
-      userDefaultLanguage: "Eng",
+      id: "2",
+      fName: "Peterddd",
+      mName: "Atefee",
+      lName: "Tawfikff",
+      validateBy: "sms",
+      email: "peter.tawfik@medafinvestment.com",
+      dateOfBirth: "10/10/2019",
+      photo: "String",
+      sex: "male",
+      mobileNumber: "0122456456456",
+      defaultLanguage: "arabic",
       userTypes: ["one", "two"],
       userRoles: ["ABC", "EFG"],
-      actions: { id: "1", active: true }
+      actions: { id: "2", active: false }
     }
   ]
 };

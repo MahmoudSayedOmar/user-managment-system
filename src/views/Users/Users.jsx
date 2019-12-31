@@ -25,7 +25,7 @@ import { Button, Table, Popconfirm, Tooltip, Icon } from "antd";
 
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { onAddUser } from "State/Users/action-creator";
+import { onAddUser, onUpdateUser } from "State/Users/action-creator";
 // core components
 import moment from "moment";
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
@@ -51,10 +51,10 @@ class Users extends React.Component {
     this.setState({
       modalTitle: "Edit " + toEditUser.fName + " " + toEditUser.mName
     });
-    console.log(toEditUser, "toEditUser");
+
     this.refs.addUserForm.setFieldsValue({
       //  ...toEditUser,
-      id: toEditUser.i,
+      id: toEditUser.id,
       fName: toEditUser.fName,
       mName: toEditUser.mName,
       lName: toEditUser.lName,
@@ -64,16 +64,14 @@ class Users extends React.Component {
       imageURL: toEditUser.photo,
       sex: toEditUser.sex,
       mobileNumber: toEditUser.mobileNumber,
+      corporate: toEditUser.corporate,
       defaultLanguage: toEditUser.defaultLanguage
     });
   };
   onActivateDeActivate = id => {
-    // console.log("we are here id");
-    // console.log(id, "delete id");
     const toEditCorporate = this.props.allCompanies.find(i => i.key === id);
-    console.log(toEditCorporate.actions.active, "editable one");
 
-    this.props.onUpdateCorporate({
+    this.props.onUpdateUser({
       key: toEditCorporate.key,
       corporateName: toEditCorporate.corporateName,
       corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
@@ -103,13 +101,11 @@ class Users extends React.Component {
     });
   };
   onAddUser = values => {
-    // moment.unix(media._source.plugin_output.time_max).format("hh:mm:ss a");
     let dateOfBirth = moment(values.dateOfBirth).format("MM/DD/YYYY");
-    console.log(moment(values.dateOfBirth).format("MM/DD/YYYY"), "values");
-    // moment(value).unix()
-    console.log(values, "values");
-    if (values.key && values.key !== "") {
-      this.props.onUpdateCorporate({
+
+    if (values.id && values.id !== "") {
+      this.props.onUpdateUser({
+        ...this.props.allUsers.find(user => user.id === values.id),
         id: values.id,
         fName: values.fName,
         mName: values.mName,
@@ -121,7 +117,7 @@ class Users extends React.Component {
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
         photo: values.photo,
-        actions: { id: values.id, active: values.corporateActive }
+        corporate: values.corporate
       });
     } else {
       this.props.onAddUser({
@@ -136,6 +132,7 @@ class Users extends React.Component {
         mobileNumber: values.mobileNumber,
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
+        corporate: values.corporate,
         photo: values.photo,
         actions: { id: this.props.allUsers.length + 1, active: false }
       });
@@ -221,9 +218,6 @@ class Users extends React.Component {
     }
   ];
   render() {
-    // console.log(this.props.allCompanies.length, "all compannies");
-    // console.log(moment("01/01/2019").format());
-
     return (
       <>
         <div className="content">
@@ -261,8 +255,7 @@ class Users extends React.Component {
             onOk={this.onAddUser}
             visible={this.state.showAddUserModal}
             ref="addUserForm"
-            media={this.props.medias}
-            plugins={this.props.plugins}
+            allCoporates={this.props.allCoporates}
           />
         </div>
       </>
@@ -271,10 +264,9 @@ class Users extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.users.users, "users");
   return {
     allUsers: state.users.users,
-    allCompanies: state.companies.companies
+    allCoporates: state.companies.companies
   };
 }
 
@@ -282,8 +274,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
       // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
-      onAddUser
-      // onUpdateCorporate
+      onAddUser,
+      onUpdateUser
     },
     dispatch
   );

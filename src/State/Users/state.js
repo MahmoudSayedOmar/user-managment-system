@@ -20,8 +20,14 @@ export const usersInitialState: usersState = {
       sex: "female",
       mobileNumber: "0122456456456",
       defaultLanguage: "english",
-      userTypes: ["one", "two"],
-      userRoles: ["ABC", "EFG"],
+      corporate: "1",
+
+      applications: [
+        { "1": [{ usertype1: ["role1", "role2"] }] },
+        { "2": [{ usertype2: ["role1", "role2"] }] },
+        { "3": [{ usertype3: ["role1", "role2"] }] }
+      ],
+
       actions: { id: "1", active: true }
     },
     {
@@ -36,8 +42,13 @@ export const usersInitialState: usersState = {
       sex: "male",
       mobileNumber: "0122456456456",
       defaultLanguage: "arabic",
-      userTypes: ["one", "two"],
-      userRoles: ["ABC", "EFG"],
+      corporate: "2",
+
+      applications: [
+        { "1": [{ usertype1: ["role1", "role2"] }] },
+        { "2": [{ usertype2: ["role1", "role2"] }] },
+        { "3": [{ usertype3: ["role1", "role2"] }] }
+      ],
       actions: { id: "2", active: false }
     }
   ]

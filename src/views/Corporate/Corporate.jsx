@@ -42,12 +42,12 @@ class Corporate extends React.Component {
   }
 
   onEditRow = id => {
-    const toEditCorporate = this.props.allCompanies.find(i => i.key === id);
+    const toEditCorporate = this.props.allCompanies.find(i => i.id === id);
 
     // this.refs.addCorporateForm.setFieldsValue(toEditCorporate);
     this.setState({ modalTitle: "Edit " + toEditCorporate.corporateName });
     this.refs.addCorporateForm.setFieldsValue({
-      key: toEditCorporate.key,
+      id: toEditCorporate.id,
       corporateName: toEditCorporate.corporateName,
       corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
       corporateAddress: toEditCorporate.corporateAddress,
@@ -66,11 +66,11 @@ class Corporate extends React.Component {
   onActivateDeActivate = id => {
     // console.log("we are here id");
     console.log(id, "delete id");
-    const toEditCorporate = this.props.allCompanies.find(i => i.key === id);
+    const toEditCorporate = this.props.allCompanies.find(i => i.id === id);
     console.log(toEditCorporate.actions.active, "editable one");
 
     this.props.onUpdateCorporate({
-      key: toEditCorporate.key,
+      id: toEditCorporate.id,
       corporateName: toEditCorporate.corporateName,
       corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
       corporateAddress: toEditCorporate.corporateAddress,
@@ -80,7 +80,7 @@ class Corporate extends React.Component {
       corporateRegisterationNumber:
         toEditCorporate.corporateRegisterationNumber,
       actions: {
-        id: toEditCorporate.key,
+        id: toEditCorporate.id,
         active: !toEditCorporate.actions.active
       }
     });
@@ -113,21 +113,23 @@ class Corporate extends React.Component {
   };
   onAddCorporate = values => {
     console.log(values, "values");
-    if (values.key && values.key !== "") {
+    if (values.id && values.id !== "") {
       this.props.onUpdateCorporate({
-        key: values.key,
+        ...this.props.allCompanies.find(
+          eachcompany => eachcompany.id === values.id
+        ),
+        id: values.id,
         corporateName: values.corporateName,
         corporatePhoneNumber: values.corporatePhoneNumber,
         corporateAddress: values.corporateAddress,
         corporateCountry: values.corporateCountry,
         corporateCity: values.corporateCity,
         corporatePostalCode: values.corporatePostalCode,
-        corporateRegisterationNumber: values.corporateRegisterationNumber,
-        actions: { id: values.key, active: values.corporateActive }
+        corporateRegisterationNumber: values.corporateRegisterationNumber
       });
     } else {
       this.props.onAddCorporate({
-        key: this.props.allCompanies.length + 1,
+        id: this.props.allCompanies.length + 1,
         corporateName: values.corporateName,
         corporatePhoneNumber: values.corporatePhoneNumber,
         corporateAddress: values.corporateAddress,
@@ -266,7 +268,7 @@ class Corporate extends React.Component {
                   </div>
                   <div className="eachCompnentButtonSection">
                     <Table
-                      key="key"
+                      rowKey="id"
                       columns={this.columns}
                       dataSource={this.props.allCompanies}
                       pagination={false}
@@ -293,7 +295,6 @@ class Corporate extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.companies.companies, "company");
   return {
     allCompanies: state.companies.companies
   };
@@ -302,7 +303,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
-      // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
       onAddCorporate,
       onUpdateCorporate
     },

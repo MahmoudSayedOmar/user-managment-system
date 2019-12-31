@@ -8,7 +8,7 @@ export const companiesInitialState: companiesState = {
   //company: null
   companies: [
     {
-      key: "1",
+      id: "1",
       corporateName: "Company 1",
       corporatePhoneNumber: 32,
       corporateAddress: "10 Downing Street",
@@ -20,7 +20,7 @@ export const companiesInitialState: companiesState = {
       actions: { id: "1", active: true }
     },
     {
-      key: "2",
+      id: "2",
       corporateName: "Company 2",
       corporatePhoneNumber: 432343242,
       corporateAddress: "10 Downing Street",

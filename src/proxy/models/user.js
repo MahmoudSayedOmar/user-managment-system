@@ -10,7 +10,7 @@ export interface UsersModel {
   sex: String;
   mobileNumber: String;
   defaultLanguage: String;
-  userTypes: Array;
-  userRoles: Array;
+  corporate: String;
+  applications: Array;
   actions: Object;
 }

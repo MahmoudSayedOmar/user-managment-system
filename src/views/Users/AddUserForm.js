@@ -43,6 +43,11 @@ export default Form.create()(
         labelCol: { span: 8 },
         wrapperCol: { span: 15 }
       };
+      let corporates = this.props.allCoporates.map(eachCoporate => (
+        <Option key={eachCoporate.id} value={eachCoporate.id}>
+          {eachCoporate.corporateName}
+        </Option>
+      ));
 
       const onlyNumbers = (rule, value, callback) => {
         if (value && isNaN(value)) {
@@ -144,6 +149,12 @@ export default Form.create()(
               </Select>
             )}
           </Form.Item>
+          <Form.Item {...formItemLayout} label="Choose Coporate">
+            {getFieldDecorator("corporate", {
+              rules: [{ required: true, message: "Please choose a coporate!" }]
+            })(<Select placeholder="Choose Corporate">{corporates}</Select>)}
+          </Form.Item>
+
           <Form.Item {...formItemLayout} label="Photo">
             {getFieldDecorator("upload", {
               // rules: [{ required: true }],

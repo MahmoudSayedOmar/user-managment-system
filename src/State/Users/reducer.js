@@ -10,9 +10,13 @@ type Action =
   | actions.ON_VIEW_USERS_ACTION
   | actions.ON_VIEW_USERS_SUCCESS_ACTION
   | actions.ON_VIEW_USERS_FAIL_ACTION
-  | actions.ON_ADD_USERS_FAIL_ACTION
-  | actions.ON_ADD_USERS_FAIL_ACTION
-  | actions.ON_ADD_USERS_FAIL_ACTION;
+  | actions.ON_ADD_USER_ACTION
+  | actions.ON_ADD_USER_SUCCESS_ACTION
+  | actions.ON_ADD_USER_FAIL_ACTION
+  | actions.ON_UPDATE_USER_ACTION
+  | actions.ON_UPDATE_USER_SUCCESS_ACTION
+  | actions.ON_UPDATE_USER_FAIL_ACTION;
+
 export function usersReducer(
   state: usersState = usersInitialState,
   action: Action
@@ -26,7 +30,7 @@ export function usersReducer(
     case types.ON_VIEW_USERS_SUCCESS: {
       return {
         ...state,
-        companies: action.payload
+        users: action.payload
       };
     }
     case types.ON_VIEW_USERS_FAIL: {
@@ -40,13 +44,33 @@ export function usersReducer(
         loading: true
       };
     }
-    case types.ON_ADD_USER_SUCCESS: {
+    case types.ON_ADD_USER_SUCCESS_ACTION: {
       return {
         ...state,
-        companies: action.payload
+        users: action.payload
       };
     }
-    case types.ON_ADD_USER_FAIL: {
+    case types.ON_ADD_USER_FAIL_ACTION: {
+      return {
+        ...state
+      };
+    }
+
+    case types.ON_UPDATE_USER_ACTION: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
+    case types.ON_UPDATE_USER_SUCCESS_ACTION: {
+      console.log("hahaha");
+
+      return {
+        ...state,
+        users: action.payload
+      };
+    }
+    case types.ON_UPDATE_USER_FAIL_ACTION: {
       return {
         ...state
       };

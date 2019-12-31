@@ -38,7 +38,7 @@ export async function onUpdateCorporate(values) {
   return async (dispatch, getState) => {
     let state = getState();
     let companies = state.companies.companies;
-    const toEditIndex = companies.findIndex(comp => comp.key === values.key);
+    const toEditIndex = companies.findIndex(comp => comp.id === values.id);
 
     companies = [...state.companies.companies]; // important to create a copy, otherwise you'll modify state outside of setState call
     companies[toEditIndex] = values;
@@ -86,12 +86,12 @@ export function onUpdateompany(): ON_UPDATE_COMPANY_ACTION {
 export function onUpdateCompnaySuccess(
   companies: CompaniesModel
 ): ON_UPDATE_COMPANY_SUCCESS_ACTION {
-  return { type: types.ON_UPDATE_COMPANY_SUCCESS, payload: companies };
+  return { type: types.ON_UPDATE_COMPANY_SUCCESS_ACTION, payload: companies };
 }
 
 export function onUpdateCompnayFail(): ON_UPDATE_COMPANY_FAIL_ACTION {
   return {
-    type: types.ON_UPDATE_COMPANY_FAIL,
+    type: types.ON_UPDATE_COMPANY_FAIL_ACTION,
     payload: "connection error"
   };
 }

@@ -58,13 +58,14 @@ export function companiesReducer(
         loading: true
       };
     }
-    case types.ON_UPDATE_COMPANY_SUCCESS: {
+    case types.ON_UPDATE_COMPANY_SUCCESS_ACTION: {
+      console.log("company update");
       return {
         ...state,
         companies: action.payload
       };
     }
-    case types.ON_UPDATE_COMPANY_FAIL: {
+    case types.ON_UPDATE_COMPANY_FAIL_ACTION: {
       return {
         ...state
       };

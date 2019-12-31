@@ -69,21 +69,13 @@ class Users extends React.Component {
     });
   };
   onActivateDeActivate = id => {
-    const toEditCorporate = this.props.allCompanies.find(i => i.key === id);
+    const toEditUser = this.props.allUsers.find(i => i.id === id);
 
     this.props.onUpdateUser({
-      key: toEditCorporate.key,
-      corporateName: toEditCorporate.corporateName,
-      corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
-      corporateAddress: toEditCorporate.corporateAddress,
-      corporateCountry: toEditCorporate.corporateCountry,
-      corporateCity: toEditCorporate.corporateCity,
-      corporatePostalCode: toEditCorporate.corporatePostalCode,
-      corporateRegisterationNumber:
-        toEditCorporate.corporateRegisterationNumber,
+      ...this.props.allUsers.find(eachUser => eachUser.id === id),
       actions: {
-        id: toEditCorporate.key,
-        active: !toEditCorporate.actions.active
+        id: id,
+        active: !toEditUser.actions.active
       }
     });
   };
@@ -126,7 +118,6 @@ class Users extends React.Component {
         mName: values.mName,
         lName: values.lName,
         email: values.email,
-        // dateOfBirth: moment(values.dateOfBirth).format("MM/DD/YYYY"),
         dateOfBirth: dateOfBirth,
         sex: values.sex,
         mobileNumber: values.mobileNumber,

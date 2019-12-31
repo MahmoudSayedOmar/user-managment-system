@@ -64,21 +64,10 @@ class Corporate extends React.Component {
     });
   };
   onActivateDeActivate = id => {
-    // console.log("we are here id");
-    console.log(id, "delete id");
     const toEditCorporate = this.props.allCompanies.find(i => i.id === id);
-    console.log(toEditCorporate.actions.active, "editable one");
 
     this.props.onUpdateCorporate({
-      id: toEditCorporate.id,
-      corporateName: toEditCorporate.corporateName,
-      corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
-      corporateAddress: toEditCorporate.corporateAddress,
-      corporateCountry: toEditCorporate.corporateCountry,
-      corporateCity: toEditCorporate.corporateCity,
-      corporatePostalCode: toEditCorporate.corporatePostalCode,
-      corporateRegisterationNumber:
-        toEditCorporate.corporateRegisterationNumber,
+      ...this.props.allCompanies.find(eachCompany => eachCompany.id === id),
       actions: {
         id: toEditCorporate.id,
         active: !toEditCorporate.actions.active
@@ -87,18 +76,7 @@ class Corporate extends React.Component {
   };
 
   onAddCorporateModal = () => {
-    console.log("we are here");
-    // let pluginChoosen = this.props.vsPlugin || "";
-
     this.refs.addCorporateForm.resetFields();
-    this.refs.addCorporateForm.setFieldsValue({
-      // plugins: pluginChoosen.plugins,
-      // chunkSize: pluginChoosen.chunkSize,
-      // stitch_plugin: pluginChoosen.stitch_plugin,
-      // memory: pluginChoosen.memory,
-      // gpu_memory: pluginChoosen.gpu_memory,
-      // compress: pluginChoosen.compress
-    });
 
     this.setState({
       modalTitle: "Add Corporate",
@@ -112,7 +90,7 @@ class Corporate extends React.Component {
     });
   };
   onAddCorporate = values => {
-    console.log(values, "values");
+
     if (values.id && values.id !== "") {
       this.props.onUpdateCorporate({
         ...this.props.allCompanies.find(
@@ -247,7 +225,7 @@ class Corporate extends React.Component {
     }
   ];
   render() {
-    // console.log(this.props.allCompanies.length, "all compannies");
+    
     return (
       <>
         <div className="content">

@@ -23,14 +23,12 @@ export default Form.create()(
 
     onOk = () => {
       this.props.form.validateFields((err, values) => {
-        // console.log(values, "values");
         if (!err) {
           this.props.onOk(values);
         }
       });
     };
     normFile = e => {
-      console.log("Upload event:", e);
       if (Array.isArray(e)) {
         return e;
       }

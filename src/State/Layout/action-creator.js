@@ -22,19 +22,15 @@ export function onViewCompanies(): ON_VIEW_COMPANIES_ACTION {
 }
 
 export async function onAddCorporate(values) {
-  console.log(values, "we reached here");
-
   return async (dispatch, getState) => {
     let state = getState();
     let companies = state.companies.companies;
     companies.push(values);
-    console.log(companies, "allcompnaies");
+
     dispatch(onAddCompnaySuccess(companies));
   };
 }
 export async function onUpdateCorporate(values) {
-  console.log(values, "we reached here");
-  // will send to the services here, suppose to
   return async (dispatch, getState) => {
     let state = getState();
     let companies = state.companies.companies;
@@ -42,9 +38,6 @@ export async function onUpdateCorporate(values) {
 
     companies = [...state.companies.companies]; // important to create a copy, otherwise you'll modify state outside of setState call
     companies[toEditIndex] = values;
-    // this.setState({ employees });
-    console.log(companies, "new companies");
-    // companies.push(values);
 
     dispatch(onUpdateCompnaySuccess(companies));
   };

@@ -59,7 +59,6 @@ export function companiesReducer(
       };
     }
     case types.ON_UPDATE_COMPANY_SUCCESS_ACTION: {
-      console.log("company update");
       return {
         ...state,
         companies: action.payload

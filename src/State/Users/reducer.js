@@ -63,8 +63,6 @@ export function usersReducer(
       };
     }
     case types.ON_UPDATE_USER_SUCCESS_ACTION: {
-      console.log("hahaha");
-
       return {
         ...state,
         users: action.payload

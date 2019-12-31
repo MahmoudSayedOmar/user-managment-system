@@ -30,13 +30,11 @@ export function onViewUSERSFail(): ON_VIEW_USERS_FAIL_ACTION {
 
 ////////////////////////////////////
 export async function onAddUser(values) {
-  console.log(values, "we reached here");
-
   return async (dispatch, getState) => {
     let state = getState();
     let users = state.users.users;
     users.push(values);
-    console.log(users, "allcompnaies");
+
     dispatch(onAddUserSuccess(users));
   };
 }
@@ -55,7 +53,6 @@ export function onAddUserFail(): ON_ADD_USER_FAIL_ACTION {
 }
 /////////////////////
 export async function onUpdateUser(values) {
-  console.log(values, "we reached here");
   // will send to the services here, suppose to
   return async (dispatch, getState) => {
     let state = getState();
@@ -65,9 +62,6 @@ export async function onUpdateUser(values) {
     users = [...state.users.users]; // important to create a copy, otherwise you'll modify state outside of setState call
     users[toEditIndex] = values;
 
-    // this.setState({ employees });
-    console.log(users, "new USERS array");
-
     dispatch(onUpdateUserSuccess(users));
   };
 }
@@ -75,7 +69,6 @@ export async function onUpdateUser(values) {
 export function onUpdateUserSuccess(
   users: usersModel
 ): ON_UPDATE_USER_SUCCESS_ACTION {
-  console.log("we reached updateUserSuccess");
   return { type: types.ON_UPDATE_USER_SUCCESS_ACTION, payload: users };
 }
 

@@ -20,7 +20,6 @@ export default Form.create()(
       });
     };
     normFile = e => {
-      console.log("Upload event:", e);
       if (Array.isArray(e)) {
         return e;
       }

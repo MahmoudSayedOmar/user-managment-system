@@ -17,9 +17,11 @@ export class LoginComponent extends React.Component {
 
   render() {
     return (
-      <form onSubmit={()=>{
+      <form
+        onSubmit={() => {
           this.props.tryLogin(this.state);
-      }} >
+        }}
+      >
         <h3>Sign In</h3>
 
         <div className="form-group">
@@ -63,7 +65,7 @@ export class LoginComponent extends React.Component {
           Submit
         </button>
         <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
+          Forgot <a href="/">password?</a>
         </p>
       </form>
     );

@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { State } from "../../State/state";
-import { Dispatch, bindActionCreators } from "redux";
-import { tryGetAllDefaultApplications } from "../../State/DefaultApplications/action-creator";
-import DefaultApplicationsListing from "../../components/DefaultApplicationsListing/default-applications-listing";
 import { Card, CardBody, Row, Col } from "reactstrap";
-import { Button, Table, Popconfirm, Tooltip, Icon } from "antd";
+import { Table } from "antd";
+import { Dispatch, bindActionCreators } from "redux";
+
+import { State } from "../../State/state";
+import { tryGetAllDefaultApplications } from "../../State/DefaultApplications/action-creator";
+
 class DefaultApplicationsContainer extends React.Component {
   props: {
     loading: boolean,

@@ -12,13 +12,13 @@ export type ON_GET_ALL_DEFAULTAPPLICATIONS_FAIL_Action = {
 };
 
 export async function tryGetAllDefaultApplications() {
-  return async (dispatch,getState) => {
+  return async (dispatch, getState) => {
     dispatch(onGetAllDefaultApplications());
     const result = await defaultApplicationsProxyService.getAll();
     debugger;
-    if (result.status == 200) {
-        console.log(result.data);
-        debugger;
+    if (result.status === 200) {
+      console.log(result.data);
+      debugger;
       dispatch(getAllDefaultApplicationsSuccess(result.data));
       console.log(getState());
     } else {

@@ -1,5 +1,3 @@
-// @Flow
-
 import { TokenDto } from "../../proxy/dtos";
 export interface AuthorizationState {
   username: string;
@@ -16,5 +14,5 @@ export const AuthorizationInitialState: AuthorizationState = {
   isLoggedIn: false,
   isRegistered: false,
   errorMessage: "",
-  loading: false,
+  loading: false
 };

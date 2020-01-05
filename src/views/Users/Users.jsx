@@ -28,7 +28,6 @@ import { connect } from "react-redux";
 import { onAddUser, onUpdateUser } from "State/Users/action-creator";
 // core components
 import moment from "moment";
-import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
 import "./Users.css";
 import AddUserForm from "./AddUserForm.js";
 

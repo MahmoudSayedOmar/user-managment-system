@@ -1,12 +1,14 @@
-// @Flow
-import { defaultApplicationState, defaultApplicationInitialState } from "./state";
+import {
+  defaultApplicationState,
+  defaultApplicationInitialState
+} from "./state";
 import * as actions from "./action-creator";
 import * as types from "./actions";
 
 type Action =
   | actions.ON_GET_ALL_DEFAULTAPPLICATIONS_Action
   | actions.ON_GET_ALL_DEFAULTAPPLICATIONS_SUCCESS_Action
-  | actions.ON_GET_ALL_DEFAULTAPPLICATIONS_FAIL_Action
+  | actions.ON_GET_ALL_DEFAULTAPPLICATIONS_FAIL_Action;
 
 export function defaultApplicationReducer(
   state: defaultApplicationState = defaultApplicationInitialState,

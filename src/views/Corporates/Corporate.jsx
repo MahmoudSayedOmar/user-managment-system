@@ -21,7 +21,7 @@ import React from "react";
 
 // reactstrap components
 import { Card, CardBody, Row, Col } from "reactstrap";
-import { Button, Table, Popconfirm, Tooltip, Icon } from "antd";
+import { Button, Table } from "antd";
 
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -30,7 +30,6 @@ import {
   onUpdateCorporate
 } from "State/Corporates/action-creator";
 // core components
-import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
 import "./Corporate.css";
 import AddCorpoateForm from "./AddCorpoateForm";
 import { onViewCompanies } from "State/Corporates/action-creator";

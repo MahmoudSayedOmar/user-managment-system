@@ -1,4 +1,3 @@
-// @Flow
 import { AuthorizationState, AuthorizationInitialState } from "./state";
 import * as actions from "./action-creator";
 import * as types from "./actions";
@@ -6,7 +5,7 @@ import * as types from "./actions";
 type Action =
   | actions.ON_LOGIN_Action
   | actions.LOGIN_SUCCESS_Action
-  | actions.LOGIN_FAIL_Action
+  | actions.LOGIN_FAIL_Action;
 
 export function authorizationReducer(
   state: AuthorizationState = AuthorizationInitialState,
@@ -22,7 +21,6 @@ export function authorizationReducer(
     }
 
     case types.LOGIN_SUCCESS: {
-      
       return {
         ...state,
         token: action.payload,

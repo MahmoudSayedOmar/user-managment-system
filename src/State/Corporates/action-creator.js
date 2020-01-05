@@ -20,29 +20,22 @@ export type ON_UPDATE_COMPANY_FAIL_ACTION = { type: String, payload: any };
 // }
 
 export async function onAddCorporate(values) {
-  console.log(values, "we reached here");
-
   return async (dispatch, getState) => {
     let state = getState();
     let companies = state.companies.companies;
     companies.push(values);
-    console.log(companies, "allcompnaies");
+
     dispatch(onAddCompnaySuccess(companies));
   };
 }
 export async function onUpdateCorporate(values) {
-  console.log(values, "we reached here");
-  // will send to the services here, suppose to
   return async (dispatch, getState) => {
     let state = getState();
     let companies = state.companies.companies;
-    const toEditIndex = companies.findIndex(comp => comp.key === values.key);
+    const toEditIndex = companies.findIndex(comp => comp.id === values.id);
 
     companies = [...state.companies.companies]; // important to create a copy, otherwise you'll modify state outside of setState call
     companies[toEditIndex] = values;
-    // this.setState({ employees });
-    console.log(companies, "new companies");
-    // companies.push(values);
 
     dispatch(onUpdateCompnaySuccess(companies));
   };
@@ -96,11 +89,11 @@ export function onUpdateompany(): ON_UPDATE_COMPANY_ACTION {
 export function onUpdateCompnaySuccess(
   companies: CompaniesModel
 ): ON_UPDATE_COMPANY_SUCCESS_ACTION {
-  return { type: types.ON_UPDATE_COMPANY_SUCCESS, payload: companies };
+  return { type: types.ON_UPDATE_COMPANY_SUCCESS_ACTION, payload: companies };
 }
 export function onUpdateCompnayFail(): ON_UPDATE_COMPANY_FAIL_ACTION {
   return {
-    type: types.ON_UPDATE_COMPANY_FAIL,
+    type: types.ON_UPDATE_COMPANY_FAIL_ACTION,
     payload: "connection error"
   };
 }

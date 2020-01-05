@@ -50,12 +50,12 @@ class Corporate extends React.Component {
   }
 
   onEditRow = id => {
-    const toEditCorporate = this.props.allCompanies.find(i => i.key === id);
+    const toEditCorporate = this.props.allCompanies.find(i => i.id === id);
 
     // this.refs.addCorporateForm.setFieldsValue(toEditCorporate);
     this.setState({ modalTitle: "Edit " + toEditCorporate.corporateName });
     this.refs.addCorporateForm.setFieldsValue({
-      key: toEditCorporate.key,
+      id: toEditCorporate.id,
       corporateName: toEditCorporate.corporateName,
       corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
       corporateAddress: toEditCorporate.corporateAddress,
@@ -73,41 +73,19 @@ class Corporate extends React.Component {
   };
 
   onActivateDeActivate = id => {
-    // console.log("we are here id");
-    console.log(id, "delete id");
-    const toEditCorporate = this.props.allCompanies.find(i => i.key === id);
-    console.log(toEditCorporate.actions.active, "editable one");
+    const toEditCorporate = this.props.allCompanies.find(i => i.id === id);
 
     this.props.onUpdateCorporate({
-      key: toEditCorporate.key,
-      corporateName: toEditCorporate.corporateName,
-      corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
-      corporateAddress: toEditCorporate.corporateAddress,
-      corporateCountry: toEditCorporate.corporateCountry,
-      corporateCity: toEditCorporate.corporateCity,
-      corporatePostalCode: toEditCorporate.corporatePostalCode,
-      corporateRegisterationNumber:
-        toEditCorporate.corporateRegisterationNumber,
+      ...this.props.allCompanies.find(eachCompany => eachCompany.id === id),
       actions: {
-        id: toEditCorporate.key,
+        id: toEditCorporate.id,
         active: !toEditCorporate.actions.active
       }
     });
   };
 
   onAddCorporateModal = () => {
-    console.log("we are here");
-    // let pluginChoosen = this.props.vsPlugin || "";
-
     this.refs.addCorporateForm.resetFields();
-    this.refs.addCorporateForm.setFieldsValue({
-      // plugins: pluginChoosen.plugins,
-      // chunkSize: pluginChoosen.chunkSize,
-      // stitch_plugin: pluginChoosen.stitch_plugin,
-      // memory: pluginChoosen.memory,
-      // gpu_memory: pluginChoosen.gpu_memory,
-      // compress: pluginChoosen.compress
-    });
 
     this.setState({
       modalTitle: "Add Corporate",
@@ -123,10 +101,12 @@ class Corporate extends React.Component {
   };
 
   onAddCorporate = values => {
-    console.log(values, "values");
-    if (values.key && values.key !== "") {
+    if (values.id && values.id !== "") {
       this.props.onUpdateCorporate({
-        id: values.key,
+        ...this.props.allCompanies.find(
+          eachcompany => eachcompany.id === values.id
+        ),
+        id: values.id,
         name: values.corporateName,
         phoneNo: values.corporatePhoneNumber,
         address: values.corporateAddress,
@@ -180,65 +160,6 @@ class Corporate extends React.Component {
       key: "address",
       dataIndex: "address"
     }
-
-    // {
-    //   title: "Actions",
-    //   dataIndex: "actions",
-    //   key: "actions",
-    //   render: eachKey => (
-    //     <span>
-    //       <Icon
-    //         type="edit"
-    //         style={{
-    //           fontSize: "20px",
-
-    //           cursor: "pointer",
-    //           paddingRight: "5px"
-    //         }}
-    //         onClick={() => this.onEditRow(eachKey.id)}
-    //       />
-    //       {eachKey.active ? (
-    //         <Popconfirm
-    //           title="Are you sure deActivate this Company?"
-    //           onConfirm={() => this.onActivateDeActivate(eachKey.id)}
-    //           okText="Yes"
-    //           cancelText="No"
-    //         >
-    //           <Tooltip placement="top" title="DeActivate">
-    //             <Icon
-    //               type="eye"
-    //               style={{
-    //                 paddingRight: "5px",
-    //                 fontSize: "20px",
-    //                 cursor: "pointer"
-    //               }}
-    //               // onClick={() => this.onDeleteRow()}
-    //             />
-    //           </Tooltip>
-    //         </Popconfirm>
-    //       ) : (
-    //         <Tooltip placement="top" title="Activate">
-    //           <Icon
-    //             type="eye-invisible"
-    //             style={{
-    //               paddingRight: "5px",
-    //               fontSize: "20px",
-    //               cursor: "pointer"
-    //             }}
-    //             onClick={() => this.onActivateDeActivate(eachKey.id)}
-    //           />
-    //         </Tooltip>
-    //       )}
-
-    //       <Tooltip placement="top" title="Corporate Applications">
-    //         <Icon
-    //           type="file-add"
-    //           style={{ fontSize: "20px", cursor: "pointer" }}
-    //         />
-    //       </Tooltip>
-    //     </span>
-    //   )
-    // }
   ];
 
   render() {
@@ -289,7 +210,6 @@ class Corporate extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.companies.companies, "company");
   return {
     allCompanies: state.companies.companies
   };

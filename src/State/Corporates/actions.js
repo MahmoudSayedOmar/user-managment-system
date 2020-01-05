@@ -8,5 +8,6 @@ export const ON_ADD_COMPANY_SUCCESS = "[company] on add company success";
 export const ON_ADD_COMPANY_FAIL = "[company] on add company fail";
 
 export const ON_UPDATE_COMPANY_ACTION = "[company] on edit company";
-export const ON_UPDATE_COMPANY_SUCCESS = "[company] on edit company success";
-export const ON_UPDATE_COMPANY_FAIL = "[company] on edit company fail";
+export const ON_UPDATE_COMPANY_SUCCESS_ACTION =
+  "[company] on edit company success";
+export const ON_UPDATE_COMPANY_FAIL_ACTION = "[company] on edit company fail";

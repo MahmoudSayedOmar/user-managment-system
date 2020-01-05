@@ -1,5 +1,5 @@
 export class CompaniesDto {
-  key: String;
+  id: String;
   corporateName: String;
   corporateCountry: String;
   corporateCity: String;

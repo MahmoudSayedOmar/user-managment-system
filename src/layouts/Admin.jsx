@@ -79,7 +79,6 @@ class Dashboard extends React.Component {
 }
 
 function mapStateToProps(state) {
-  // console.log(state.companies, "company");
   return {
     homeData: state.companies
   };

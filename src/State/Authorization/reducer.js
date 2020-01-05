@@ -22,7 +22,7 @@ export function authorizationReducer(
     }
 
     case types.LOGIN_SUCCESS: {
-      debugger;
+      
       return {
         ...state,
         token: action.payload,

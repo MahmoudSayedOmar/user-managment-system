@@ -15,4 +15,19 @@ export class CorporateService {
       }
     });
   }
+
+  async add(newCoprorate) {
+    debugger;
+    return await axios({
+      method: "post",
+      url: `${BASE_URL}corporates/add`,
+      data: newCoprorate,
+      config: {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-Type": "application/json"
+        }
+      }
+    });
+  }
 }

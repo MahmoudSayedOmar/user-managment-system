@@ -1,5 +1,5 @@
 import * as types from "./actions";
-import { corporateService } from '../../proxy/services'
+import { corporateService } from "../../proxy/services";
 
 export type ON_VIEW_COMPANIES_ACTION = { type: String };
 export type ON_VIEW_COMPANIES_SUCCESS_ACTION = { type: String, payload: any };
@@ -23,9 +23,15 @@ export async function onAddCorporate(values) {
   return async (dispatch, getState) => {
     let state = getState();
     let companies = state.companies.companies;
-    companies.push(values);
-
-    dispatch(onAddCompnaySuccess(companies));
+    let response = await corporateService.add(values);
+    if (response.status === 200) {
+      companies.push(response.data);
+      dispatch(onAddCompnaySuccess(companies));
+    } else {
+      console.log(response.statusText);
+      dispatch(onAddCompnayFail());
+    }
+    // companies.push(values);
   };
 }
 export async function onUpdateCorporate(values) {
@@ -51,7 +57,7 @@ export async function onViewCompanies(): ON_VIEW_COMPANIES_ACTION {
       dispatch(onViewCompaniesFail());
     }
     // console.log(json)
-  }
+  };
 }
 export function onViewCompaniesSuccess(
   companies: CompaniesModel

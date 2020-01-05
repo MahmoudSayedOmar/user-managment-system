@@ -1,15 +1,23 @@
-import { companiesInitialState } from "./Corporates/state";
-import { usersInitialState } from "./Users/state";
-import { AuthorizationInitialState } from "./Authorization/state";
-
+import { companiesInitialState, companiesState } from "./Corporates/state";
+import { usersInitialState, usersState } from "./Users/state";
+import {
+  AuthorizationInitialState,
+  AuthorizationState
+} from "./Authorization/state";
+import {
+  defaultApplicationInitialState,
+  defaultApplicationState
+} from "./DefaultApplications/state";
 export type State = {
-  authorization: AuthorizationInitialState,
-  companies: compnayInitialState,
-  users: usersInitialState
+  authorization: AuthorizationState,
+  companies: companiesState,
+  users: usersState,
+  defaultApplications: defaultApplicationState
 };
 
 export const initialState = {
   authorization: AuthorizationInitialState,
   companies: companiesInitialState,
-  users: usersInitialState
+  users: usersInitialState,
+  defaultApplications: defaultApplicationInitialState
 };

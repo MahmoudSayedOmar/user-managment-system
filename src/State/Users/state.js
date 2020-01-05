@@ -1,7 +1,7 @@
-import { usersDto } from "../../proxy/dtos/user";
+import { userDto } from "../../proxy/dtos/user";
 
 export interface usersState {
-  users: usersDto;
+  users: userDto[];
 }
 
 export const usersInitialState: usersState = {

@@ -1,4 +1,4 @@
-export class CompaniesDto {
+export class CompanyDto {
   id: String;
   corporateName: String;
   corporateCountry: String;

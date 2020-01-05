@@ -1,4 +1,4 @@
-export class UsersDto {
+export class UserDto {
   id: String;
   fName: String;
   mName: String;

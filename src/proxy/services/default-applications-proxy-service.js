@@ -1,10 +1,11 @@
+import { BASE_URL } from "../../http-client/constants";
 import axios from "axios";
 
 export class DefaultApplicationsProxyService {
-  async getAll() {
+  async get() {
     return await axios({
       method: "get",
-      url: "https://api.myjson.com/bins/gq9qw",
+      url: `${BASE_URL}lockups/BasicApps`,
       config: {
         headers: {
           "Access-Control-Allow-Origin": "*",

@@ -29,28 +29,31 @@ class DefaultApplicationsContainer extends React.Component {
   }
   columns = [
     {
-      title: "Sequence",
-      dataIndex: "serial",
-      key: "serial"
-    },
-    {
       title: "Application Name",
-      dataIndex: "applicationName",
-      key: "applicationName"
+      dataIndex: "title",
+      key: "title"
     },
     {
       title: "Basic Application",
-      dataIndex: "basicApplication",
-      key: "basicApplication"
-    },
-    {
-      title: "Owner Corprate",
-      dataIndex: "ownerCorprate",
-      key: "ownerCorprate"
+      dataIndex: "modulesDefaultApp",
+      key: "modulesDefaultApp",
+      render: (modulesDefaultApp, row) => (
+        <span>
+          {" "}
+          {modulesDefaultApp.map((module, index) => (
+            <span key={index}>
+              {console.log(module.title)}
+              {module.title}
+              {index === modulesDefaultApp.length - 1 ? ".  " : ", "}
+            </span>
+          ))}
+        </span>
+      )
     }
   ];
 
   render() {
+    console.log(this.props.defaultApplications, "defaultapplications");
     return (
       <div className="content">
         <Row>
@@ -59,7 +62,7 @@ class DefaultApplicationsContainer extends React.Component {
               <CardBody className="all-icons">
                 <div className="eachCompnentButtonSection">
                   <Table
-                    rowKey="serial"
+                    rowKey="id"
                     dataSource={this.props.defaultApplications}
                     columns={this.columns}
                     pagination={false}

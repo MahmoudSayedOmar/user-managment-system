@@ -86,7 +86,7 @@ export async function onDeactivateCorporate(id) {
     if (response.status === 200) {
       console.log("connected successfully");
       // companies.push(response.data);
-      dispatch(onAddCompanySuccess(companies));
+      // dispatch(onAddCompanySuccess(companies));
     } else {
       console.log("failed");
       console.log(response.statusText);

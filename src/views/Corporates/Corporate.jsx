@@ -21,12 +21,13 @@ import React from "react";
 
 // reactstrap components
 import { Card, CardBody, Row, Col } from "reactstrap";
-import { Button, Table } from "antd";
+import { Button, Table, Icon, Popconfirm, Tooltip } from "antd";
 
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import {
   onAddCorporate,
+  onDeactivateCorporate,
   onUpdateCorporate
 } from "State/Corporates/action-creator";
 // core components
@@ -52,18 +53,16 @@ class Corporate extends React.Component {
     const toEditCorporate = this.props.allCompanies.find(i => i.id === id);
 
     // this.refs.addCorporateForm.setFieldsValue(toEditCorporate);
-    this.setState({ modalTitle: "Edit " + toEditCorporate.corporateName });
+    this.setState({ modalTitle: "Edit " + toEditCorporate.name });
     this.refs.addCorporateForm.setFieldsValue({
       id: toEditCorporate.id,
-      corporateName: toEditCorporate.corporateName,
-      corporatePhoneNumber: toEditCorporate.corporatePhoneNumber,
-      corporateAddress: toEditCorporate.corporateAddress,
-      corporateCountry: toEditCorporate.corporateCountry,
-      corporateCity: toEditCorporate.corporateCity,
-      corporatePostalCode: toEditCorporate.corporatePostalCode,
-      corporateRegisterationNumber:
-        toEditCorporate.corporateRegisterationNumber,
-      corporateActive: toEditCorporate.actions.active
+      corporateName: toEditCorporate.name,
+      corporatePhoneNumber: toEditCorporate.phoneNo,
+      corporateAddress: toEditCorporate.address,
+      corporateCountry: toEditCorporate.country,
+      corporateCity: toEditCorporate.city,
+      corporatePostalCode: toEditCorporate.zip,
+      corporateRegisterationNumber: toEditCorporate.registerationNo
     });
 
     this.setState({
@@ -71,15 +70,17 @@ class Corporate extends React.Component {
     });
   };
 
+  onDeactivateCoporate = id => {
+    this.props.onDeactivateCorporate(id);
+  };
   onActivateDeActivate = id => {
+    // console.log(id, "we are here");
     const toEditCorporate = this.props.allCompanies.find(i => i.id === id);
 
     this.props.onUpdateCorporate({
       ...this.props.allCompanies.find(eachCompany => eachCompany.id === id),
-      actions: {
-        id: toEditCorporate.id,
-        active: !toEditCorporate.actions.active
-      }
+
+      isActive: !toEditCorporate.isActive
     });
   };
 
@@ -105,27 +106,24 @@ class Corporate extends React.Component {
         ...this.props.allCompanies.find(
           eachcompany => eachcompany.id === values.id
         ),
-        id: values.id,
+
         name: values.corporateName,
         phoneNo: values.corporatePhoneNumber,
         address: values.corporateAddress,
         country: values.corporateCountry,
         city: values.corporateCity,
         zip: values.corporatePostalCode,
-        registerationNo: values.corporateRegisterationNumber,
-        actions: { id: values.key, active: values.corporateActive }
+        registerationNo: values.corporateRegisterationNumber
       });
     } else {
       this.props.onAddCorporate({
-        id: this.props.allCompanies.length + 1,
         name: values.corporateName,
         phoneNo: values.corporatePhoneNumber,
         address: values.corporateAddress,
         country: values.corporateCountry,
         city: values.corporateCity,
         zip: values.corporatePostalCode,
-        registerationNo: values.corporateRegisterationNumber,
-        actions: { id: this.props.allCompanies.length + 1, active: false }
+        registerationNo: values.corporateRegisterationNumber
       });
     }
 
@@ -158,6 +156,64 @@ class Corporate extends React.Component {
       title: "Address",
       key: "address",
       dataIndex: "address"
+    },
+    {
+      title: "Actions",
+      dataIndex: "isActive",
+      key: "isActive",
+      render: (eachKey, row) => (
+        <span>
+          <Icon
+            type="edit"
+            style={{
+              fontSize: "20px",
+
+              cursor: "pointer",
+              paddingRight: "5px"
+            }}
+            onClick={() => this.onEditRow(row.id)}
+          />
+          {row.isActive ? (
+            <Popconfirm
+              title="Are you sure deActivate this Company?"
+              onConfirm={() => this.onDeactivateCoporate(row.id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Tooltip placement="top" title="DeActivate">
+                <Icon
+                  type="eye"
+                  style={{
+                    paddingRight: "5px",
+                    fontSize: "20px",
+                    cursor: "pointer"
+                  }}
+                  // onClick={() => this.onDeleteRow()}
+                />
+              </Tooltip>
+            </Popconfirm>
+          ) : (
+            <Tooltip placement="top" title="Activate">
+              <Icon
+                type="eye-invisible"
+                style={{
+                  paddingRight: "5px",
+                  fontSize: "20px",
+                  cursor: "pointer"
+                }}
+                onClick={() => this.onActivateDeActivate(row.id)}
+              />
+            </Tooltip>
+          )}
+
+          <Tooltip placement="top" title="Corporate Applications">
+            <Icon
+              type="file-add"
+              style={{ fontSize: "20px", cursor: "pointer" }}
+            />
+          </Tooltip>
+        </span>
+      )
     }
   ];
 
@@ -220,6 +276,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       onViewCompanies,
       // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
       onAddCorporate,
+      onDeactivateCorporate,
       onUpdateCorporate
     },
     dispatch

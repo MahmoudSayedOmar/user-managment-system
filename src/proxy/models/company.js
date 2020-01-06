@@ -1,11 +1,11 @@
 export interface CompaniesModel {
   id: String;
-  corporateName: String;
-  corporateCountry: String;
-  corporateCity: String;
-  corporatePhoneNumber: String;
-  corporateAddress: String;
-  corporatePostalCode: String;
-  corporateRegisterationNumber: String;
-  actions: Object;
+  name: String;
+  phoneNo: String;
+  country: String;
+  city: String;
+  address: String;
+  zip: String;
+  registerationNo: String;
+  isActive: Boolean;
 }

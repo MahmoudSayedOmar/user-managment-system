@@ -9,11 +9,17 @@ import { companiesInitialState, companiesState } from "./state";
 type Action =
   | actions.ON_VIEW_COMPIES_ACTION
   | actions.ON_VIEW_COMPANIES_SUCCESS_ACTION
-  | actions.ON_VIEW_COMPANIES_FAIL_ACTION
+  | actions.ON_DEACTIVATE_COMPANY_ACTION
+  | actions.ON_DEACTIVATE_COMPANY_SUCCESS_ACTION
+  | actions.ON_DEACTIVATE_COMPANY_Fail_ACTION
   | actions.ON_ADD_COMPANY_ACTION
   | actions.ON_ADD_COMPANY_SUCCESS_ACTION
   | actions.ON_VIEW_COMPANIES_FAIL_ACTION
+  | actions.ON_UPDATE_COMPANY_ACTION
+  | actions.ON_UPDATE_COMPANY_SUCCESS_ACTION
+  | actions.ON_UPDATE_COMPANY_FAIL_ACTION
   | actions.ON_ADD_Application_ACTION;
+  
 export function companiesReducer(
   state: companiesState = companiesInitialState,
   action: Action
@@ -42,17 +48,36 @@ export function companiesReducer(
         loading: true
       };
     }
-    case types.ON_ADD_COMPANY_SUCCESS: {
+    case types.ON_ADD_COMPANY_SUCCESS_ACTION: {
       return {
         ...state,
         companies: action.payload
       };
     }
-    case types.ON_ADD_COMPANY_FAIL: {
+    case types.ON_ADD_COMPANY_FAIL_ACTION: {
       return {
         ...state
       };
     }
+    /////////
+    case types.ON_DEACTIVATE_COMPANY_ACTION: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
+    case types.ON_DEACTIVATE_COMPANY_SUCCESS_ACTION: {
+      return {
+        ...state,
+        companies: action.payload
+      };
+    }
+    case types.ON_DEACTIVATE_COMPANY_FAIL_ACTION: {
+      return {
+        ...state
+      };
+    }
+    ////////
     case types.ON_UPDATE_COMPANY_ACTION: {
       return {
         ...state,

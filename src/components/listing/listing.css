@@ -1,0 +1,9 @@
+.eachCompnentButtonSection {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+  }
+  .buttonRight {
+    float: right;
+  }
+  

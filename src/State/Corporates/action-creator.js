@@ -64,7 +64,6 @@ export async function onAddCorporate(values) {
       console.log(response.statusText);
       dispatch(onAddCompanyFail());
     }
-    // companies.push(values);
   };
 }
 

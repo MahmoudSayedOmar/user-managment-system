@@ -18,6 +18,12 @@ export const ON_DEACTIVATE_COMPANY_SUCCESS_ACTION =
 export const ON_DEACTIVATE_COMPANY_FAIL_ACTION =
   "[company] on deactivate company fail";
 
+export const ON_ACTIVATE_COMPANY_ACTION = "[company] on activate company";
+export const ON_ACTIVATE_COMPANY_SUCCESS_ACTION =
+  "[company] on activate company success";
+export const ON_ACTIVATE_COMPANY_FAIL_ACTION =
+  "[company] on activate company fail";
+
 export const ON_VIEW_APPLICATIONS_BY_CORPORATE_ID =
   "[application] on view all application by corporate Id";
 export const ON_VIEW_SUCCESS_APPLICATIONS_BY_CORPORATE_ID =

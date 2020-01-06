@@ -61,6 +61,21 @@ export class CorporateService {
       }
     });
   }
+  async activate(id) {
+    console.log(id, "in services");
+    // debugger;
+
+    return await axios({
+      method: "post",
+      url: `${BASE_URL}corporates/activate/${id}`,
+      config: {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-Type": "application/json"
+        }
+      }
+    });
+  }
 }
 ///////////////////  async activate(newCoprorate) {
 //     debugger;

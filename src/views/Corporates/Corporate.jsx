@@ -28,6 +28,7 @@ import { connect } from "react-redux";
 import {
   onAddCorporate,
   onDeactivateCorporate,
+  onActivateCorporate,
   onUpdateCorporate
 } from "State/Corporates/action-creator";
 // core components
@@ -70,8 +71,11 @@ class Corporate extends React.Component {
     });
   };
 
-  onDeactivateCoporate = id => {
+  onDeactivate = id => {
     this.props.onDeactivateCorporate(id);
+  };
+  onActivate = id => {
+    this.props.onActivateCorporate(id);
   };
   onActivateDeActivate = id => {
     // console.log(id, "we are here");
@@ -176,7 +180,7 @@ class Corporate extends React.Component {
           {row.isActive ? (
             <Popconfirm
               title="Are you sure deActivate this Company?"
-              onConfirm={() => this.onDeactivateCoporate(row.id)}
+              onConfirm={() => this.onDeactivate(row.id)}
               okText="Yes"
               cancelText="No"
             >
@@ -201,7 +205,7 @@ class Corporate extends React.Component {
                   fontSize: "20px",
                   cursor: "pointer"
                 }}
-                onClick={() => this.onActivateDeActivate(row.id)}
+                onClick={() => this.onActivate(row.id)}
               />
             </Tooltip>
           )}
@@ -277,7 +281,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
       // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
       onAddCorporate,
       onDeactivateCorporate,
-      onUpdateCorporate
+      onUpdateCorporate,
+      onActivateCorporate
     },
     dispatch
   );

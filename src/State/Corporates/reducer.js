@@ -19,7 +19,7 @@ type Action =
   | actions.ON_UPDATE_COMPANY_SUCCESS_ACTION
   | actions.ON_UPDATE_COMPANY_FAIL_ACTION
   | actions.ON_ADD_Application_ACTION;
-  
+
 export function companiesReducer(
   state: companiesState = companiesInitialState,
   action: Action
@@ -55,6 +55,25 @@ export function companiesReducer(
       };
     }
     case types.ON_ADD_COMPANY_FAIL_ACTION: {
+      return {
+        ...state
+      };
+    }
+
+    //////////////////////
+    case types.ON_ACTIVATE_COMPANY_ACTION: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
+    case types.ON_ACTIVATE_COMPANY_SUCCESS_ACTION: {
+      return {
+        ...state,
+        companies: action.payload
+      };
+    }
+    case types.ON_ACTIVATE_COMPANY_FAIL_ACTION: {
       return {
         ...state
       };

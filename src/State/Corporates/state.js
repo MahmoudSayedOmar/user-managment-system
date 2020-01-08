@@ -2,10 +2,12 @@ import { CompanyDto } from "../../proxy/dtos/company";
 
 export interface companiesState {
   companies: CompanyDto[];
-  selectedCompanyId:Number;
+  selectedCompanyId: Number;
+  selectedCompany: Object;
 }
 
 export const companiesInitialState: companiesState = {
   companies: [],
-  selectedCompanyId:0,
+  selectedCompanyId: undefined,
+  selectedCompany: {}
 };

@@ -2,10 +2,12 @@ import { ApplicationsPortofolioDto } from "../../proxy/dtos/applicationportofoli
 
 export interface applicationsPortofoliosState {
   applicationsPortofolios: ApplicationsPortofolioDto[];
-  selectedApplicationsPortofolioId:Number;
+  selectedApplicationsPortofolioId: Number;
+  isLoaded: Boolean;
 }
 
 export const applicationsPortofoliosInitialState: applicationsPortofoliosState = {
-    applicationsPortofolios: [],
-    selectedApplicationPortofolioId:0,
+  applicationsPortofolios: [],
+  selectedApplicationPortofolioId: undefined,
+  isLoaded: false
 };

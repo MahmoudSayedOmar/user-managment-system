@@ -24,5 +24,4 @@ export const ON_ACTIVATE_COMPANY_SUCCESS_ACTION =
 export const ON_ACTIVATE_COMPANY_FAIL_ACTION =
   "[company] on activate company fail";
 
-
-
+export const SELECT_COMPANY = "[company] select company";

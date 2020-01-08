@@ -1,5 +1,5 @@
 import * as types from "./actions";
-import { corporateService ,applicationsPortofoliosProxyService } from "../../proxy/services";
+import { corporateService } from "../../proxy/services";
 
 export type ON_VIEW_COMPANIES_ACTION = { type: String };
 export type ON_VIEW_COMPANIES_SUCCESS_ACTION = { type: String, payload: any };
@@ -15,7 +15,9 @@ export type ON_DEACTIVATE_COMPANY_SUCCESS_ACTION = {
   payload: any
 };
 export type ON_DEACTIVATE_COMPANY_FAIL_ACTION = { type: String, payload: any };
+
 /////////////
+
 export type ON_ACTIVATE_COMPANY_ACTION = { type: String };
 export type ON_ACTIVATE_COMPANY_SUCCESS_ACTION = {
   type: String,
@@ -199,3 +201,11 @@ export function onUpdateCompnayFail(): ON_UPDATE_COMPANY_FAIL_ACTION {
 }
 
 /***************************************/
+
+export type SELECT_COMPANY_ACTION = { type: String, payload: Number };
+export function selectCorporate(corporateId): SELECT_COMPANY_ACTION {
+  return {
+    type: types.SELECT_COMPANY,
+    payload: corporateId
+  };
+}

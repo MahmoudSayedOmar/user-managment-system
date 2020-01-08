@@ -8,9 +8,7 @@ import { connect } from "react-redux";
 
 import ApplicationsPortofoliosListingComponent from "../../components/application-portofolio/application-portofolio";
 
-import {
-    viewCorporateDetails
-} from "State/Corporates/action-creator";
+import { viewCorporateDetails } from "../../State/ApplicationsPortofolio/action-creator";
 
 class CorporateDetailsContainer extends React.Component {
   constructor(props) {
@@ -20,19 +18,27 @@ class CorporateDetailsContainer extends React.Component {
   }
 
   mapStateToProps(state) {
-    return {};
+    return {
+      selectedCompany: state.companies.selectedCompany,
+      applicationsPortofolios:
+        state.applicationsPortofolios.applicationsPortofolios
+    };
   }
 
   mapDispatchToProps(dispatch: Dispatch) {
-    return bindActionCreators({}, dispatch);
+    return bindActionCreators(
+      {
+        viewCorporateDetails
+      },
+      dispatch
+    );
   }
 
   render() {
     return (
       <>
         <div className="content">
-       
-          <Row>          
+          <Row>
             <Col md="12">
               <ApplicationsPortofoliosListingComponent
                 columns={this.columns}
@@ -43,7 +49,6 @@ class CorporateDetailsContainer extends React.Component {
               />
             </Col>
           </Row>
-         
         </div>
       </>
     );

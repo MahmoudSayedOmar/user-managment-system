@@ -5,6 +5,10 @@ import {
   AuthorizationState
 } from "./Authorization/state";
 import {
+  applicationsPortofoliosInitialState,
+  applicationsPortofoliosState
+} from "./ApplicationsPortofolio/state";
+import {
   defaultApplicationInitialState,
   defaultApplicationState
 } from "./DefaultApplications/state";
@@ -12,12 +16,14 @@ export type State = {
   authorization: AuthorizationState,
   companies: companiesState,
   users: usersState,
-  defaultApplications: defaultApplicationState
+  defaultApplications: defaultApplicationState,
+  applicationsPortofolios: applicationsPortofoliosState
 };
 
 export const initialState = {
   authorization: AuthorizationInitialState,
   companies: companiesInitialState,
   users: usersInitialState,
-  defaultApplications: defaultApplicationInitialState
+  defaultApplications: defaultApplicationInitialState,
+  applicationsPortofolios: applicationsPortofoliosInitialState
 };

@@ -9,9 +9,7 @@ import { connect } from "react-redux";
 import ApplicationsPortofoliosListingComponent from "../../components/application-portofolio/application-portofolio";
 
 import {
-  onAddCorporate,
-  onDeactivateCorporate,
-  onUpdateCorporate
+    viewCorporateDetails
 } from "State/Corporates/action-creator";
 
 class CorporateDetailsContainer extends React.Component {

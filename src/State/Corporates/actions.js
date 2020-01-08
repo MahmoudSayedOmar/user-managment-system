@@ -24,14 +24,5 @@ export const ON_ACTIVATE_COMPANY_SUCCESS_ACTION =
 export const ON_ACTIVATE_COMPANY_FAIL_ACTION =
   "[company] on activate company fail";
 
-export const ON_VIEW_APPLICATIONS_BY_CORPORATE_ID =
-  "[application] on view all application by corporate Id";
-export const ON_VIEW_SUCCESS_APPLICATIONS_BY_CORPORATE_ID =
-  "[application] on view Success application by corporate Id";
-export const ON_VIEW_FAIL_APPLICATIONS_BY_CORPORATE_ID =
-  "[application] on view fail application by corporate Id";
 
-export const ON_ADD_Application_ACTION = "[application] on add Application";
-export const ON_ADD_Application_SUCCESS =
-  "[application] on add application success";
-export const ON_ADD_Application_FAIL = "[application] on add application fail";
+

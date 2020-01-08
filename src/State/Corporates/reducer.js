@@ -18,7 +18,6 @@ type Action =
   | actions.ON_UPDATE_COMPANY_ACTION
   | actions.ON_UPDATE_COMPANY_SUCCESS_ACTION
   | actions.ON_UPDATE_COMPANY_FAIL_ACTION
-  | actions.ON_ADD_Application_ACTION;
 
 export function companiesReducer(
   state: companiesState = companiesInitialState,

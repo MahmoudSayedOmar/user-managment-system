@@ -8,4 +8,5 @@ export class CompanyDto {
   zip: String;
   registerationNo: String;
   isActive: Boolean;
+  applicationsPortofolio:Array;
 }

@@ -53,7 +53,7 @@ class Users extends React.Component {
 
     this.refs.addUserForm.setFieldsValue({
       //  ...toEditUser,
-      id: toEditUser.id,
+      // id: toEditUser.id,
       fName: toEditUser.fName,
       mName: toEditUser.mName,
       lName: toEditUser.lName,
@@ -63,7 +63,7 @@ class Users extends React.Component {
       imageURL: toEditUser.photo,
       sex: toEditUser.sex,
       mobileNumber: toEditUser.mobileNumber,
-      corporate: toEditUser.corporate,
+      // corporate: toEditUser.corporate,
       defaultLanguage: toEditUser.defaultLanguage
     });
   };
@@ -112,7 +112,7 @@ class Users extends React.Component {
       });
     } else {
       this.props.onAddUser({
-        id: this.props.allUsers.length + 1,
+        // id: this.props.allUsers.length + 1,
         fName: values.fName,
         mName: values.mName,
         lName: values.lName,
@@ -122,9 +122,9 @@ class Users extends React.Component {
         mobileNumber: values.mobileNumber,
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
-        corporate: values.corporate,
+        // corporate: values.corporate,
         photo: values.photo,
-        actions: { id: this.props.allUsers.length + 1, active: false }
+        // actions: { id: this.props.allUsers.length + 1, active: false }
       });
     }
 

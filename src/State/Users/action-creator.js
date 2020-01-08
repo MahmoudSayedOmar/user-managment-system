@@ -1,5 +1,7 @@
 import * as types from "./actions";
 
+import{authProxyService} from "../../proxy/services"
+
 export type ON_VIEW_USERS_ACTION = { type: String };
 export type ON_VIEW_USERS_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_VIEW_USERS_FAIL_ACTION = { type: String, payload: any };
@@ -30,12 +32,22 @@ export function onViewUSERSFail(): ON_VIEW_USERS_FAIL_ACTION {
 
 ////////////////////////////////////
 export async function onAddUser(values) {
+console.log("valuesss",values);
+  debugger;
   return async (dispatch, getState) => {
     let state = getState();
     let users = state.users.users;
-    users.push(values);
+    let response=await authProxyService.register(values);
+    if(response.status===200){
+      users.push(response.data);
+      dispatch(onAddUserSuccess(users));
+    }
+    else {
+      console.log(response.statusText);
+      dispatch(onAddUserFail());
+    }
+    // users.push(values);
 
-    dispatch(onAddUserSuccess(users));
   };
 }
 

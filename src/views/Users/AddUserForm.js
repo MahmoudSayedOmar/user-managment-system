@@ -147,11 +147,11 @@ export default Form.create()(
               </Select>
             )}
           </Form.Item>
-          <Form.Item {...formItemLayout} label="Choose Coporate">
+          {/* <Form.Item {...formItemLayout} label="Choose Coporate">
             {getFieldDecorator("corporate", {
               rules: [{ required: true, message: "Please choose a coporate!" }]
             })(<Select placeholder="Choose Corporate">{corporates}</Select>)}
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item {...formItemLayout} label="Photo">
             {getFieldDecorator("upload", {

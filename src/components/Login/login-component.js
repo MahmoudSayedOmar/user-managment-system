@@ -4,7 +4,7 @@ export class LoginComponent extends React.Component {
   constructor() {
     super();
     this.state = {
-      userName: "",
+      username: "",
       password: ""
     };
     this.handelChange = this.handelChange.bind(this);
@@ -18,20 +18,24 @@ export class LoginComponent extends React.Component {
   render() {
     return (
       <form
-        onSubmit={() => {
+        onSubmit={(e) => {
+          e.preventDefault();
           this.props.tryLogin(this.state);
         }}
       >
         <h3>Sign In</h3>
+        <center>
 
+          <h6 style={{ color: 'red' }} >{this.props.errorMessage}</h6>
+        </center>
         <div className="form-group">
           <label>Email address</label>
           <input
-            name="userName"
+            name="username"
             type="email"
             className="form-control"
             placeholder="Enter email"
-            value={this.state.userName}
+            value={this.state.username}
             onChange={this.handelChange}
           />
         </div>

@@ -5,9 +5,11 @@ import axios from "axios";
 
 export class AuthProxyService {
   async login(user: UserLoginModel) {
+    console.log(user);
+    debugger;
     return await axios({
       method: "post",
-      url: `${BASE_URL}auth/login`,
+      url: `${BASE_URL}account/authenticate`,
       data: user,
       config: {
         headers: {
@@ -18,8 +20,6 @@ export class AuthProxyService {
     });
   }
   async editUser(user: UserRegisterModel) {
-    console.log("Usssser", user);
-    debugger;
     return await axios({
       method: "put",
       url: `${BASE_URL}account/edit/${user.id}`,

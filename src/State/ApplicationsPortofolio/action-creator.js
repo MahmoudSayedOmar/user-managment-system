@@ -1,5 +1,5 @@
 import * as types from "./actions";
-import { applicationsPortofoliosProxyService } from '../../proxy/services/index'
+import { applicationsPortofoliosProxyService } from "../../proxy/services/index";
 
 export type SELECT_COMPANY_ACTION = { type: String, payload: Number };
 
@@ -21,32 +21,6 @@ export function SelectCorporate(corporateId): SELECT_COMPANY_ACTION {
     payload: corporateId
   };
 }
-export function onViewApplicationsPortofolios(): ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID_ACTION {
-  return {
-    type: types.ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID
-  };
-}
-
-export function onViewApplicationsPortofoliosSuccess(
-  applications: any
-): ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID_SUCCESS_ACTION {
-  return {
-    type: types.ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID_SUCCESS,
-    payload: applications
-  };
-}
-
-export type ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID_ACTION = {
-  type: String
-};
-export type ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID_SUCCESS_ACTION = {
-  type: String,
-  payload: any
-};
-export type ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID_FAIL_ACTION = {
-  type: String,
-  payload: any
-};
 
 export function onViewApplicationsPortofolios(): ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID_ACTION {
   return {
@@ -121,7 +95,7 @@ export type ON_ADD_APPLICATIONPORTOFOLIO_FAIL_ACTION = {
 };
 
 export async function addApplicationPortofolioToCorporate() {
-  return async (dispatch, getState) => { };
+  return async (dispatch, getState) => {};
 }
 
 export function onAddApplicationsPortofolios(): ON_ADD_APPLICATIONPORTOFOLIO_ACTION {

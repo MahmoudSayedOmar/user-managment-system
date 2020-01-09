@@ -1,6 +1,6 @@
 import * as types from "./actions";
 
-import{authProxyService} from "../../proxy/services"
+import { authProxyService } from "../../proxy/services";
 
 export type ON_VIEW_USERS_ACTION = { type: String };
 export type ON_VIEW_USERS_SUCCESS_ACTION = { type: String, payload: any };
@@ -30,24 +30,62 @@ export function onViewUSERSFail(): ON_VIEW_USERS_FAIL_ACTION {
   };
 }
 
+export async function viewUsers() {
+  return async (dispatch, getState) => {
+    let state = getState();
+    let users = state.users.users;
+    let response = await authProxyService.getUsers();
+    debugger;
+    if (response.status === 200) {
+      debugger;
+      users.push(response.data);
+      dispatch(onViewUsersSuccess(response.data));
+    } else {
+      console.log(response.statusText);
+      dispatch(onViewUSERSFail());
+    }
+    // users.push(values);
+  };
+}
+
 ////////////////////////////////////
 export async function onAddUser(values) {
-console.log("valuesss",values);
+  console.log("valuesss", values);
   debugger;
   return async (dispatch, getState) => {
     let state = getState();
     let users = state.users.users;
-    let response=await authProxyService.register(values);
-    if(response.status===200){
+    let response = await authProxyService.register(values);
+    debugger;
+    if (response.status === 200) {
+      debugger;
       users.push(response.data);
       dispatch(onAddUserSuccess(users));
-    }
-    else {
+    } else {
       console.log(response.statusText);
       dispatch(onAddUserFail());
     }
     // users.push(values);
+  };
+}
 
+export async function onEditUser(values) {
+  console.log("valuesss", values);
+  debugger;
+  return async (dispatch, getState) => {
+    // let state = getState();
+    // let users = state.users.users;
+    let response = await authProxyService.editUser(values);
+    debugger;
+    if (response.status === 200) {
+      debugger;
+      // users.push(response.data);
+      dispatch(onUpdateUserSuccess(response.data));
+    } else {
+      console.log(response.statusText);
+      dispatch(onUpdateUserFail());
+    }
+    // users.push(values);
   };
 }
 

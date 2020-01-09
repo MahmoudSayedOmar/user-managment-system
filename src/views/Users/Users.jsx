@@ -25,7 +25,7 @@ import { Button, Table, Popconfirm, Tooltip, Icon } from "antd";
 
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { onAddUser, onUpdateUser } from "State/Users/action-creator";
+import { onAddUser, onEditUser, viewUsers } from "State/Users/action-creator";
 // core components
 import moment from "moment";
 import "./Users.css";
@@ -41,7 +41,12 @@ class Users extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.viewUsers();
+  }
+
   onEditRow = id => {
+    debugger;
     const toEditUser = this.props.allUsers.find(i => i.id === id);
 
     this.setState({
@@ -52,8 +57,8 @@ class Users extends React.Component {
     });
 
     this.refs.addUserForm.setFieldsValue({
-      //  ...toEditUser,
-      // id: toEditUser.id,
+      ...toEditUser,
+      id: toEditUser.id,
       fName: toEditUser.fName,
       mName: toEditUser.mName,
       lName: toEditUser.lName,
@@ -69,13 +74,14 @@ class Users extends React.Component {
   };
   onActivateDeActivate = id => {
     const toEditUser = this.props.allUsers.find(i => i.id === id);
+    debugger;
 
-    this.props.onUpdateUser({
-      ...this.props.allUsers.find(eachUser => eachUser.id === id),
-      actions: {
-        id: id,
-        active: !toEditUser.actions.active
-      }
+    this.props.onEditUser({
+      ...this.props.allUsers.find(eachUser => eachUser.id === id)
+      // actions: {
+      //   id: id,
+      //   active: !toEditUser.actions.active
+      // }
     });
   };
 
@@ -92,10 +98,12 @@ class Users extends React.Component {
     });
   };
   onAddUser = values => {
-    let dateOfBirth = moment(values.dateOfBirth).format("MM/DD/YYYY");
-
+    debugger;
+    let dateOfBirth = values.dateOfBirth;
+    console.log("vvvvvvvv", values);
     if (values.id && values.id !== "") {
-      this.props.onUpdateUser({
+      debugger;
+      this.props.onEditUser({
         ...this.props.allUsers.find(user => user.id === values.id),
         id: values.id,
         fName: values.fName,
@@ -123,8 +131,7 @@ class Users extends React.Component {
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
         // corporate: values.corporate,
-        photo: values.photo,
-        // actions: { id: this.props.allUsers.length + 1, active: false }
+        photo: values.photo
       });
     }
 
@@ -157,24 +164,23 @@ class Users extends React.Component {
 
     {
       title: "Actions",
-      dataIndex: "actions",
-      key: "actions",
-      render: eachKey => (
+      dataIndex: "id",
+      key: "id",
+      render: (id, row) => (
         <span>
           <Icon
             type="edit"
             style={{
               fontSize: "20px",
-
               cursor: "pointer",
               paddingRight: "5px"
             }}
-            onClick={() => this.onEditRow(eachKey.id)}
+            onClick={() => this.onEditRow(id)}
           />
-          {eachKey.active ? (
+          {row.isActive ? (
             <Popconfirm
               title="Are you sure deActivate this Company?"
-              onConfirm={() => this.onActivateDeActivate(eachKey.id)}
+              onConfirm={() => this.onActivateDeActivate(id)}
               okText="Yes"
               cancelText="No"
             >
@@ -199,7 +205,7 @@ class Users extends React.Component {
                   fontSize: "20px",
                   cursor: "pointer"
                 }}
-                onClick={() => this.onActivateDeActivate(eachKey.id)}
+                onClick={() => this.onActivateDeActivate(id)}
               />
             </Tooltip>
           )}
@@ -263,9 +269,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
+      viewUsers,
       // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
       onAddUser,
-      onUpdateUser
+      onEditUser
     },
     dispatch
   );

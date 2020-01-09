@@ -14,10 +14,11 @@ type Action =
   | actions.ON_DEACTIVATE_COMPANY_Fail_ACTION
   | actions.ON_ADD_COMPANY_ACTION
   | actions.ON_ADD_COMPANY_SUCCESS_ACTION
-  | actions.ON_VIEW_COMPANIES_FAIL_ACTION
+  | actions.ON_VIEW_COMPANIES_FAIL_ACTIONa
   | actions.ON_UPDATE_COMPANY_ACTION
   | actions.ON_UPDATE_COMPANY_SUCCESS_ACTION
   | actions.ON_UPDATE_COMPANY_FAIL_ACTION
+  | actions.SELECT_COMPANY_ACTION;
 
 export function companiesReducer(
   state: companiesState = companiesInitialState,
@@ -111,6 +112,13 @@ export function companiesReducer(
     case types.ON_UPDATE_COMPANY_FAIL_ACTION: {
       return {
         ...state
+      };
+    }
+    case types.SELECT_COMPANY: {
+      console.log("selectCorporate:", state);
+      return {
+        ...state,
+        selectedCompanyId: action.payload
       };
     }
     default: {

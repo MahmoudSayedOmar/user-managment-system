@@ -246,6 +246,11 @@ class Corporate extends React.Component {
                       columns={this.columns}
                       dataSource={this.props.allCompanies}
                       pagination={false}
+                      onRowClick={rowData => {
+                        debugger;
+                        console.log(this.props.history);
+                        console.log("ROWKEY", rowData.id);
+                      }}
                     />
                   </div>
                 </CardBody>

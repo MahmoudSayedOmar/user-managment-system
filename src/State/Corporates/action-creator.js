@@ -199,13 +199,3 @@ export function onUpdateCompnayFail(): ON_UPDATE_COMPANY_FAIL_ACTION {
     payload: "connection error"
   };
 }
-
-/***************************************/
-
-export type SELECT_COMPANY_ACTION = { type: String, payload: Number };
-export function selectCorporate(corporateId): SELECT_COMPANY_ACTION {
-  return {
-    type: types.SELECT_COMPANY,
-    payload: corporateId
-  };
-}

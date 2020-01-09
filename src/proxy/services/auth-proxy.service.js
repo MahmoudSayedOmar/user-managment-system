@@ -1,5 +1,5 @@
 import { BASE_URL } from "../../http-client/constants";
-import { UserLoginModel,UserRegisterModel } from "../../proxy";
+import { UserLoginModel, UserRegisterModel } from "../../proxy";
 
 import axios from "axios";
 
@@ -17,12 +17,12 @@ export class AuthProxyService {
       }
     });
   }
-  async register(user: UserRegisterModel) {
-    console.log("Usssser",user);
+  async editUser(user: UserRegisterModel) {
+    console.log("Usssser", user);
     debugger;
     return await axios({
-      method: "post",
-      url: `${BASE_URL}account/register`,
+      method: "put",
+      url: `${BASE_URL}account/edit/${user.id}`,
       data: user,
       config: {
         headers: {
@@ -33,4 +33,17 @@ export class AuthProxyService {
     });
   }
 
+  async getUsers() {
+    debugger;
+    return await axios({
+      method: "get",
+      url: `${BASE_URL}account/getUsers`,
+      config: {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-Type": "application/json"
+        }
+      }
+    });
+  }
 }

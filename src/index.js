@@ -32,6 +32,7 @@ import "assets/scss/paper-dashboard.scss?v=1.1.0";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { LoginScreen } from "./views/login-screen";
+import { UserConfirmScreen } from "./views/UserConfirm/UserConfirm";
 import AdminLayout from "layouts/Admin.jsx";
 import { combinedReducer } from "./State/reducer";
 import "antd/dist/antd.css";
@@ -47,6 +48,7 @@ ReactDOM.render(
     <Router history={hist}>
       <Switch>
         <Route path="/login" component={LoginScreen} />
+        <Route path="/userConfirm" component={UserConfirmScreen} />
         <Route path="/admin" render={props => <AdminLayout {...props} />} />
         {/* <Redirect to="/admin/dashboard" /> */}
         <Redirect to="/admin/corporates/corporates" />

@@ -77,16 +77,6 @@ class Corporate extends React.Component {
   onActivate = id => {
     this.props.onActivateCorporate(id);
   };
-  onActivateDeActivate = id => {
-    // console.log(id, "we are here");
-    const toEditCorporate = this.props.allCompanies.find(i => i.id === id);
-
-    this.props.onUpdateCorporate({
-      ...this.props.allCompanies.find(eachCompany => eachCompany.id === id),
-
-      isActive: !toEditCorporate.isActive
-    });
-  };
 
   onAddCorporateModal = () => {
     this.refs.addCorporateForm.resetFields();
@@ -105,6 +95,7 @@ class Corporate extends React.Component {
   };
 
   onAddCorporate = values => {
+    
     if (values.id && values.id !== "") {
       this.props.onUpdateCorporate({
         ...this.props.allCompanies.find(
@@ -127,7 +118,7 @@ class Corporate extends React.Component {
         country: values.corporateCountry,
         city: values.corporateCity,
         zip: values.corporatePostalCode,
-        registerationNo: values.corporateRegisterationNumber
+        registratioNo: values.corporateRegisterationNumber
       });
     }
 

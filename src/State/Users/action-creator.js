@@ -50,7 +50,6 @@ export async function viewUsers() {
 
 ////////////////////////////////////
 export async function onAddUser(values) {
-  console.log("valuesss", values);
   debugger;
   return async (dispatch, getState) => {
     let state = getState();
@@ -61,8 +60,9 @@ export async function onAddUser(values) {
       debugger;
       users.push(response.data);
       dispatch(onAddUserSuccess(users));
-    } else {
-      console.log(response.statusText);
+    }
+    else {
+      
       dispatch(onAddUserFail());
     }
     // users.push(values);

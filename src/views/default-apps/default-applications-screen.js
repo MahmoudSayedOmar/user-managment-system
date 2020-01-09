@@ -38,22 +38,22 @@ class DefaultApplicationsContainer extends React.Component {
       dataIndex: "modulesDefaultApp",
       key: "modulesDefaultApp",
       render: (modulesDefaultApp, row) => (
-        <span>
-          {" "}
-          {modulesDefaultApp.map((module, index) => (
-            <span key={index}>
-              {console.log(module.title)}
-              {module.title}
-              {index === modulesDefaultApp.length - 1 ? ".  " : ", "}
-            </span>
-          ))}
-        </span>
+        <>
+          <span>
+            {" "}
+            {modulesDefaultApp.map((module, index) => (
+              <span key={index}>
+                {module.title}
+                {index === modulesDefaultApp.length - 1 ? ".  " : ", "}
+              </span>
+            ))}
+          </span>
+        </>
       )
     }
   ];
 
   render() {
-    console.log(this.props.defaultApplications, "defaultapplications");
     return (
       <div className="content">
         <Row>

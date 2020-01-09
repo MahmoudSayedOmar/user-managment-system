@@ -30,13 +30,12 @@ export class CorporateService {
     });
   }
   async update(value) {
-    console.log(value, "in services");
     // debugger;
 
     return await axios({
       method: "put",
-      url: `${BASE_URL}corporates/edit/`,
-      data: { id: value.id, corporate: value },
+      url: `${BASE_URL}corporates/edit/${value.id}`,
+      data: value,
       config: {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -47,7 +46,6 @@ export class CorporateService {
   }
 
   async deactivate(id) {
-    console.log(id, "in services");
     // debugger;
 
     return await axios({
@@ -62,7 +60,6 @@ export class CorporateService {
     });
   }
   async activate(id) {
-    console.log(id, "in services");
     // debugger;
 
     return await axios({
@@ -77,18 +74,3 @@ export class CorporateService {
     });
   }
 }
-///////////////////  async activate(newCoprorate) {
-//     debugger;
-//     return await axios({
-//       method: "post",
-//       url: `${BASE_URL}corporates/add/${}`,
-
-//       config: {
-//         headers: {
-//           "Access-Control-Allow-Origin": "*",
-//           "content-Type": "application/json"
-//         }
-//       }
-//     });
-//   }
-// }

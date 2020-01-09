@@ -17,10 +17,10 @@ export async function tryGetAllDefaultApplications() {
     const result = await defaultApplicationsProxyService.get();
     // debugger;
     if (result.status === 200) {
-      console.log(result.data);
+      
       // debugger;
       dispatch(getAllDefaultApplicationsSuccess(result.data));
-      console.log(getState());
+      
     } else {
       dispatch(getAllDefaultApplicationsFail());
     }

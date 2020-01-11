@@ -25,21 +25,17 @@ import { Button, Table, Icon, Popconfirm, Tooltip } from "antd";
 
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-// import {
-//   onAddUserType,
-//   onDeactivateUserType,
-//   onActivateUserType,
-//   onUpdateUserType
-// } from "State/Corporates/action-creator";
+import {
+  onViewUserTypes,
+  onAddUserType,
+  onActivateUserType,
+  onDeactivateUserType,
+  onUpdateUserType
+} from "../../State/user-types/action-creator";
 // core components
 import "./user-types.css";
-// import AddCorpoateForm from "./AddCorpoateForm";
 import { AddUserTypeForm } from "./add-user-form";
-// import { onViewCompanies } from "State/Corporates/action-creator";
-const userTypesArray = [
-  { name: "Admin", id: 1 },
-  { name: "Finance", id: 2 }
-];
+
 class UserTypes extends React.Component {
   constructor(props) {
     super(props);
@@ -51,11 +47,11 @@ class UserTypes extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.onViewCompanies();
+    this.props.onViewUserTypes(6);
   }
 
   onEditRow = id => {
-    const toEditUserType = userTypesArray.find(i => i.id === id);
+    const toEditUserType = this.props.userTypes.find(i => i.id === id);
 
     // this.refs.addUserTypeForm.setFieldsValue(toEditUserType);
     this.setState({ modalTitle: "Edit " + toEditUserType.name });
@@ -102,9 +98,12 @@ class UserTypes extends React.Component {
         name: values.name
       });
     } else {
-      this.props.onAddUserType({
-        name: values.name
-      });
+      this.props.onAddUserType(
+        {
+          name: values.name
+        },
+        6
+      );
     }
 
     this.refs.addUserTypeForm.resetFields();
@@ -203,7 +202,7 @@ class UserTypes extends React.Component {
                     <Table
                       rowKey="id"
                       columns={this.columns}
-                      dataSource={userTypesArray}
+                      dataSource={this.props.userTypes}
                       pagination={false}
                       onRowClick={rowData => {
                         debugger;
@@ -234,18 +233,18 @@ class UserTypes extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    // allCompanies: state.companies.companies
+    userTypes: state.userTypes.userTypes
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
-      // onViewCompanies,
-      // onAddUserType,
-      // onDeactivateUserType,
-      // onUpdateUserType,
-      // onActivateUserType
+      onViewUserTypes,
+      onAddUserType,
+      onActivateUserType,
+      onDeactivateUserType,
+      onUpdateUserType
     },
     dispatch
   );

@@ -37,7 +37,8 @@ class Users extends React.Component {
 
     this.state = {
       showAddUserModal: false,
-      modalTitle: "Add User"
+      modalTitle: "Add User",
+      isEdit: false
     };
   }
 
@@ -46,14 +47,14 @@ class Users extends React.Component {
   }
 
   onEditRow = id => {
-    debugger;
     const toEditUser = this.props.allUsers.find(i => i.id === id);
 
     this.setState({
       showAddUserModal: true
     });
     this.setState({
-      modalTitle: "Edit " + toEditUser.fName + " " + toEditUser.mName
+      modalTitle: "Edit " + toEditUser.fName + " " + toEditUser.mName,
+      isEdit: true
     });
 
     this.refs.addUserForm.setFieldsValue({
@@ -74,7 +75,6 @@ class Users extends React.Component {
   };
   onActivateDeActivate = id => {
     const toEditUser = this.props.allUsers.find(i => i.id === id);
-    debugger;
 
     this.props.onEditUser({
       ...this.props.allUsers.find(eachUser => eachUser.id === id)
@@ -94,15 +94,14 @@ class Users extends React.Component {
   onCancelSettingsModal = () => {
     this.setState({
       modalTitle: "Add User",
-      showAddUserModal: false
+      showAddUserModal: false,
+      isEdit: false
     });
   };
   onAddUser = values => {
-    debugger;
     let dateOfBirth = values.dateOfBirth;
     console.log("vvvvvvvv", values);
     if (values.id && values.id !== "") {
-      debugger;
       this.props.onEditUser({
         ...this.props.allUsers.find(user => user.id === values.id),
         id: values.id,
@@ -131,7 +130,9 @@ class Users extends React.Component {
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
         // corporate: values.corporate,
-        photo: values.photo
+        photo: values.photo,
+        password: values.password,
+        confirmPassword: values.password
       });
     }
 
@@ -246,6 +247,7 @@ class Users extends React.Component {
           </Row>
           {/* <FixedPlugin />  this is for search when be*/}
           <AddUserForm
+            isEdit={this.state.isEdit}
             title={this.state.modalTitle}
             onCancel={this.onCancelSettingsModal}
             onOk={this.onAddUser}

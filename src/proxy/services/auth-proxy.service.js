@@ -19,6 +19,7 @@ export class AuthProxyService {
       }
     });
   }
+
   async editUser(user: UserRegisterModel) {
     return await axios({
       method: "put",
@@ -38,6 +39,22 @@ export class AuthProxyService {
     return await axios({
       method: "get",
       url: `${BASE_URL}account/getUsers`,
+      config: {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-Type": "application/json"
+        }
+      }
+    });
+  }
+
+  async register(user: UserRegisterModel) {
+    console.log("Usssser", user);
+    debugger;
+    return await axios({
+      method: "post",
+      url: `${BASE_URL}account/register`,
+      data: user,
       config: {
         headers: {
           "Access-Control-Allow-Origin": "*",

@@ -19,6 +19,7 @@
 import Dashboard from "views/Dashboard.jsx";
 import Corporate from "views/Corporates/Corporate.jsx";
 import Users from "views/Users/Users.jsx";
+import { UserTypesScreen } from './views/user-types/user-types'
 import Notifications from "views/Notifications.jsx";
 import Icons from "views/Icons.jsx";
 import Typography from "views/Typography.jsx";
@@ -26,7 +27,7 @@ import TableList from "views/Tables.jsx";
 import Maps from "views/Map.jsx";
 import UserPage from "views/User.jsx";
 import { DefaultApplicationsScreen } from "./views/default-apps/default-applications-screen";
-import { CorporateDetailsScreen  } from "./views/CorporateDetails/corporate-details";
+import { CorporateDetailsScreen } from "./views/CorporateDetails/corporate-details";
 var routes = [
   {
     path: "/corporates/corporates",
@@ -55,6 +56,13 @@ var routes = [
     name: "Users",
     icon: "nc-icon nc-single-02",
     component: Users,
+    layout: "/admin"
+  },
+  {
+    path: "/users/types",
+    name: "User types",
+    icon: "nc-icon nc-circle-10",
+    component: UserTypesScreen,
     layout: "/admin"
   },
   {

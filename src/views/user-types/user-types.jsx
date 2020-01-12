@@ -205,7 +205,6 @@ class UserTypes extends React.Component {
                       dataSource={this.props.userTypes}
                       pagination={false}
                       onRowClick={rowData => {
-                        debugger;
                         console.log(this.props.history);
                         console.log("ROWKEY", rowData.id);
                       }}

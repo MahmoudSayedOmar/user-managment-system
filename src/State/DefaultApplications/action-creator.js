@@ -15,12 +15,10 @@ export async function tryGetAllDefaultApplications() {
   return async (dispatch, getState) => {
     dispatch(onGetAllDefaultApplications());
     const result = await defaultApplicationsProxyService.get();
-    // debugger;
     if (result.status === 200) {
-      
-      // debugger;
+
       dispatch(getAllDefaultApplicationsSuccess(result.data));
-      
+
     } else {
       dispatch(getAllDefaultApplicationsFail());
     }

@@ -54,12 +54,10 @@ export function onViewCompaniesFail(): ON_VIEW_COMPANIES_FAIL_ACTION {
 ///////////////
 export async function onAddCorporate(values) {
   return async (dispatch, getState) => {
-    debugger;
     let state = getState();
     let companies = state.companies.companies;
     dispatch({ type: types.ON_ADD_COMPANY_ACTION });
     let response = await corporateService.add(values);
-    debugger;
     if (response.status === 200) {
       response.data.registerationNo = response.data.registratioNo;
       companies.push(response.data);

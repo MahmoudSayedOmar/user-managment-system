@@ -48,7 +48,7 @@ export function onViewApplicationsPortofoliosFail(): ON_VIEW_APPLICATIONPORTOFOL
 
 export async function viewCorporateDetails(corporateId) {
   return async (dispatch, getState) => {
-    debugger;
+
 
     dispatch(SelectCorporate(corporateId));
 
@@ -61,7 +61,7 @@ export async function viewCorporateDetails(corporateId) {
     );
 
     if (response.status === 200) {
-      debugger;
+
       console.log("state", getState());
       console.log(response.data);
       dispatch(onViewApplicationsPortofoliosSuccess(response.data));
@@ -113,10 +113,10 @@ export async function addApplicationPortofolioToCorporate(
       corporateId
     );
     console.log(response);
-    debugger;
+
 
     if (response.status === 200) {
-      debugger;
+
       console.log(response.data);
       dispatch(onAddApplicationsPortofoliosSuccess(response.data));
     } else {

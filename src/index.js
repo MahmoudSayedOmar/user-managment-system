@@ -48,7 +48,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/login" component={LoginScreen} />
         <Route path="/admin" render={props => <AdminLayout {...props} />} />
-        {/* <Redirect to="/admin/dashboard" /> */}
+
         <Redirect to="/admin/corporates/corporates" />
       </Switch>
     </Router>

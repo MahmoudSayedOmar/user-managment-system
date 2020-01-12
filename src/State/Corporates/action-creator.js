@@ -30,7 +30,8 @@ export type ON_UPDATE_COMPANY_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_UPDATE_COMPANY_FAIL_ACTION = { type: String, payload: any };
 
 export async function onViewCompanies(): ON_VIEW_COMPANIES_ACTION {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    console.log(getState());
     var json = await corporateService.get();
     if (json.status === 200) {
       console.log(json.data);
@@ -55,10 +56,12 @@ export function onViewCompaniesFail(): ON_VIEW_COMPANIES_FAIL_ACTION {
 ///////////////
 export async function onAddCorporate(values) {
   return async (dispatch, getState) => {
+    debugger;
     let state = getState();
     let companies = state.companies.companies;
     dispatch({ type: types.ON_ADD_COMPANY_ACTION });
     let response = await corporateService.add(values);
+    debugger;
     if (response.status === 200) {
       companies.push(response.data);
       dispatch(onAddCompanySuccess(companies));

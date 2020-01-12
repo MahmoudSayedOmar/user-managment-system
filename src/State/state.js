@@ -12,12 +12,16 @@ import {
   defaultApplicationInitialState,
   defaultApplicationState
 } from "./DefaultApplications/state";
+
+import { modulesInitialState, ModulesState } from "./ExtraModules/state";
+
 export type State = {
   authorization: AuthorizationState,
   companies: companiesState,
   users: usersState,
   defaultApplications: defaultApplicationState,
-  applicationsPortofolios: applicationsPortofoliosState
+  applicationsPortofolios: applicationsPortofoliosState,
+  modules: ModulesState
 };
 
 export const initialState = {
@@ -25,5 +29,6 @@ export const initialState = {
   companies: companiesInitialState,
   users: usersInitialState,
   defaultApplications: defaultApplicationInitialState,
-  applicationsPortofolios: applicationsPortofoliosInitialState
+  applicationsPortofolios: applicationsPortofoliosInitialState,
+  modules: modulesInitialState
 };

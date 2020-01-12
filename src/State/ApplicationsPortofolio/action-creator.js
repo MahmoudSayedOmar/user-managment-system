@@ -1,6 +1,7 @@
 import * as types from "./actions";
 
-import { applicationsPortofoliosProxyService } from "../../proxy";
+import { applicationsPortofoliosProxyService } from "../../proxy/services";
+import { applicationsPortofoliosInitialState } from "./state";
 
 export type SELECT_COMPANY_ACTION = { type: String, payload: Number };
 
@@ -46,19 +47,23 @@ export function onViewApplicationsPortofoliosFail(): ON_VIEW_APPLICATIONPORTOFOL
 
 export async function viewCorporateDetails(corporateId) {
   return async (dispatch, getState) => {
+    debugger;
+
     dispatch(SelectCorporate(corporateId));
 
     //dispatch(onViewApplicationsPortofolios());
     // let state = getState();
     // let companies = state.companies.companies;
     // if(companies===[]){
-    const response = applicationsPortofoliosProxyService.getCorporateApplicationsPortofolios(
+    const response = await applicationsPortofoliosProxyService.getCorporateApplicationsPortofolios(
       corporateId
     );
 
     if (response.status === 200) {
+      debugger;
+      console.log("state", getState());
       console.log(response.data);
-      //dispatch(onViewApplicationsPortofoliosSuccess());
+      dispatch(onViewApplicationsPortofoliosSuccess(response.data));
     } else {
       dispatch(onViewApplicationsPortofoliosFail());
     }
@@ -80,8 +85,29 @@ export type ON_ADD_APPLICATIONPORTOFOLIO_FAIL_ACTION = {
   payload: String
 };
 
-export async function addApplicationPortofolioToCorporate() {
-  return async (dispatch, getState) => {};
+export async function addApplicationPortofolioToCorporate(
+  applicationPortofolio
+) {
+  return async (dispatch, getState) => {
+    dispatch(onAddApplicationsPortofolios());
+    const state = getState();
+    var corporateId = state.companies.selectedCompanyId;
+    console.log("applicationPortofolio", applicationPortofolio);
+    const response = await applicationsPortofoliosProxyService.addApplicationPortofolioToCorporate(
+      applicationPortofolio,
+      corporateId
+    );
+    console.log(response);
+    debugger;
+
+    if (response.status === 200) {
+      debugger;
+      console.log(response.data);
+      dispatch(onAddApplicationsPortofoliosSuccess(response.data));
+    } else {
+      dispatch(onAddApplicationsPortofoliosSuccess());
+    }
+  };
 }
 
 export function onAddApplicationsPortofolios(): ON_ADD_APPLICATIONPORTOFOLIO_ACTION {

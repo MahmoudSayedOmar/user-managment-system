@@ -26,7 +26,7 @@ import TableList from "views/Tables.jsx";
 import Maps from "views/Map.jsx";
 import UserPage from "views/User.jsx";
 import { DefaultApplicationsScreen } from "./views/default-apps/default-applications-screen";
-import { CorporateDetailsScreen  } from "./views/CorporateDetails/corporate-details";
+import { CorporateDetailsScreen } from "./views/CorporateDetails/corporate-details";
 var routes = [
   {
     path: "/corporates/corporates",
@@ -48,8 +48,7 @@ var routes = [
     icon: "nc-icon nc-app",
     component: CorporateDetailsScreen,
     layout: "/admin"
-  }
-  ,
+  },
   {
     path: "/users/users",
     name: "Users",

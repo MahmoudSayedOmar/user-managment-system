@@ -120,6 +120,7 @@ class Corporate extends React.Component {
         registerationNo: values.corporateRegisterationNumber
       });
     } else {
+      debugger;
       this.props.onAddCorporate({
         name: values.corporateName,
         phoneNo: values.corporatePhoneNumber,
@@ -248,8 +249,10 @@ class Corporate extends React.Component {
                       pagination={false}
                       onRowClick={rowData => {
                         debugger;
-                        console.log(this.props.history);
-                        console.log("ROWKEY", rowData.id);
+
+                        this.props.history.push("/admin/corporatedetails", {
+                          id: rowData.id
+                        });
                       }}
                     />
                   </div>

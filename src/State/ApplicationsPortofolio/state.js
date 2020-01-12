@@ -9,5 +9,5 @@ export interface applicationsPortofoliosState {
 export const applicationsPortofoliosInitialState: applicationsPortofoliosState = {
   applicationsPortofolios: [],
   selectedApplicationPortofolioId: undefined,
-  isLoaded: false
+  isLoaded: true
 };

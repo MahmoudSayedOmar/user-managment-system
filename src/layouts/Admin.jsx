@@ -19,7 +19,7 @@
 import React from "react";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 
@@ -62,11 +62,10 @@ class Dashboard extends React.Component {
         <div className="main-panel" ref={this.mainPanel}>
           <DemoNavbar {...this.props} routes={routes} />
           <Switch>
-            <Route
-              path={this.props.layout}
+            <Redirect
+              path={routes[0].layout}
               exact
-              component={routes[0].component}
-              key={0}
+              to={routes[0].layout + routes[0].path}
             />
             {routes.map((prop, key) => {
               return (

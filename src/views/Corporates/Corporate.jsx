@@ -95,7 +95,6 @@ class Corporate extends React.Component {
   };
 
   onAddCorporate = values => {
-    
     if (values.id && values.id !== "") {
       this.props.onUpdateCorporate({
         ...this.props.allCompanies.find(
@@ -134,13 +133,25 @@ class Corporate extends React.Component {
     {
       title: "Corporate Name",
       dataIndex: "name",
-      key: "name"
+      key: "name",
+      render: (name, row) => (
+        <span
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            this.props.history.push(`/admin/corporatedetails/${row.id}`, {
+              id: row.id
+            });
+          }}
+        >
+          {name}
+        </span>
+      )
     },
     {
       title: "Country - City",
       dataIndex: "country",
       key: "country",
-      render: (country, row) => <span>{country + " - " + row.city}</span>
+      render: (country, row) => <>{country + " - " + row.city}</>
     },
     {
       title: "Phone",
@@ -238,13 +249,6 @@ class Corporate extends React.Component {
                       columns={this.columns}
                       dataSource={this.props.allCompanies}
                       pagination={false}
-                      onRowClick={rowData => {
-                        debugger;
-
-                        this.props.history.push("/admin/corporatedetails", {
-                          id: rowData.id
-                        });
-                      }}
                     />
                   </div>
                 </CardBody>

@@ -23,7 +23,7 @@ export function defaultApplicationReducer(
     }
 
     case types.ON_GET_ALL_DEFAULTAPPLICATIONS_SUCCESS: {
-      // debugger;
+      //
       return {
         ...state,
         defaultApplications: action.payload,

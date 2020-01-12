@@ -11,7 +11,8 @@ import { tryGetAllModules } from "../../State/ExtraModules/action-creator";
 
 import {
   viewCorporateDetails,
-  addApplicationPortofolioToCorporate
+  addApplicationPortofolioToCorporate,
+  changeApplicationPortofolioActivationStatus
 } from "../../State/ApplicationsPortofolio/action-creator";
 
 class CorporateDetailsContainer extends React.Component {
@@ -29,7 +30,12 @@ class CorporateDetailsContainer extends React.Component {
     {
       title: "Base Application",
       dataIndex: "baseAPPId",
-      key: "baseAPPId"
+      key: "baseAPPId",
+      render: row => (
+        <span>
+          {this.props.baseApplications.find(obj => obj["id"] == row).title}
+        </span>
+      )
     },
     {
       title: "Extra Modules",
@@ -43,66 +49,65 @@ class CorporateDetailsContainer extends React.Component {
           })}
         </span>
       )
+    },
+
+    {
+      title: "Actions",
+      dataIndex: "isActive",
+      key: "isActive",
+      render: (eachKey, row) => (
+        <span>
+          {console.log(row.isActive)}
+          {row.isActive ? (
+            <Popconfirm
+              title="Are you sure deActivate this application portofolio?"
+              onConfirm={() => {
+                console.log("row", row);
+                console.log("Key", eachKey);
+                
+                this.props.changeApplicationPortofolioActivationStatus(
+                  row.id,
+                  false
+                );
+              }}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Tooltip placement="top" title="DeActivate">
+                <Icon
+                  type="eye"
+                  style={{
+                    paddingRight: "5px",
+                    fontSize: "20px",
+                    cursor: "pointer"
+                  }}
+                />
+              </Tooltip>
+            </Popconfirm>
+          ) : (
+            <Tooltip placement="top" title="Activate">
+              <Icon
+                type="eye-invisible"
+                style={{
+                  paddingRight: "5px",
+                  fontSize: "20px",
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  console.log("row", row);
+                  console.log("Key", eachKey);
+                  
+                  this.props.changeApplicationPortofolioActivationStatus(
+                    row.id,
+                    true
+                  );
+                }}
+              />
+            </Tooltip>
+          )}
+        </span>
+      )
     }
-
-    // {
-    //   title: "Actions",
-    //   dataIndex: "isActive",
-    //   key: "isActive",
-    //   render: (eachKey, row) => (
-    //     <span>
-    //       <Icon
-    //         type="edit"
-    //         style={{
-    //           fontSize: "20px",
-
-    //           cursor: "pointer",
-    //           paddingRight: "5px"
-    //         }}
-    //         onClick={() => this.onEditRow(row.id)}
-    //       />
-    //       {row.isActive ? (
-    //         <Popconfirm
-    //           title="Are you sure deActivate this Company?"
-    //           onConfirm={() => this.onDeactivateCoporate(row.id)}
-    //           okText="Yes"
-    //           cancelText="No"
-    //         >
-    //           <Tooltip placement="top" title="DeActivate">
-    //             <Icon
-    //               type="eye"
-    //               style={{
-    //                 paddingRight: "5px",
-    //                 fontSize: "20px",
-    //                 cursor: "pointer"
-    //               }}
-    //               // onClick={() => this.onDeleteRow()}
-    //             />
-    //           </Tooltip>
-    //         </Popconfirm>
-    //       ) : (
-    //         <Tooltip placement="top" title="Activate">
-    //           <Icon
-    //             type="eye-invisible"
-    //             style={{
-    //               paddingRight: "5px",
-    //               fontSize: "20px",
-    //               cursor: "pointer"
-    //             }}
-    //             onClick={() => this.onActivateDeActivate(row.id)}
-    //           />
-    //         </Tooltip>
-    //       )}
-
-    //       <Tooltip placement="top" title="Corporate Applications">
-    //         <Icon
-    //           type="file-add"
-    //           style={{ fontSize: "20px", cursor: "pointer" }}
-    //         />
-    //       </Tooltip>
-    //     </span>
-    //   )
-    // }
   ];
 
   static mapStatetToProps(state) {
@@ -120,7 +125,8 @@ class CorporateDetailsContainer extends React.Component {
       {
         viewCorporateDetails,
         addApplicationPortofolioToCorporate,
-        tryGetAllModules
+        tryGetAllModules,
+        changeApplicationPortofolioActivationStatus
       },
       dispatch
     );
@@ -133,7 +139,7 @@ class CorporateDetailsContainer extends React.Component {
   render() {
     //console.log(this.props);
     console.log("applicationsPortofolios", this.props.applicationsPortofolios);
-    debugger;
+    
     return (
       <>
         <div className="content">

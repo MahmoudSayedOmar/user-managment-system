@@ -11,4 +11,11 @@ export const ON_ADD_APPLICATIONPORTOFOLIO_SUCCESS =
 export const ON_ADD_APPLICATIONPORTOFOLIO_FAIL =
   "[application] on add application fail";
 
+export const ON_CHANGE_ACTIVATION_STATUS =
+  "[application] on change activation status Application";
+export const ON_CHANGE_ACTIVATION_STATUS_SUCCESS =
+  "[application] on change activation status success";
+export const ON_CHANGE_ACTIVATION_STATUS_FAIL =
+  "[application] on change activation status fail";
+
 export const SELECT_COMPANY = "[company] select company";

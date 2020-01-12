@@ -35,9 +35,8 @@ export async function viewUsers() {
     let state = getState();
     let users = state.users.users;
     let response = await authProxyService.getUsers();
-    debugger;
+
     if (response.status === 200) {
-      debugger;
       users.push(response.data);
       dispatch(onViewUsersSuccess(response.data));
     } else {
@@ -50,19 +49,15 @@ export async function viewUsers() {
 
 ////////////////////////////////////
 export async function onAddUser(values) {
-  debugger;
   return async (dispatch, getState) => {
     let state = getState();
     let users = state.users.users;
     let response = await authProxyService.register(values);
-    debugger;
+
     if (response.status === 200) {
-      debugger;
       users.push(response.data);
       dispatch(onAddUserSuccess(users));
-    }
-    else {
-      
+    } else {
       dispatch(onAddUserFail());
     }
     // users.push(values);
@@ -71,14 +66,13 @@ export async function onAddUser(values) {
 
 export async function onEditUser(values) {
   console.log("valuesss", values);
-  debugger;
+
   return async (dispatch, getState) => {
     // let state = getState();
     // let users = state.users.users;
     let response = await authProxyService.editUser(values);
-    debugger;
+
     if (response.status === 200) {
-      debugger;
       // users.push(response.data);
       dispatch(onUpdateUserSuccess(response.data));
     } else {

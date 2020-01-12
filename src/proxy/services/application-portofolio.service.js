@@ -18,7 +18,6 @@ export class ApplicationsPortofoliosProxyService {
     applicationPortofolio,
     corporateId
   ) {
-    debugger;
     return await axios({
       method: "post",
       url: `${BASE_URL}ApplicationPortoflios/add/${corporateId}`,
@@ -30,5 +29,33 @@ export class ApplicationsPortofoliosProxyService {
         }
       }
     });
+  }
+  async changeApplicationPortofolioActivationStatus(
+    applicationPortofolioId,
+    newStatus
+  ) {
+    if (newStatus) {
+      return await axios({
+        method: "put",
+        url: `${BASE_URL}ApplicationPortoflios/activate/${applicationPortofolioId}`,
+        config: {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "content-Type": "application/json"
+          }
+        }
+      });
+    } else {
+      return await axios({
+        method: "put",
+        url: `${BASE_URL}ApplicationPortoflios/deactivate/${applicationPortofolioId}`,
+        config: {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "content-Type": "application/json"
+          }
+        }
+      });
+    }
   }
 }

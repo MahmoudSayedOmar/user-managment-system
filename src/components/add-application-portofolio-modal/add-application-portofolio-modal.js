@@ -17,7 +17,8 @@ export default class AddApplicationPortofolioModal extends React.Component {
     this.state = {
       name: "",
       baseAPPId: undefined,
-      extraModules: []
+      extraModules: [],
+      isActive: true
     };
   }
 
@@ -37,18 +38,11 @@ export default class AddApplicationPortofolioModal extends React.Component {
     console.log(e.target.value);
     console.log(e.target.name);
     this.setState({ name: e.target.value });
-    debugger;
   }
 
   render() {
     const { Option } = Select;
     const { visible, modalText, onOk, onCancel } = this.props;
-    const extraModules = [];
-    for (let i = 10; i < 36; i++) {
-      extraModules.push(
-        <Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>
-      );
-    }
 
     return (
       <div>

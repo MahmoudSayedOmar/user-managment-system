@@ -20,7 +20,7 @@ export function moduleReducer(
     }
 
     case types.ON_GET_ALL_MODULES_SUCCESS: {
-      //debugger;
+      //
       return {
         ...state,
         modules: action.payload,

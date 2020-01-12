@@ -32,7 +32,6 @@ export class AuthProxyService {
   }
 
   async getUsers() {
-    debugger;
     return await axios({
       method: "get",
       url: `${BASE_URL}account/getUsers`,
@@ -46,8 +45,6 @@ export class AuthProxyService {
   }
 
   async register(user: UserRegisterModel) {
-    console.log("Usssser", user);
-    debugger;
     return await axios({
       method: "post",
       url: `${BASE_URL}account/register`,

@@ -110,7 +110,6 @@ class Corporate extends React.Component {
         registerationNo: values.corporateRegisterationNumber
       });
     } else {
-      debugger;
       this.props.onAddCorporate({
         name: values.corporateName,
         phoneNo: values.corporatePhoneNumber,

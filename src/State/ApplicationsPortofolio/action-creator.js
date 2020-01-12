@@ -48,8 +48,6 @@ export function onViewApplicationsPortofoliosFail(): ON_VIEW_APPLICATIONPORTOFOL
 
 export async function viewCorporateDetails(corporateId) {
   return async (dispatch, getState) => {
-    debugger;
-
     dispatch(SelectCorporate(corporateId));
 
     //dispatch(onViewApplicationsPortofolios());
@@ -61,7 +59,6 @@ export async function viewCorporateDetails(corporateId) {
     );
 
     if (response.status === 200) {
-      debugger;
       console.log("state", getState());
       console.log(response.data);
       dispatch(onViewApplicationsPortofoliosSuccess(response.data));
@@ -113,14 +110,12 @@ export async function addApplicationPortofolioToCorporate(
       corporateId
     );
     console.log(response);
-    debugger;
 
     if (response.status === 200) {
-      debugger;
-      console.log(response.data);
+      console.log("Response", response.data);
       dispatch(onAddApplicationsPortofoliosSuccess(response.data));
     } else {
-      dispatch(onAddApplicationsPortofoliosSuccess());
+      dispatch(onAddApplicationsPortofoliosFail());
     }
   };
 }
@@ -143,6 +138,61 @@ export function onAddApplicationsPortofoliosSuccess(
 export function onAddApplicationsPortofoliosFail(): ON_ADD_APPLICATIONPORTOFOLIO_FAIL_ACTION {
   return {
     type: types.ON_ADD_APPLICATIONPORTOFOLIO_FAIL,
+    payload: "Faild to Add application portofolio"
+  };
+}
+
+/***************************************/
+
+export type ON_CHANGE_ACTIVATION_STATUS_ACTION = { type: String };
+export type ON_CHANGE_ACTIVATION_STATUS_SUCCESS_ACTION = {
+  type: String,
+  payload: Object
+};
+export type ON_CHANGE_ACTIVATION_STATUS_FAIL_ACTION = {
+  type: String,
+  payload: String
+};
+
+export async function changeApplicationPortofolioActivationStatus(
+  applicationPortofolioId,
+  newStatus
+) {
+  return async (dispatch, getState) => {
+    dispatch(onChangeActivationStatus());
+    const response = await applicationsPortofoliosProxyService.changeApplicationPortofolioActivationStatus(
+      applicationPortofolioId,
+      newStatus
+    );
+    console.log(response);
+
+    if (response.status === 200) {
+      console.log("Response", response.data);
+      dispatch(onChangeActivationStatusSuccess(response.data));
+    } else {
+      dispatch(onChangeActivationStatusFail());
+    }
+  };
+}
+
+export function onChangeActivationStatus(): ON_CHANGE_ACTIVATION_STATUS_ACTION {
+  return {
+    type: types.ON_CHANGE_ACTIVATION_STATUS
+  };
+}
+
+export function onChangeActivationStatusSuccess(
+  applications: any
+): ON_CHANGE_ACTIVATION_STATUS_SUCCESS_ACTION {
+  return {
+    type: types.ON_CHANGE_ACTIVATION_STATUS_SUCCESS,
+    payload: applications
+  };
+}
+
+export function onChangeActivationStatusFail(): ON_CHANGE_ACTIVATION_STATUS_FAIL_ACTION {
+  return {
+    type: types.ON_CHANGE_ACTIVATION_STATUS_FAIL,
     payload: "Faild to Add application portofolio"
   };
 }

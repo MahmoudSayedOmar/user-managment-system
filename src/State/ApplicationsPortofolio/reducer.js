@@ -11,7 +11,10 @@ type Action =
   | actions.ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID_SUCCESS_ACTION
   | actions.ON_ADD_APPLICATIONPORTOFOLIO_ACTION
   | actions.ON_ADD_APPLICATIONPORTOFOLIO_FAIL_ACTION
-  | actions.ON_ADD_APPLICATIONPORTOFOLIO_SUCCESS_ACTION;
+  | actions.ON_ADD_APPLICATIONPORTOFOLIO_SUCCESS_ACTION
+  | actions.ON_CHANGE_ACTIVATION_STATUS_ACTION
+  | actions.ON_CHANGE_ACTIVATION_STATUS_SUCCESS_ACTION
+  | actions.ON_CHANGE_ACTIVATION_STATUS_FAIL_ACTION;
 
 export function applicationsPortofoliosReducer(
   state: applicationsPortofoliosState = applicationsPortofoliosInitialState,
@@ -32,6 +35,36 @@ export function applicationsPortofoliosReducer(
       };
     }
     case types.ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID_FAIL: {
+      return {
+        ...state
+      };
+    }
+    case types.ON_ADD_APPLICATIONPORTOFOLIO: {
+      return {
+        ...state
+      };
+    }
+    case types.ON_CHANGE_ACTIVATION_STATUS_SUCCESS:
+    case types.ON_ADD_APPLICATIONPORTOFOLIO_SUCCESS: {
+      console.log(action.payload);
+
+      return {
+        ...state,
+        applicationsPortofolios: action.payload
+      };
+    }
+    case types.ON_ADD_APPLICATIONPORTOFOLIO_FAIL: {
+      return {
+        ...state
+      };
+    }
+    case types.ON_CHANGE_ACTIVATION_STATUS: {
+      return {
+        ...state
+      };
+    }
+
+    case types.ON_CHANGE_ACTIVATION_STATUS_FAIL: {
       return {
         ...state
       };

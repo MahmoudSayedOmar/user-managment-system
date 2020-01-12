@@ -30,7 +30,7 @@ export class CorporateService {
     });
   }
   async update(value) {
-    // debugger;
+    //
 
     return await axios({
       method: "put",
@@ -46,7 +46,7 @@ export class CorporateService {
   }
 
   async deactivate(id) {
-    // debugger;
+    //
 
     return await axios({
       method: "post",
@@ -60,7 +60,7 @@ export class CorporateService {
     });
   }
   async activate(id) {
-    // debugger;
+    //
 
     return await axios({
       method: "post",

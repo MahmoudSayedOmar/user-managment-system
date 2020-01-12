@@ -29,7 +29,7 @@ class LoginContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn === true) {
-      this.props.location.push("/");
+      this.props.history.push("/admin");
     }
   }
   render() {

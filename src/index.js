@@ -49,9 +49,10 @@ ReactDOM.render(
       <Switch>
         <Route path="/login" component={LoginScreen} />
         <Route path="/userConfirm" component={UserConfirmScreen} />
+
         <Route path="/admin" render={props => <AdminLayout {...props} />} />
 
-        <Redirect to="/admin/corporates/corporates" />
+        <Redirect path="/" to="/login" />
       </Switch>
     </Router>
   </Provider>,

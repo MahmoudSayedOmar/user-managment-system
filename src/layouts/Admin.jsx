@@ -62,6 +62,12 @@ class Dashboard extends React.Component {
         <div className="main-panel" ref={this.mainPanel}>
           <DemoNavbar {...this.props} routes={routes} />
           <Switch>
+            <Route
+              path={this.props.layout}
+              exact
+              component={routes[0].component}
+              key={0}
+            />
             {routes.map((prop, key) => {
               return (
                 <Route

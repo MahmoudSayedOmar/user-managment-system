@@ -5,6 +5,7 @@ import { authorizationReducer } from "./Authorization/reducer";
 import { defaultApplicationReducer } from "./DefaultApplications/reducer";
 import { applicationsPortofoliosReducer } from "./ApplicationsPortofolio/reducer";
 import { moduleReducer } from "./ExtraModules/reducer";
+import { submitCodeReducer } from "./SubmitCode/reducer";
 import { userTypesReducer } from "./user-types/reducer";
 
 export const combinedReducer = combineReducers({
@@ -14,5 +15,6 @@ export const combinedReducer = combineReducers({
   defaultApplications: defaultApplicationReducer,
   applicationsPortofolios: applicationsPortofoliosReducer,
   module: moduleReducer,
+  submitCode: submitCodeReducer,
   userTypes: userTypesReducer
 });

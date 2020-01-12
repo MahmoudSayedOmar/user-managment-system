@@ -19,7 +19,7 @@
 import Dashboard from "views/Dashboard.jsx";
 import Corporate from "views/Corporates/Corporate.jsx";
 import Users from "views/Users/Users.jsx";
-import { UserTypesScreen } from './views/user-types/user-types'
+import { UserTypesScreen } from "./views/user-types/user-types";
 import Notifications from "views/Notifications.jsx";
 import Icons from "views/Icons.jsx";
 import Typography from "views/Typography.jsx";

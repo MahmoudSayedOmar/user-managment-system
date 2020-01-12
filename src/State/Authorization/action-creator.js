@@ -1,5 +1,5 @@
 import { UserLoginModel } from "../../proxy";
-import { authProxyService } from '../../proxy/services'
+import { authProxyService } from "../../proxy/services";
 import * as types from "./actions";
 
 export type ON_LOGIN_Action = { type: string };
@@ -10,8 +10,6 @@ export type LOGIN_SUCCESS_Action = {
 export type LOGIN_FAIL_Action = { type: string, payload: string };
 
 export async function tryLogin(user: UserLoginModel) {
-  debugger;
-
   return async dispatch => {
     dispatch(onLogin(user));
     try {
@@ -21,7 +19,7 @@ export async function tryLogin(user: UserLoginModel) {
       } else {
         dispatch(loginFail());
       }
-    } catch{
+    } catch {
       dispatch(loginFail());
     }
   };

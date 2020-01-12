@@ -1,5 +1,6 @@
 import { companiesInitialState, companiesState } from "./Corporates/state";
 import { usersInitialState, usersState } from "./Users/state";
+import { submitCodeInitialState, submitCodeState } from "./SubmitCode/state";
 import {
   AuthorizationInitialState,
   AuthorizationState
@@ -21,7 +22,8 @@ export type State = {
   users: usersState,
   defaultApplications: defaultApplicationState,
   applicationsPortofolios: applicationsPortofoliosState,
-  modules: ModulesState
+  modules: ModulesState,
+  submitCode: submitCodeState
 };
 
 export const initialState = {
@@ -30,5 +32,6 @@ export const initialState = {
   users: usersInitialState,
   defaultApplications: defaultApplicationInitialState,
   applicationsPortofolios: applicationsPortofoliosInitialState,
-  modules: modulesInitialState
+  modules: modulesInitialState,
+  submitCode: submitCodeInitialState
 };

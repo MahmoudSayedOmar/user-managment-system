@@ -6,29 +6,56 @@ import { connect } from "react-redux";
 import queryString from "query-string";
 // core components
 import "./UserConfirm.css";
-
+import { onSubmitCode } from "State/SubmitCode/action-creator";
 class UserConfirm extends React.Component {
+  state = {
+    confirmDirty: false
+  };
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        this.props.onSubmitCode(values);
         this.props.form.resetFields();
       }
     });
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.verified === true) {
+      this.props.history.push("/login");
+    }
+  }
   componentDidMount() {
-    console.log(this.props.location.search, "props");
     const urlVariables = queryString.parse(this.props.location.search);
-    console.log(urlVariables.email);
 
     if (urlVariables.email !== "") {
-      console.log("haha");
+      // console.log("haha");
       this.props.form.setFieldsValue({
         email: urlVariables.email
       });
     }
   }
+  handleConfirmBlur = e => {
+    const { value } = e.target;
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+  };
+  compareToFirstPassword = (rule, value, callback) => {
+    const { form } = this.props;
+    if (value && value !== form.getFieldValue("password")) {
+      callback("Two passwords that you enter is inconsistent!");
+    } else {
+      callback();
+    }
+  };
+  validateToNextPassword = (rule, value, callback) => {
+    const { form } = this.props;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(["confirm"], { force: true });
+    }
+    callback();
+  };
+
   render() {
     // if (this.props.params.email) {
     //   console.log(this.props.params.email);
@@ -47,9 +74,11 @@ class UserConfirm extends React.Component {
               />
             </div>
             <Form onSubmit={this.handleSubmit}>
-              <h3>Mail Confirmation</h3>
+              <h3>Mail Verification</h3>
 
-              <Form.Item>{getFieldDecorator("email", {})(<Input />)}</Form.Item>
+              <Form.Item style={{ display: "none" }}>
+                {getFieldDecorator("email", {})(<Input type="hidden" />)}
+              </Form.Item>
 
               <Form.Item>
                 {getFieldDecorator("code", {
@@ -61,6 +90,34 @@ class UserConfirm extends React.Component {
                     }
                   ]
                 })(<Input placeholder="code" />)}
+              </Form.Item>
+              <Form.Item label="Password">
+                {getFieldDecorator("password", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please input your password!"
+                    }
+                  ]
+                })(<Input.Password placeholder="Password" />)}
+              </Form.Item>
+              <Form.Item label="Confirm Password" hasFeedback>
+                {getFieldDecorator("confirm", {
+                  rules: [
+                    {
+                      required: true,
+                      message: "Please confirm your password!"
+                    },
+                    {
+                      validator: this.compareToFirstPassword
+                    }
+                  ]
+                })(
+                  <Input.Password
+                    onBlur={this.handleConfirmBlur}
+                    placeholder="Confirm Password"
+                  />
+                )}
               </Form.Item>
               <button type="submit" className="btn btn-primary btn-block">
                 Submit
@@ -77,11 +134,12 @@ class UserConfirm extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {};
+  console.log(state.submitCode, "submit state");
+  return { verified: state.submitCode.verified };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ onSubmitCode }, dispatch);
 }
 let UserForm = Form.create()(UserConfirm);
 export const UserConfirmScreen = connect(

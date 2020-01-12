@@ -18,15 +18,14 @@ export class LoginComponent extends React.Component {
   render() {
     return (
       <form
-        onSubmit={(e) => {
+        onSubmit={e => {
           e.preventDefault();
           this.props.tryLogin(this.state);
         }}
       >
         <h3>Sign In</h3>
         <center>
-
-          <h6 style={{ color: 'red' }} >{this.props.errorMessage}</h6>
+          <h6 style={{ color: "red" }}>{this.props.errorMessage}</h6>
         </center>
         <div className="form-group">
           <label>Email address</label>

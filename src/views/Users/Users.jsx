@@ -50,7 +50,8 @@ class Users extends React.Component {
     const toEditUser = this.props.allUsers.find(i => i.id === id);
 
     this.setState({
-      showAddUserModal: true
+      showAddUserModal: true,
+      isEdit: false
     });
     this.setState({
       modalTitle: "Edit " + toEditUser.fName + " " + toEditUser.mName,
@@ -88,7 +89,8 @@ class Users extends React.Component {
   onAddUserModal = () => {
     this.refs.addUserForm.resetFields();
     this.setState({
-      showAddUserModal: true
+      showAddUserModal: true,
+      isEdit: false
     });
   };
   onCancelSettingsModal = () => {
@@ -138,7 +140,8 @@ class Users extends React.Component {
 
     this.refs.addUserForm.resetFields();
     this.setState({
-      showAddUserModal: false
+      showAddUserModal: false,
+      isEdit: true
     });
   };
 

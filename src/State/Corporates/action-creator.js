@@ -58,7 +58,6 @@ export async function onAddCorporate(values) {
     let companies = state.companies.companies;
     dispatch({ type: types.ON_ADD_COMPANY_ACTION });
     let response = await corporateService.add(values);
-
     if (response.status === 200) {
       response.data.registerationNo = response.data.registratioNo;
       companies.push(response.data);
@@ -66,7 +65,6 @@ export async function onAddCorporate(values) {
     } else {
       dispatch(onAddCompanyFail());
     }
-    // companies.push(values);
   };
 }
 
@@ -144,7 +142,6 @@ export async function onDeactivateCorporate(id) {
     } else {
       dispatch(onDeactivateCorporateFail());
     }
-    // companies.push(values);
   };
 }
 
@@ -184,7 +181,6 @@ export async function onUpdateCorporate(values) {
     } else {
       dispatch(onUpdateCompnayFail());
     }
-    // companies.push(values);
   };
 }
 

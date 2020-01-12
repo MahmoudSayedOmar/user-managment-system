@@ -2,7 +2,6 @@ import { BASE_URL } from "../../http-client/constants";
 import axios from "axios";
 
 export class SubmitCodeProxyService {
-  debugger;
   async activatecode(values) {
     console.log(values, "values");
     console.log(values.username);

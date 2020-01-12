@@ -139,9 +139,6 @@ class CorporateDetailsContainer extends React.Component {
   }
 
   render() {
-    //console.log(this.props);
-    console.log("applicationsPortofolios", this.props.applicationsPortofolios);
-
     return (
       <>
         <div className="content">

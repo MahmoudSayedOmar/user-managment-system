@@ -49,40 +49,15 @@ export function onViewApplicationsPortofoliosFail(): ON_VIEW_APPLICATIONPORTOFOL
 export async function viewCorporateDetails(corporateId) {
   return async (dispatch, getState) => {
     dispatch(SelectCorporate(corporateId));
-
-    //dispatch(onViewApplicationsPortofolios());
-    // let state = getState();
-    // let companies = state.companies.companies;
-    // if(companies===[]){
     const response = await applicationsPortofoliosProxyService.getCorporateApplicationsPortofolios(
       corporateId
     );
-
     if (response.status === 200) {
-      console.log("state", getState());
-      console.log(response.data);
       dispatch(onViewApplicationsPortofoliosSuccess(response.data));
     } else {
       dispatch(onViewApplicationsPortofoliosFail());
     }
     dispatch(onViewApplicationsPortofolios());
-    // let state = getState();
-    // let companies = state.companies.companies;
-    // if(companies===[]){
-    // const response = applicationsPortofoliosProxyService.getCorporateApplicationsPortofolios(
-    //   corporateId
-    // );
-
-    // if (response.status === 200) {
-
-    //   //dispatch(onViewApplicationsPortofoliosSuccess());
-    // } else {
-    //   dispatch(onViewApplicationsPortofoliosFail());
-    // }
-    // }
-    // else{
-
-    // }
   };
 }
 
@@ -109,10 +84,7 @@ export async function addApplicationPortofolioToCorporate(
       applicationPortofolio,
       corporateId
     );
-    console.log(response);
-
     if (response.status === 200) {
-      console.log("Response", response.data);
       dispatch(onAddApplicationsPortofoliosSuccess(response.data));
     } else {
       dispatch(onAddApplicationsPortofoliosFail());
@@ -164,10 +136,7 @@ export async function changeApplicationPortofolioActivationStatus(
       applicationPortofolioId,
       newStatus
     );
-    console.log(response);
-
     if (response.status === 200) {
-      console.log("Response", response.data);
       dispatch(onChangeActivationStatusSuccess(response.data));
     } else {
       dispatch(onChangeActivationStatusFail());

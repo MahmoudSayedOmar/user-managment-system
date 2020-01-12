@@ -30,8 +30,6 @@ export class CorporateService {
     });
   }
   async update(value) {
-    //
-
     return await axios({
       method: "put",
       url: `${BASE_URL}corporates/edit/${value.id}`,
@@ -46,8 +44,6 @@ export class CorporateService {
   }
 
   async deactivate(id) {
-    //
-
     return await axios({
       method: "post",
       url: `${BASE_URL}corporates/deactivate/${id}`,
@@ -60,8 +56,6 @@ export class CorporateService {
     });
   }
   async activate(id) {
-    //
-
     return await axios({
       method: "post",
       url: `${BASE_URL}corporates/activate/${id}`,

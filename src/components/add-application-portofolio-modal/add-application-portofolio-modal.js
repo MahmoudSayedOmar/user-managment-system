@@ -35,8 +35,6 @@ export default class AddApplicationPortofolioModal extends React.Component {
     this.setState({ baseAPPId: value });
   }
   onChangeValue(e) {
-    console.log(e.target.value);
-    console.log(e.target.name);
     this.setState({ name: e.target.value });
   }
 

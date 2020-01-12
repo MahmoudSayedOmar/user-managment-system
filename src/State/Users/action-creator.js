@@ -35,7 +35,6 @@ export async function viewUsers() {
     let state = getState();
     let users = state.users.users;
     let response = await authProxyService.getUsers();
-
     if (response.status === 200) {
       users.push(response.data);
       dispatch(onViewUsersSuccess(response.data));
@@ -60,7 +59,6 @@ export async function onAddUser(values) {
     } else {
       dispatch(onAddUserFail());
     }
-    // users.push(values);
   };
 }
 
@@ -68,18 +66,19 @@ export async function onEditUser(values) {
   console.log("valuesss", values);
 
   return async (dispatch, getState) => {
-    // let state = getState();
-    // let users = state.users.users;
+    let state = getState();
+    let users = state.users.users;
     let response = await authProxyService.editUser(values);
 
     if (response.status === 200) {
-      // users.push(response.data);
-      dispatch(onUpdateUserSuccess(response.data));
+      const toEditIndex = users.findIndex(user => user.id == response.data.id);
+      users = [...state.users.users];
+      users[toEditIndex] = response.data;
+      dispatch(onUpdateUserSuccess(users));
     } else {
       console.log(response.statusText);
       dispatch(onUpdateUserFail());
     }
-    // users.push(values);
   };
 }
 

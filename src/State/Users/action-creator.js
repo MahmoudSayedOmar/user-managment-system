@@ -13,6 +13,21 @@ export type ON_ADD_USER_FAIL_ACTION = { type: String, payload: any };
 export type ON_UPDATE_USER_ACTION = { type: String };
 export type ON_UPDATE_USER_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_UPDATE_USER_FAIL_ACTION = { type: String, payload: any };
+////////////////
+export type ON_ACTIVATE_USER_ACTION = { type: String };
+export type ON_ACTIVATE_USER_SUCCESS_ACTION = {
+  type: String,
+  payload: any
+};
+export type ON_ACTIVATE_USER_FAIL_ACTION = { type: String, payload: any };
+
+//////////////////
+export type ON_DEACTIVATE_USER_ACTION = { type: String };
+export type ON_DEACTIVATE_USER_SUCCESS_ACTION = {
+  type: String,
+  payload: any
+};
+export type ON_DEACTIVATE_USER_FAIL_ACTION = { type: String, payload: any };
 
 export function onViewUsers(): ON_VIEW_USERS_ACTION {
   return { type: types.ON_VIEW_USERS };
@@ -118,6 +133,82 @@ export function onUpdateUserSuccess(
 export function onUpdateUserFail(): ON_UPDATE_USER_FAIL_ACTION {
   return {
     type: types.ON_ADD_USER_FAIL_ACTION,
+    payload: "connection error"
+  };
+}
+///////////////////////////////
+export async function onDeactivateUser(id) {
+  return async (dispatch, getState) => {
+    let state = getState();
+
+    let response = await authProxyService.deactivate(id);
+    console.log(response, "response");
+    if (response.status === 200) {
+      let users = state.users.users;
+      const toEditIndex = users.findIndex(user => user.id === id);
+
+      users = [...state.users.users]; // important to create a copy, otherwise you'll modify state outside of setState call
+      users[toEditIndex].isActive = !users[toEditIndex].isActive;
+
+      dispatch(onDeactivateUserSuccess(users));
+    } else {
+      dispatch(onDeactivateUserFail());
+    }
+    // companies.push(values);
+  };
+}
+
+export function onDeactivateUserSuccess(
+  users: usersModel
+): ON_DEACTIVATE_USER_SUCCESS_ACTION {
+  return {
+    type: types.ON_DEACTIVATE_USER_SUCCESS_ACTION,
+    payload: users
+  };
+}
+
+export function onDeactivateUserFail(): ON_DEACTIVATE_USER_FAIL_ACTION {
+  return {
+    type: types.ON_DEACTIVATE_USER_FAIL_ACTION,
+    payload: "connection error"
+  };
+}
+///////////////
+
+///////////////////////////////
+export async function onActivateUser(id) {
+  return async (dispatch, getState) => {
+    let state = getState();
+
+    let response = await authProxyService.activate(id);
+    console.log(response, "response");
+    if (response.status === 200) {
+      let users = state.users.users;
+      const toEditIndex = users.findIndex(user => user.id === id);
+
+      users = [...state.users.users]; // important to create a copy, otherwise you'll modify state outside of setState call
+      users[toEditIndex].isActive = !users[toEditIndex].isActive;
+
+      dispatch(onActivateUserSuccess(users));
+    } else {
+      dispatch(onActivateUserFail());
+    }
+    // companies.push(values);
+  };
+}
+
+export function onActivateUserSuccess(
+  users: usersModel
+): ON_ACTIVATE_USER_SUCCESS_ACTION {
+  return {
+    type: types.ON_ACTIVATE_USER_SUCCESS_ACTION,
+    payload: users
+  };
+}
+
+export function onActivateUserFail(): ON_ACTIVATE_USER_FAIL_ACTION {
+  return {
+    type: types.ON_ACTIVATE_USER_FAIL_ACTION,
     payload: "connection error"
   };
 }

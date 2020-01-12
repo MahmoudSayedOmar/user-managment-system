@@ -25,7 +25,13 @@ import { Button, Table, Popconfirm, Tooltip, Icon } from "antd";
 
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { onAddUser, onEditUser, viewUsers } from "State/Users/action-creator";
+import {
+  onAddUser,
+  onEditUser,
+  viewUsers,
+  onDeactivateUser,
+  onActivateUser
+} from "State/Users/action-creator";
 // core components
 import moment from "moment";
 import "./Users.css";
@@ -74,16 +80,11 @@ class Users extends React.Component {
       defaultLanguage: toEditUser.defaultLanguage
     });
   };
-  onActivateDeActivate = id => {
-    const toEditUser = this.props.allUsers.find(i => i.id === id);
-
-    this.props.onEditUser({
-      ...this.props.allUsers.find(eachUser => eachUser.id === id)
-      // actions: {
-      //   id: id,
-      //   active: !toEditUser.actions.active
-      // }
-    });
+  onDeactivate = id => {
+    this.props.onDeactivateUser(id);
+  };
+  onActivate = id => {
+    this.props.onActivateUser(id);
   };
 
   onAddUserModal = () => {
@@ -183,8 +184,8 @@ class Users extends React.Component {
           />
           {row.isActive ? (
             <Popconfirm
-              title="Are you sure deActivate this Company?"
-              onConfirm={() => this.onActivateDeActivate(id)}
+              title="Are you sure deActivate this User?"
+              onConfirm={() => this.onDeactivate(row.id)}
               okText="Yes"
               cancelText="No"
             >
@@ -209,7 +210,7 @@ class Users extends React.Component {
                   fontSize: "20px",
                   cursor: "pointer"
                 }}
-                onClick={() => this.onActivateDeActivate(id)}
+                onClick={() => this.onActivate(id)}
               />
             </Tooltip>
           )}
@@ -265,6 +266,7 @@ class Users extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state.users.users, "allusers");
   return {
     allUsers: state.users.users,
     allCoporates: state.companies.companies
@@ -277,7 +279,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
       viewUsers,
       // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
       onAddUser,
-      onEditUser
+      onEditUser,
+      onDeactivateUser,
+      onActivateUser
     },
     dispatch
   );

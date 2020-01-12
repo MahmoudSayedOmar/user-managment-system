@@ -17,6 +17,37 @@ export class AuthProxyService {
       }
     });
   }
+
+  async deactivate(id) {
+    // debugger;
+
+    return await axios({
+      method: "get",
+      url: `${BASE_URL}account/deactivate/${id}`,
+      config: {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-Type": "application/json"
+        }
+      }
+    });
+  }
+
+  async activate(id) {
+    // debugger;
+
+    return await axios({
+      method: "get",
+      url: `${BASE_URL}account/activate/${id}`,
+      config: {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-Type": "application/json"
+        }
+      }
+    });
+  }
+
   async editUser(user: UserRegisterModel) {
     return await axios({
       method: "put",

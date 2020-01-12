@@ -27,6 +27,11 @@ class LoginContainer extends React.Component {
     return bindActionCreators({ tryLogin }, dispatch);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isLoggedIn === true) {
+      this.props.location.push("/");
+    }
+  }
   render() {
     return (
       <div className="auth-wrapper">
@@ -42,8 +47,8 @@ class LoginContainer extends React.Component {
           {this.props.loading ? (
             "loading..."
           ) : (
-            <LoginComponent tryLogin={this.props.tryLogin} />
-          )}
+              <LoginComponent tryLogin={this.props.tryLogin} errorMessage={this.props.errorMessage} />
+            )}
         </div>
       </div>
     );

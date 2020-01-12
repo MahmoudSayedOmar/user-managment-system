@@ -5,6 +5,7 @@ import { authorizationReducer } from "./Authorization/reducer";
 import { defaultApplicationReducer } from "./DefaultApplications/reducer";
 import { applicationsPortofoliosReducer } from "./ApplicationsPortofolio/reducer";
 import { moduleReducer } from "./ExtraModules/reducer";
+import { userTypesReducer } from "./user-types/reducer";
 
 export const combinedReducer = combineReducers({
   authorization: authorizationReducer,
@@ -12,5 +13,6 @@ export const combinedReducer = combineReducers({
   users: usersReducer,
   defaultApplications: defaultApplicationReducer,
   applicationsPortofolios: applicationsPortofoliosReducer,
-  module: moduleReducer
+  module: moduleReducer,
+  userTypes: userTypesReducer
 });

@@ -1,4 +1,5 @@
 import { UserLoginModel } from "../../proxy";
+import { authProxyService } from '../../proxy/services'
 import * as types from "./actions";
 
 export type ON_LOGIN_Action = { type: string };
@@ -9,17 +10,24 @@ export type LOGIN_SUCCESS_Action = {
 export type LOGIN_FAIL_Action = { type: string, payload: string };
 
 export async function tryLogin(user: UserLoginModel) {
+  debugger;
+
   return async dispatch => {
-    dispatch(onLogin());
-    if (true) {
-      dispatch(loginSuccess());
-    } else {
+    dispatch(onLogin(user));
+    try {
+      let response = await authProxyService.login(user);
+      if (response.status === 200) {
+        dispatch(loginSuccess(response.data));
+      } else {
+        dispatch(loginFail());
+      }
+    } catch{
       dispatch(loginFail());
     }
   };
 }
-export function onLogin(): ON_LOGIN_Action {
-  return { type: types.ON_LOGIN };
+export function onLogin(user): ON_LOGIN_Action {
+  return { type: types.ON_LOGIN, payload: user };
 }
 
 export function loginSuccess(token): LOGIN_SUCCESS_Action {

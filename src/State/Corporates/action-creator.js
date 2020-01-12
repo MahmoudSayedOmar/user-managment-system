@@ -34,12 +34,10 @@ export async function onViewCompanies(): ON_VIEW_COMPANIES_ACTION {
     console.log(getState());
     var json = await corporateService.get();
     if (json.status === 200) {
-      console.log(json.data);
       dispatch(onViewCompaniesSuccess(json.data));
     } else {
       dispatch(onViewCompaniesFail());
     }
-    // console.log(json)
   };
 }
 export function onViewCompaniesSuccess(
@@ -63,10 +61,10 @@ export async function onAddCorporate(values) {
     let response = await corporateService.add(values);
     debugger;
     if (response.status === 200) {
+      response.data.registerationNo = response.data.registratioNo;
       companies.push(response.data);
       dispatch(onAddCompanySuccess(companies));
     } else {
-      console.log(response.statusText);
       dispatch(onAddCompanyFail());
     }
     // companies.push(values);
@@ -89,7 +87,6 @@ export function onAddCompanyFail(): ON_ADD_COMPANY_FAIL_ACTION {
 /////////////////////////////////
 
 export async function onActivateCorporate(id) {
-  console.log(id, "we are here");
   return async (dispatch, getState) => {
     let state = getState();
 
@@ -103,11 +100,9 @@ export async function onActivateCorporate(id) {
 
       companies = [...state.companies.companies]; // important to create a copy, otherwise you'll modify state outside of setState call
       companies[toEditIndex].isActive = !companies[toEditIndex].isActive;
-      // console.log(companies, "companies");
+
       dispatch(onActivateCorporateSuccess(companies));
     } else {
-      console.log("failed");
-      console.log(response.statusText);
       dispatch(onActivateCorporateFail());
     }
     // companies.push(values);
@@ -132,7 +127,6 @@ export function onActivateCorporateFail(): ON_ACTIVATE_COMPANY_FAIL_ACTION {
 
 /////////////////////////////////
 export async function onDeactivateCorporate(id) {
-  console.log(id, "we are here");
   return async (dispatch, getState) => {
     let state = getState();
 
@@ -146,11 +140,9 @@ export async function onDeactivateCorporate(id) {
 
       companies = [...state.companies.companies]; // important to create a copy, otherwise you'll modify state outside of setState call
       companies[toEditIndex].isActive = !companies[toEditIndex].isActive;
-      // console.log(companies, "companies");
+
       dispatch(onDeactivateCorporateSuccess(companies));
     } else {
-      console.log("failed");
-      console.log(response.statusText);
       dispatch(onDeactivateCorporateFail());
     }
     // companies.push(values);
@@ -178,13 +170,19 @@ export async function onUpdateCorporate(values) {
   return async (dispatch, getState) => {
     let state = getState();
     let companies = state.companies.companies;
+
     let response = await corporateService.update(values);
-    console.log(response, "respnose");
+
     if (response.status === 200) {
-      // companies.push(response.data);
+      response.data.registerationNo = response.data.registratioNo;
+      let companies = state.companies.companies;
+      const toEditIndex = companies.findIndex(
+        comp => comp.id === response.data.id
+      );
+      companies = [...state.companies.companies]; // important to create a copy, otherwise you'll modify state outside of setState call
+      companies[toEditIndex] = response.data;
       dispatch(onUpdateCompanySuccess(companies));
     } else {
-      console.log(response.statusText);
       dispatch(onUpdateCompnayFail());
     }
     // companies.push(values);

@@ -26,132 +26,98 @@ import { Button, Table, Icon, Popconfirm, Tooltip } from "antd";
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import {
-  onAddCorporate,
-  onDeactivateCorporate,
-  onActivateCorporate,
-  onUpdateCorporate
-} from "State/Corporates/action-creator";
+  onViewUserTypes,
+  onAddUserType,
+  onActivateUserType,
+  onDeactivateUserType,
+  onUpdateUserType
+} from "../../State/user-types/action-creator";
 // core components
-import "./Corporate.css";
-import AddCorpoateForm from "./AddCorpoateForm";
-import { onViewCompanies } from "State/Corporates/action-creator";
+import "./user-types.css";
+import { AddUserTypeForm } from "./add-user-form";
 
-class Corporate extends React.Component {
+class UserTypes extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      showAddCorporateModal: false,
-      modalTitle: "Add Corporate"
+      showAddUserTypeModal: false,
+      modalTitle: "Add Users type"
     };
   }
 
   componentDidMount() {
-    this.props.onViewCompanies();
+    this.props.onViewUserTypes(6);
   }
 
   onEditRow = id => {
-    const toEditCorporate = this.props.allCompanies.find(i => i.id === id);
+    const toEditUserType = this.props.userTypes.find(i => i.id === id);
 
-    // this.refs.addCorporateForm.setFieldsValue(toEditCorporate);
-    this.setState({ modalTitle: "Edit " + toEditCorporate.name });
-    this.refs.addCorporateForm.setFieldsValue({
-      id: toEditCorporate.id,
-      corporateName: toEditCorporate.name,
-      corporatePhoneNumber: toEditCorporate.phoneNo,
-      corporateAddress: toEditCorporate.address,
-      corporateCountry: toEditCorporate.country,
-      corporateCity: toEditCorporate.city,
-      corporatePostalCode: toEditCorporate.zip,
-      corporateRegisterationNumber: toEditCorporate.registerationNo
+    // this.refs.addUserTypeForm.setFieldsValue(toEditUserType);
+    this.setState({ modalTitle: "Edit " + toEditUserType.name });
+    this.refs.addUserTypeForm.setFieldsValue({
+      id: toEditUserType.id,
+      name: toEditUserType.name
     });
 
     this.setState({
-      showAddCorporateModal: true
+      showAddUserTypeModal: true
     });
   };
 
   onDeactivate = id => {
-    this.props.onDeactivateCorporate(id);
+    this.props.onDeactivateUserType(id);
   };
   onActivate = id => {
-    this.props.onActivateCorporate(id);
+    this.props.onActivateUserType(id);
   };
 
-  onAddCorporateModal = () => {
-    this.refs.addCorporateForm.resetFields();
+  onAddUserTypeModal = () => {
+    this.refs.addUserTypeForm.resetFields();
 
     this.setState({
-      modalTitle: "Add Corporate",
-      showAddCorporateModal: true
+      modalTitle: "Add User type",
+      showAddUserTypeModal: true
     });
   };
 
   onCancelSettingsModal = () => {
     this.setState({
-      modalTitle: "Add Corporate",
-      showAddCorporateModal: false
+      modalTitle: "Add User type",
+      showAddUserTypeModal: false
     });
   };
 
-  onAddCorporate = values => {
-    
+  onAddUserType = values => {
     if (values.id && values.id !== "") {
-      this.props.onUpdateCorporate({
+      this.props.onUpdateUserType({
         ...this.props.allCompanies.find(
           eachcompany => eachcompany.id === values.id
         ),
 
-        name: values.corporateName,
-        phoneNo: values.corporatePhoneNumber,
-        address: values.corporateAddress,
-        country: values.corporateCountry,
-        city: values.corporateCity,
-        zip: values.corporatePostalCode,
-        registerationNo: values.corporateRegisterationNumber
+        name: values.name
       });
     } else {
-      debugger;
-      this.props.onAddCorporate({
-        name: values.corporateName,
-        phoneNo: values.corporatePhoneNumber,
-        address: values.corporateAddress,
-        country: values.corporateCountry,
-        city: values.corporateCity,
-        zip: values.corporatePostalCode,
-        registratioNo: values.corporateRegisterationNumber
-      });
+      this.props.onAddUserType(
+        {
+          name: values.name
+        },
+        6
+      );
     }
 
-    this.refs.addCorporateForm.resetFields();
+    this.refs.addUserTypeForm.resetFields();
 
     this.setState({
-      showAddCorporateModal: false
+      showAddUserTypeModal: false
     });
   };
 
   columns = [
     {
-      title: "Corporate Name",
+      title: "User type",
       dataIndex: "name",
       key: "name"
-    },
-    {
-      title: "Country - City",
-      dataIndex: "country",
-      key: "country",
-      render: (country, row) => <span>{country + " - " + row.city}</span>
-    },
-    {
-      title: "Phone",
-      dataIndex: "phoneNo",
-      key: "phoneNo"
-    },
-
-    {
-      title: "Address",
-      key: "address",
-      dataIndex: "address"
     },
     {
       title: "Actions",
@@ -171,7 +137,7 @@ class Corporate extends React.Component {
           />
           {row.isActive ? (
             <Popconfirm
-              title="Are you sure deActivate this Company?"
+              title="Are you sure deActivate this User type?"
               onConfirm={() => this.onDeactivate(row.id)}
               okText="Yes"
               cancelText="No"
@@ -202,7 +168,7 @@ class Corporate extends React.Component {
             </Tooltip>
           )}
 
-          <Tooltip placement="top" title="Corporate Applications">
+          <Tooltip placement="top" title="Application User types">
             <Icon
               type="file-add"
               style={{ fontSize: "20px", cursor: "pointer" }}
@@ -226,9 +192,9 @@ class Corporate extends React.Component {
                       <Button
                         type="primary"
                         size="small"
-                        onClick={() => this.onAddCorporateModal()}
+                        onClick={() => this.onAddUserTypeModal()}
                       >
-                        Add Corporate
+                        Add User type
                       </Button>
                     </div>
                   </div>
@@ -236,14 +202,12 @@ class Corporate extends React.Component {
                     <Table
                       rowKey="id"
                       columns={this.columns}
-                      dataSource={this.props.allCompanies}
+                      dataSource={this.props.userTypes}
                       pagination={false}
                       onRowClick={rowData => {
                         debugger;
-
-                        this.props.history.push("/admin/corporatedetails", {
-                          id: rowData.id
-                        });
+                        console.log(this.props.history);
+                        console.log("ROWKEY", rowData.id);
                       }}
                     />
                   </div>
@@ -252,12 +216,12 @@ class Corporate extends React.Component {
             </Col>
           </Row>
           {/* <FixedPlugin />  this is for search when be*/}
-          <AddCorpoateForm
+          <AddUserTypeForm
             title={this.state.modalTitle}
             onCancel={this.onCancelSettingsModal}
-            onOk={this.onAddCorporate}
-            visible={this.state.showAddCorporateModal}
-            ref="addCorporateForm"
+            onOk={this.onAddUserType}
+            visible={this.state.showAddUserTypeModal}
+            ref="addUserTypeForm"
             media={this.props.medias}
             plugins={this.props.plugins}
           />
@@ -269,22 +233,24 @@ class Corporate extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    allCompanies: state.companies.companies
+    userTypes: state.userTypes.userTypes
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
-      onViewCompanies,
-      // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
-      onAddCorporate,
-      onDeactivateCorporate,
-      onUpdateCorporate,
-      onActivateCorporate
+      onViewUserTypes,
+      onAddUserType,
+      onActivateUserType,
+      onDeactivateUserType,
+      onUpdateUserType
     },
     dispatch
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Corporate);
+export const UserTypesScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserTypes);

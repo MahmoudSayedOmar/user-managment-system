@@ -35,6 +35,7 @@ export default Form.create()(
       return e && e.fileList;
     };
     render() {
+      console.log(this.props)
       const Option = Select.Option;
       const { getFieldDecorator, getFieldValue } = this.props.form;
       const formItemLayout = {
@@ -57,6 +58,11 @@ export default Form.create()(
         } else {
           callback();
         }
+      };
+
+      const confirmPassword = (rule, value, callback) => {
+        callback();
+        return
       };
       let FormItems = (
         <Form>
@@ -140,13 +146,33 @@ export default Form.create()(
             })(
               <Select
                 placeholder="default Language"
-                // onChange={this.handleSelectChange}
+              // onChange={this.handleSelectChange}
               >
                 <Option value="english">English</Option>
                 <Option value="arabic">Arabic</Option>
               </Select>
             )}
           </Form.Item>
+
+          {!this.props.isEdit && <Form.Item {...formItemLayout} label="Password">
+            {getFieldDecorator("password", {
+              rules: [
+                { required: true, message: "Please Enter Password Number!" },
+                { validator: onlyNumbers }
+              ]
+            })(<Input placeholder="Password " />)}
+          </Form.Item>
+          }
+          {
+            !this.props.isEdit && <Form.Item {...formItemLayout} label="Confirm password" >
+              {getFieldDecorator("password", {
+                rules: [
+                  { required: true, message: "Please re-enter Password Number!" },
+                  { validator: confirmPassword }
+                ]
+              })(<Input placeholder="Confirm Password" />)}
+            </Form.Item>
+          }
           {/* <Form.Item {...formItemLayout} label="Choose Coporate">
             {getFieldDecorator("corporate", {
               rules: [{ required: true, message: "Please choose a coporate!" }]
@@ -170,8 +196,8 @@ export default Form.create()(
           {getFieldValue("imageURL") && getFieldValue("imageURL") !== "" ? (
             <Form.Item {...formItemLayout}>"image url"</Form.Item>
           ) : (
-            ""
-          )}
+              ""
+            )}
           <FormItem style={{ display: "none" }}>
             {getFieldDecorator("imageURL")(<Input type="hidden" />)}
           </FormItem>

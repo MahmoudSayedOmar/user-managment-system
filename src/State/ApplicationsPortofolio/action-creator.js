@@ -23,6 +23,7 @@ export function SelectCorporate(corporateId): SELECT_COMPANY_ACTION {
     payload: corporateId
   };
 }
+
 export function onViewApplicationsPortofolios(): ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID_ACTION {
   return {
     type: types.ON_VIEW_APPLICATIONPORTOFOLIO_BY_CORPORATE_ID
@@ -67,6 +68,20 @@ export async function viewCorporateDetails(corporateId) {
     } else {
       dispatch(onViewApplicationsPortofoliosFail());
     }
+    dispatch(onViewApplicationsPortofolios());
+    // let state = getState();
+    // let companies = state.companies.companies;
+    // if(companies===[]){
+    // const response = applicationsPortofoliosProxyService.getCorporateApplicationsPortofolios(
+    //   corporateId
+    // );
+
+    // if (response.status === 200) {
+
+    //   //dispatch(onViewApplicationsPortofoliosSuccess());
+    // } else {
+    //   dispatch(onViewApplicationsPortofoliosFail());
+    // }
     // }
     // else{
 
@@ -131,4 +146,3 @@ export function onAddApplicationsPortofoliosFail(): ON_ADD_APPLICATIONPORTOFOLIO
     payload: "Faild to Add application portofolio"
   };
 }
-/***************************************/

@@ -35,7 +35,7 @@ import {
 // core components
 import "./user-types.css";
 import { AddUserTypeForm } from "./add-user-form";
-
+const APP_PORTFOLIOID = 2;
 class UserTypes extends React.Component {
   constructor(props) {
     super(props);
@@ -47,7 +47,7 @@ class UserTypes extends React.Component {
   }
 
   componentDidMount() {
-    this.props.onViewUserTypes(6);
+    this.props.onViewUserTypes(APP_PORTFOLIOID);
   }
 
   onEditRow = id => {
@@ -102,7 +102,7 @@ class UserTypes extends React.Component {
         {
           name: values.name
         },
-        6
+        APP_PORTFOLIOID
       );
     }
 

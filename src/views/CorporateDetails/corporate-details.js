@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 
 import ApplicationsPortofoliosListingComponent from "../../components/application-portofolio/application-portofolio";
 import { tryGetAllModules } from "../../State/ExtraModules/action-creator";
-
+import { tryGetAllDefaultApplications } from "../../State/DefaultApplications/action-creator";
 import {
   viewCorporateDetails,
   addApplicationPortofolioToCorporate,
@@ -64,7 +64,7 @@ class CorporateDetailsContainer extends React.Component {
               onConfirm={() => {
                 console.log("row", row);
                 console.log("Key", eachKey);
-                
+
                 this.props.changeApplicationPortofolioActivationStatus(
                   row.id,
                   false
@@ -96,7 +96,7 @@ class CorporateDetailsContainer extends React.Component {
                 onClick={() => {
                   console.log("row", row);
                   console.log("Key", eachKey);
-                  
+
                   this.props.changeApplicationPortofolioActivationStatus(
                     row.id,
                     true
@@ -126,7 +126,8 @@ class CorporateDetailsContainer extends React.Component {
         viewCorporateDetails,
         addApplicationPortofolioToCorporate,
         tryGetAllModules,
-        changeApplicationPortofolioActivationStatus
+        changeApplicationPortofolioActivationStatus,
+        tryGetAllDefaultApplications
       },
       dispatch
     );
@@ -134,12 +135,13 @@ class CorporateDetailsContainer extends React.Component {
   componentDidMount() {
     this.props.viewCorporateDetails(this.props.location.state.id);
     this.props.tryGetAllModules();
+    this.props.tryGetAllDefaultApplications();
   }
 
   render() {
     //console.log(this.props);
     console.log("applicationsPortofolios", this.props.applicationsPortofolios);
-    
+
     return (
       <>
         <div className="content">

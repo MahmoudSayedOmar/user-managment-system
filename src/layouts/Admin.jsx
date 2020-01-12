@@ -22,6 +22,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
+import { CorporateDetailsScreen } from "../views/CorporateDetails/corporate-details";
 
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
@@ -76,6 +77,10 @@ class Dashboard extends React.Component {
                 />
               );
             })}
+            <Route
+              path="/admin/corporatedetails"
+              component={CorporateDetailsScreen}
+            />
           </Switch>
         </div>
       </div>

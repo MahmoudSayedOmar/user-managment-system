@@ -17,31 +17,23 @@ export default Form.create()(
   class AddApplicationPortofolioModal extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {
-        name: "",
-        baseAPPId: undefined,
-        extraModules: [],
-        isActive: true
-      };
     }
+    onOk = () => {
+      this.props.form.validateFields((err, values) => {
+        if (!err) {
+          this.props.onOk({
+            name: values.applicationportofolio,
+            baseAPPId: values.baseapplictaion,
+            extraModules: _.map(values.extramodules, extraModule => {
+              return { moduleId: extraModule };
+            }),
 
-    handleChange(value) {
-      var selectedModules = [];
-      value.forEach(selectValue => {
-        selectedModules.push({ moduleId: selectValue });
+            isActive: true
+          });
+          this.props.form.resetFields();
+        }
       });
-
-      this.setState({ extraModules: selectedModules });
-    }
-    onChange(value) {
-      console.log(value);
-      this.setState({ baseAPPId: value });
-    }
-    onChangeValue(e) {
-      console.log(e.target.value);
-      console.log(e.target.name);
-      this.setState({ name: e.target.value });
-    }
+    };
 
     render() {
       const { getFieldDecorator } = this.props.form;
@@ -66,9 +58,7 @@ export default Form.create()(
               <Modal
                 title="New Application Portofolio"
                 visible={visible}
-                onOk={() => {
-                  onOk(this.state);
-                }}
+                onOk={this.onOk}
                 onCancel={onCancel}
               >
                 <Form>
@@ -102,7 +92,10 @@ export default Form.create()(
                       <Select placeholder="Select Base Application">
                         {_.map(context.baseApplications, baseApplication => {
                           return (
-                            <Option value={baseApplication.id}>
+                            <Option
+                              key={baseApplication.id}
+                              value={baseApplication.id}
+                            >
                               {baseApplication.title}
                             </Option>
                           );
@@ -123,7 +116,6 @@ export default Form.create()(
                       <Select
                         mode="multiple"
                         placeholder="Please select your extra modules"
-                        onChange={this.handleChange.bind(this)}
                       >
                         {_.map(context.modules, module => {
                           return (

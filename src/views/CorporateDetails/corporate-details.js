@@ -31,9 +31,12 @@ class CorporateDetailsContainer extends React.Component {
       title: "Base Application",
       dataIndex: "baseAPPId",
       key: "baseAPPId",
-      render: row => (
+      render: (baseAPPId, row) => (
         <span>
-          {this.props.baseApplications.find(obj => obj["id"] == row).title}
+          {this.props.baseApplications.find(obj => obj.id === baseAPPId)
+            ? this.props.baseApplications.find(obj => obj.id === baseAPPId)
+                .title
+            : ""}
         </span>
       )
     },
@@ -45,7 +48,11 @@ class CorporateDetailsContainer extends React.Component {
         <span>
           {" "}
           {_.map(extraModules, module => {
-            return <Tag color="blue">{module.module.name}</Tag>;
+            return (
+              <Tag color="blue" key={module.module.id}>
+                {module.module.name}
+              </Tag>
+            );
           })}
         </span>
       )
@@ -111,8 +118,10 @@ class CorporateDetailsContainer extends React.Component {
   ];
 
   static mapStatetToProps(state) {
+    console.log(state.defaultApplications.defaultApplications, "applicstios");
     return {
       // selectedCompany: state.companies.selectedCompany,
+
       applicationsPortofolios:
         state.applicationsPortofolios.applicationsPortofolios,
       baseApplications: state.defaultApplications.defaultApplications,

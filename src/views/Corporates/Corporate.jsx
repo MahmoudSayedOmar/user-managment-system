@@ -137,12 +137,9 @@ class Corporate extends React.Component {
         <span
           style={{ cursor: "pointer" }}
           onClick={() => {
-            console.log(this.props.history);
-
             this.props.history.push(`/admin/corporatedetails/${row.id}`, {
               id: row.id
             });
-            console.log(this.props.history);
           }}
         >
           {name}

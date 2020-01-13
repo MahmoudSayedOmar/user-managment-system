@@ -18,6 +18,8 @@ export class ApplicationsPortofoliosProxyService {
     applicationPortofolio,
     corporateId
   ) {
+    debugger;
+
     return await axios({
       method: "post",
       url: `${BASE_URL}ApplicationPortoflios/add/${corporateId}`,

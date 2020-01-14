@@ -28,12 +28,14 @@ export default Form.create()(
       this.props.onChangeCorporate(value);
     };
     onChangeUserApplications = value => {
-      this.props.onChangeApplications(value);
+      if (value && value.length > 0) {
+        this.props.onChangeApplications(value);
+      }
     };
     onChanngeUsersTypes = value => {
-      console.log(value)
+      console.log(value);
       // this.props.onChanngeUsersTypes(value);
-    }
+    };
     onChangeUsersTypes = value => {
       console.log(value);
       // this.setState({ value });
@@ -274,7 +276,6 @@ export default Form.create()(
                 mode="multiple"
                 placeholder="Choose Applications"
                 onChange={this.onChangeUserApplications}
-
               >
                 {corporateApplicationsOptions}
               </Select>

@@ -18,8 +18,9 @@ export class UserTypesService {
 
   async getByArray(appPortoflioId) {
     return await axios({
-      method: "get",
-      url: `${BASE_URL}usertypes/getall/${appPortoflioId}`,
+      method: "post",
+      url: `${BASE_URL}usertypes/UserTypesByApplicationIds`,
+      data: appPortoflioId,
       config: {
         headers: {
           "Access-Control-Allow-Origin": "*",

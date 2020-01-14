@@ -32,6 +32,9 @@ import {
   onDeactivateUser,
   onActivateUser
 } from "State/Users/action-creator";
+import { onViewCompanies } from "State/Corporates/action-creator";
+import { viewCorporateDetails } from "State/ApplicationsPortofolio/action-creator";
+import { onViewUserTypesArray } from "../../State/user-types/action-creator";
 // core components
 import moment from "moment";
 import "./Users.css";
@@ -50,6 +53,9 @@ class Users extends React.Component {
 
   componentDidMount() {
     this.props.viewUsers();
+    this.props.onViewCompanies();
+    // this.props.viewCorporateDetails(this.props.location.state.id);
+    // this.props.onViewUserTypes(2);
   }
 
   onEditRow = id => {
@@ -94,6 +100,13 @@ class Users extends React.Component {
       isEdit: false
     });
   };
+  onChangeCorporate = value => {
+    this.props.viewCorporateDetails(value);
+  };
+  onChangeApplications = value => {
+    console.log(value, "value");
+    this.props.onViewUserTypesArray(value);
+  };
   onCancelSettingsModal = () => {
     this.setState({
       modalTitle: "Add User",
@@ -102,8 +115,9 @@ class Users extends React.Component {
     });
   };
   onAddUser = values => {
+    // console.log(values, "values");
     let dateOfBirth = values.dateOfBirth;
-    console.log("vvvvvvvv", values);
+
     if (values.id && values.id !== "") {
       this.props.onEditUser({
         ...this.props.allUsers.find(user => user.id === values.id),
@@ -258,6 +272,10 @@ class Users extends React.Component {
             visible={this.state.showAddUserModal}
             ref="addUserForm"
             allCoporates={this.props.allCoporates}
+            userTypes={this.props.userTypes}
+            applicationsPortofolios={this.props.applicationsPortofolios}
+            onChangeCorporate={value => this.onChangeCorporate(value)}
+            onChangeApplications={value => this.onChangeApplications(value)}
           />
         </div>
       </>
@@ -266,22 +284,26 @@ class Users extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.users.users, "allusers");
   return {
+    userTypes: state.userTypes.userTypes,
     allUsers: state.users.users,
-    allCoporates: state.companies.companies
+    allCoporates: state.companies.companies,
+    applicationsPortofolios:
+      state.applicationsPortofolios.applicationsPortofolios
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(
     {
+      onViewCompanies,
       viewUsers,
-      // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
+      viewCorporateDetails,
       onAddUser,
       onEditUser,
       onDeactivateUser,
-      onActivateUser
+      onActivateUser,
+      onViewUserTypesArray
     },
     dispatch
   );

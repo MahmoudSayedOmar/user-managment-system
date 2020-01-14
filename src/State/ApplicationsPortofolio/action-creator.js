@@ -79,8 +79,7 @@ export async function addApplicationPortofolioToCorporate(
     dispatch(onAddApplicationsPortofolios());
     const state = getState();
     var corporateId = state.companies.selectedCompanyId;
-    console.log("applicationPortofolio", applicationPortofolio);
-    debugger;
+
     const response = await applicationsPortofoliosProxyService.addApplicationPortofolioToCorporate(
       applicationPortofolio,
       corporateId

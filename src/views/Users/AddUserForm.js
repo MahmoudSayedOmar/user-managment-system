@@ -8,20 +8,62 @@ import {
   Icon,
   Radio,
   DatePicker,
-  Select
+  Select,
+  TreeSelect
 } from "antd";
+import axios from "axios";
+import { BASE_URL } from "../../http-client/constants";
 
 const FormItem = Form.Item;
-
+const { TreeNode } = TreeSelect;
 export default Form.create()(
   class ImportMediaForm extends React.Component {
+    state = {
+      value: undefined,
+      userRolesOptions:[]
+    };
     static defaultProps = {};
 
     onCancel = () => {
       this.props.onCancel();
     };
+    onChangeUserCorporate = value => {
+      this.props.onChangeCorporate(value);
+    };
+    onChangeUserApplications = value => {
+      if (value && value.length > 0) {
+        this.props.onChangeApplications(value);
+      }
+    };
+      async  onChangeUsersTypes (value)   {
+        console.log(value);
+        if(value && value.length > 0)
+        {
+          var json = await this.get(value);
+         
+          this.setState ({userRolesOptions:<><Select.Option key="1" value="2">
+          aaa
+        </Select.Option>
+        </>})  
 
-    onOk = () => {
+        // this.props.onChanngeUsersTypes(value);
+      }
+    }
+
+    async get(userTypesIds) {
+      return await axios({
+        method: "post",
+        url: `${BASE_URL}usertypes/userRolesById`,
+        data:userTypesIds,
+        config: {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "content-Type": "application/json"
+          }
+        }
+      });
+    };
+  onOk = () => {
       this.props.form.validateFields((err, values) => {
         if (!err) {
           this.props.onOk(values);
@@ -35,18 +77,77 @@ export default Form.create()(
       return e && e.fileList;
     };
     render() {
-      console.log(this.props)
       const Option = Select.Option;
       const { getFieldDecorator, getFieldValue } = this.props.form;
+
       const formItemLayout = {
         labelCol: { span: 8 },
         wrapperCol: { span: 15 }
       };
-      let corporates = this.props.allCoporates.map(eachCoporate => (
+
+      let corporatesOptions = this.props.allCoporates.map(eachCoporate => (
         <Option key={eachCoporate.id} value={eachCoporate.id}>
-          {eachCoporate.corporateName}
+          {eachCoporate.name}
         </Option>
       ));
+      let corporateApplicationsOptions = this.props.applicationsPortofolios.map(
+        eachApp => (
+          <Option key={eachApp.id} value={eachApp.id}>
+            {eachApp.name}
+          </Option>
+        )
+      );
+      let userTypesOptions = this.props.userTypes.map(eachApp => {
+        // console.log(
+        //   this.props.form.getFieldValue("userApplications"),
+        //   "hahahah"
+        // );
+        return (
+          <Option key={eachApp.id} value={eachApp.id}>
+            {eachApp.name}
+          </Option>
+        );
+      });
+      // let userTypesOptions =
+      //   this.props.form.getFieldValue("userApplications") &&
+      //   this.props.form.getFieldValue("userApplications").length > 0
+      //     ? this.props.form
+      //         .getFieldValue("userApplications")
+      //         .map((eachApp, index) => {
+      //           return (
+      //             <TreeNode
+      //               value={eachApp.id}
+      //               title={eachApp.name}
+      //               key={index}
+      //               disabled
+      //             >
+      //               <TreeNode value="leaf1" title="my leaf" key="random" />
+      //               <TreeNode value="leaf2" title="your leaf" key="random1" />
+      //             </TreeNode>
+      //           );
+      //         })
+      //     : "";
+
+      // let userTypesOptions = (
+      //   <TreeNode value="user Types" title="parent 1" key="0-1" disabled>
+      //     <TreeNode value="parent 1-0" title="parent 1-0" key="0-1-1" disabled>
+      //       <TreeNode value="leaf1" title="my leaf" key="random" />
+      //       <TreeNode value="leaf2" title="your leaf" key="random1" />
+      //     </TreeNode>
+      //     <TreeNode
+      //       value="parent 1-1"
+      //       title="parent 1-1"
+      //       key="random2"
+      //       disabled
+      //     >
+      //       <TreeNode
+      //         value="sss"
+      //         title={<b style={{ color: "#08c" }}>sss</b>}
+      //         key="random3"
+      //       />
+      //     </TreeNode>
+      //   </TreeNode>
+      // );
 
       const onlyNumbers = (rule, value, callback) => {
         if (value && isNaN(value)) {
@@ -62,7 +163,7 @@ export default Form.create()(
 
       const confirmPassword = (rule, value, callback) => {
         callback();
-        return
+        return;
       };
       let FormItems = (
         <Form>
@@ -146,7 +247,7 @@ export default Form.create()(
             })(
               <Select
                 placeholder="default Language"
-              // onChange={this.handleSelectChange}
+                // onChange={this.handleSelectChange}
               >
                 <Option value="english">English</Option>
                 <Option value="arabic">Arabic</Option>
@@ -154,31 +255,97 @@ export default Form.create()(
             )}
           </Form.Item>
 
-          {!this.props.isEdit && <Form.Item {...formItemLayout} label="Password">
-            {getFieldDecorator("password", {
-              rules: [
-                { required: true, message: "Please Enter Password Number!" },
-                { validator: onlyNumbers }
-              ]
-            })(<Input placeholder="Password " />)}
-          </Form.Item>
-          }
-          {
-            !this.props.isEdit && <Form.Item {...formItemLayout} label="Confirm password" >
+          {!this.props.isEdit && (
+            <Form.Item {...formItemLayout} label="Password">
               {getFieldDecorator("password", {
                 rules: [
-                  { required: true, message: "Please re-enter Password Number!" },
+                  { required: true, message: "Please Enter Password Number!" },
+                  { validator: onlyNumbers }
+                ]
+              })(<Input placeholder="Password " />)}
+            </Form.Item>
+          )}
+          {!this.props.isEdit && (
+            <Form.Item {...formItemLayout} label="Confirm password">
+              {getFieldDecorator("password", {
+                rules: [
+                  {
+                    required: true,
+                    message: "Please re-enter Password Number!"
+                  },
                   { validator: confirmPassword }
                 ]
               })(<Input placeholder="Confirm Password" />)}
             </Form.Item>
-          }
-          {/* <Form.Item {...formItemLayout} label="Choose Coporate">
-            {getFieldDecorator("corporate", {
+          )}
+          <Form.Item {...formItemLayout} label="Choose Coporate">
+            {getFieldDecorator("userCoporate", {
               rules: [{ required: true, message: "Please choose a coporate!" }]
-            })(<Select placeholder="Choose Corporate">{corporates}</Select>)}
-          </Form.Item> */}
-
+            })(
+              <Select
+                onChange={this.onChangeUserCorporate}
+                placeholder="Choose Corporate"
+              >
+                {corporatesOptions}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item {...formItemLayout} label="Choose App. Portofilio">
+            {getFieldDecorator(
+              "userApplications",
+              {}
+            )(
+              <Select
+                mode="multiple"
+                placeholder="Choose Applications"
+                onChange={this.onChangeUserApplications}
+              >
+                {corporateApplicationsOptions}
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item {...formItemLayout} label="User Types">
+            {getFieldDecorator(
+              "userTypes",
+              {}
+            )(
+              <Select
+                mode="multiple"
+                placeholder="Choose User Types"
+                onChange={this.onChangeUsersTypes}
+              >
+                {userTypesOptions}
+              </Select>
+              
+            )}
+          </Form.Item>
+          <Form.Item {...formItemLayout} label="User Roles">
+            {getFieldDecorator(
+              "userRoles",
+              {}
+            )(
+              <Select
+                mode="multiple"
+                placeholder="Choose User Roles"
+              
+              >
+                {this.state.userRolesOptions}
+              </Select>
+              // <TreeSelect
+              //   showSearch
+              //   style={{ width: "100%" }}
+              //   value={this.state.value}
+              //   dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+              //   placeholder="Choose UserTypes"
+              //   allowClear
+              //   multiple
+              //   treeDefaultExpandAll
+              //   onChange={this.onChangeUsersTypes}
+              // >
+              //   {userTypesOptions}
+              // </TreeSelect>
+            )}
+          </Form.Item>
           <Form.Item {...formItemLayout} label="Photo">
             {getFieldDecorator("upload", {
               // rules: [{ required: true }],
@@ -196,8 +363,8 @@ export default Form.create()(
           {getFieldValue("imageURL") && getFieldValue("imageURL") !== "" ? (
             <Form.Item {...formItemLayout}>"image url"</Form.Item>
           ) : (
-              ""
-            )}
+            ""
+          )}
           <FormItem style={{ display: "none" }}>
             {getFieldDecorator("imageURL")(<Input type="hidden" />)}
           </FormItem>

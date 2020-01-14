@@ -5,6 +5,16 @@ export type ON_VIEW_USER_TYPES_ACTION = { type: String };
 export type ON_VIEW_USER_TYPES_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_VIEW_USER_TYPES_FAIL_ACTION = { type: String, payload: any };
 
+export type ON_VIEW_USER_TYPES_ARRAY_ACTION = { type: String };
+export type ON_VIEW_USER_TYPES_ARRAY_SUCCESS_ACTION = {
+  type: String,
+  payload: any
+};
+export type ON_VIEW_USER_TYPES_ARRAY_FAIL_ACTION = {
+  type: String,
+  payload: any
+};
+
 export type ON_ADD_USER_TYPE_ACTION = { type: String };
 export type ON_ADD_USER_TYPE_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_ADD_USER_TYPE_FAIL_ACTION = { type: String, payload: any };
@@ -14,7 +24,10 @@ export type ON_DEACTIVATE_USER_TYPE_SUCCESS_ACTION = {
   type: String,
   payload: any
 };
-export type ON_DEACTIVATE_USER_TYPE_FAIL_ACTION = { type: String, payload: any };
+export type ON_DEACTIVATE_USER_TYPE_FAIL_ACTION = {
+  type: String,
+  payload: any
+};
 
 /////////////
 
@@ -28,8 +41,36 @@ export type ON_ACTIVATE_USER_TYPE_FAIL_ACTION = { type: String, payload: any };
 export type ON_UPDATE_USER_TYPE_ACTION = { type: String };
 export type ON_UPDATE_USER_TYPE_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_UPDATE_USER_TYPE_FAIL_ACTION = { type: String, payload: any };
+////////////////Array ///////////////
+export async function onViewUserTypesArray(
+  appPortoflioId
+): ON_VIEW_USER_TYPES_ARRAY_ACTION {
+  return async dispatch => {
+    var json = await userTypesService.getByArray(appPortoflioId);
+    if (json.status === 200) {
+      dispatch(onViewUserTypesArraySuccess(json.data));
+    } else {
+      dispatch(onViewUserTypesArrayFail());
+    }
+  };
+}
 
-export async function onViewUserTypes(appPortoflioId): ON_VIEW_USER_TYPES_ACTION {
+export function onViewUserTypesArraySuccess(
+  userTypes
+): ON_VIEW_USER_TYPES_ARRAY_SUCCESS_ACTION {
+  return { type: types.ON_VIEW_USER_TYPES_ARRAY_SUCCESS, payload: userTypes };
+}
+
+export function onViewUserTypesArrayFail(): ON_VIEW_USER_TYPES_ARRAY_FAIL_ACTION {
+  return {
+    type: types.ON_VIEW_USER_TYPES_ARRAY_FAIL,
+    payload: "connection error"
+  };
+}
+///////////////
+export async function onViewUserTypes(
+  appPortoflioId
+): ON_VIEW_USER_TYPES_ACTION {
   return async dispatch => {
     var json = await userTypesService.get(appPortoflioId);
     if (json.status === 200) {
@@ -191,7 +232,10 @@ export async function onUpdateUserType(values) {
 export function onUpdateUserTypeSuccess(
   USER_TYPES: USER_TYPESModel
 ): ON_UPDATE_USER_TYPE_SUCCESS_ACTION {
-  return { type: types.ON_UPDATE_USER_TYPE_SUCCESS_ACTION, payload: USER_TYPES };
+  return {
+    type: types.ON_UPDATE_USER_TYPE_SUCCESS_ACTION,
+    payload: USER_TYPES
+  };
 }
 
 export function onUpdateUserTypeFail(): ON_UPDATE_USER_TYPE_FAIL_ACTION {

@@ -7,6 +7,9 @@ import { userTypesInitialState, userTypesState } from "./state";
 // types is your main object under state, so when call it will be state.types.company
 
 type Action =
+  | actions.ON_VIEW_USER_TYPES_ARRAY_ACTION
+  | actions.ON_VIEW_USER_TYPES_ARRAY_SUCCESS_ACTION
+  | actions.ON_DEACTIVATE_USER_TYPE_ARRAY_ACTION
   | actions.ON_VIEW_USERTYPES_ACTION
   | actions.ON_VIEW_USER_TYPES_SUCCESS_ACTION
   | actions.ON_DEACTIVATE_USER_TYPE_ACTION
@@ -14,7 +17,7 @@ type Action =
   | actions.ON_DEACTIVATE_USER_TYPE_Fail_ACTION
   | actions.ON_ADD_USER_TYPE_ACTION
   | actions.ON_ADD_USER_TYPE_SUCCESS_ACTION
-  | actions.ON_VIEW_USER_TYPES_FAIL_ACTIONa
+  | actions.ON_VIEW_USER_TYPES_FAIL_ACTION
   | actions.ON_UPDATE_USER_TYPE_ACTION
   | actions.ON_UPDATE_USER_TYPE_SUCCESS_ACTION
   | actions.ON_UPDATE_USER_TYPE_FAIL_ACTION
@@ -25,6 +28,23 @@ export function userTypesReducer(
   action: Action
 ): userTypesState {
   switch (action.type) {
+    case types.ON_VIEW_USER_TYPES_ARRAY_ACTION: {
+      return {
+        ...state
+      };
+    }
+    case types.ON_VIEW_USER_TYPES_ARRAY_SUCCESS: {
+      return {
+        ...state,
+        userTypes: action.payload
+      };
+    }
+    case types.ON_VIEW_USER_TYPES_ARRAY_FAIL: {
+      return {
+        ...state
+      };
+    }
+
     case types.ON_VIEW_USER_TYPES: {
       return {
         ...state

@@ -64,14 +64,10 @@ class CorporateDetailsContainer extends React.Component {
       key: "isActive",
       render: (eachKey, row) => (
         <span>
-          {console.log(row.isActive)}
           {row.isActive ? (
             <Popconfirm
               title="Are you sure deActivate this application portofolio?"
               onConfirm={() => {
-                console.log("row", row);
-                console.log("Key", eachKey);
-
                 this.props.changeApplicationPortofolioActivationStatus(
                   row.id,
                   false
@@ -118,7 +114,6 @@ class CorporateDetailsContainer extends React.Component {
   ];
 
   static mapStatetToProps(state) {
-    console.log(state.defaultApplications.defaultApplications, "applicstios");
     return {
       // selectedCompany: state.companies.selectedCompany,
 

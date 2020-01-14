@@ -25,7 +25,19 @@ class CorporateDetailsContainer extends React.Component {
     {
       title: "Application Name",
       dataIndex: "name",
-      key: "name"
+      key: "name",
+      render: (name, row) => (
+        <span
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            this.props.history.push(`/admin/users/types/${row.id}`, {
+              id: row.id
+            });
+          }}
+        >
+          {name}
+        </span>
+      )
     },
     {
       title: "Base Application",

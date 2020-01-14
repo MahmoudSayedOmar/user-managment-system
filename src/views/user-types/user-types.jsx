@@ -35,7 +35,7 @@ import {
 // core components
 import "./user-types.css";
 import { AddUserTypeForm } from "./add-user-form";
-const APP_PORTFOLIOID = 2;
+var APP_PORTFOLIOID = 0;
 class UserTypes extends React.Component {
   constructor(props) {
     super(props);
@@ -47,7 +47,8 @@ class UserTypes extends React.Component {
   }
 
   componentDidMount() {
-    this.props.onViewUserTypes(APP_PORTFOLIOID);
+    this.props.onViewUserTypes(this.props.location.state.id);
+    APP_PORTFOLIOID = this.props.location.state.id;
   }
 
   onEditRow = id => {
@@ -117,7 +118,19 @@ class UserTypes extends React.Component {
     {
       title: "User type",
       dataIndex: "name",
-      key: "name"
+      key: "name",
+      render: (name, row) => (
+        <span
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            this.props.history.push(`/admin/roles/${row.id}`, {
+              id: row.id
+            });
+          }}
+        >
+          {name}
+        </span>
+      )
     },
     {
       title: "Actions",

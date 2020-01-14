@@ -14,6 +14,8 @@ import {
   defaultApplicationState
 } from "./DefaultApplications/state";
 
+import { rolesInitialState, rolesState } from "./Roles/state";
+
 import { modulesInitialState, ModulesState } from "./ExtraModules/state";
 
 export type State = {
@@ -23,7 +25,8 @@ export type State = {
   defaultApplications: defaultApplicationState,
   applicationsPortofolios: applicationsPortofoliosState,
   modules: ModulesState,
-  submitCode: submitCodeState
+  submitCode: submitCodeState,
+  roles: rolesState
 };
 
 export const initialState = {
@@ -33,5 +36,6 @@ export const initialState = {
   defaultApplications: defaultApplicationInitialState,
   applicationsPortofolios: applicationsPortofoliosInitialState,
   modules: modulesInitialState,
-  submitCode: submitCodeInitialState
+  submitCode: submitCodeInitialState,
+  roles: rolesInitialState
 };

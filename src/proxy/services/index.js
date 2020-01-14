@@ -5,6 +5,7 @@ import { ApplicationsPortofoliosProxyService } from "./application-portofolio.se
 import { ModulesProxyService } from "./modules-service";
 import { SubmitCodeProxyService } from "./submit-code-proxy-service";
 import { UserTypesService } from "./user-types.service";
+import { RolesProxyService } from "./roles.service";
 
 const authProxyService = new AuthProxyService();
 const submitCodeProxyService = new SubmitCodeProxyService();
@@ -12,8 +13,8 @@ const corporateService = new CorporateService();
 const defaultApplicationsProxyService = new DefaultApplicationsProxyService();
 const applicationsPortofoliosProxyService = new ApplicationsPortofoliosProxyService();
 const modulesProxyService = new ModulesProxyService();
-
 const userTypesService = new UserTypesService();
+const rolesProxyService = new RolesProxyService();
 
 export {
   authProxyService,
@@ -22,5 +23,6 @@ export {
   applicationsPortofoliosProxyService,
   userTypesService,
   modulesProxyService,
-  submitCodeProxyService
+  submitCodeProxyService,
+  rolesProxyService
 };

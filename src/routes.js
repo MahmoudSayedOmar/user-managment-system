@@ -49,13 +49,7 @@ var routes = [
     component: Users,
     layout: "/admin"
   },
-  {
-    path: "/users/types",
-    name: "User types",
-    icon: "nc-icon nc-circle-10",
-    component: UserTypesScreen,
-    layout: "/admin"
-  },
+
   {
     path: "/dashboard",
     name: "Dashboard",

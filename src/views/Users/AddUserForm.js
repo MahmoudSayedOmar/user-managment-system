@@ -11,13 +11,16 @@ import {
   Select,
   TreeSelect
 } from "antd";
+import axios from "axios";
+import { BASE_URL } from "../../http-client/constants";
 
 const FormItem = Form.Item;
 const { TreeNode } = TreeSelect;
 export default Form.create()(
   class ImportMediaForm extends React.Component {
     state = {
-      value: undefined
+      value: undefined,
+      userRolesOptions:[]
     };
     static defaultProps = {};
 
@@ -32,15 +35,35 @@ export default Form.create()(
         this.props.onChangeApplications(value);
       }
     };
-    onChanngeUsersTypes = value => {
-      console.log(value);
-      // this.props.onChanngeUsersTypes(value);
+      async  onChangeUsersTypes (value)   {
+        console.log(value);
+        if(value && value.length > 0)
+        {
+          var json = await this.get(value);
+         
+          this.setState ({userRolesOptions:<><Select.Option key="1" value="2">
+          aaa
+        </Select.Option>
+        </>})  
+
+        // this.props.onChanngeUsersTypes(value);
+      }
+    }
+
+    async get(userTypesIds) {
+      return await axios({
+        method: "post",
+        url: `${BASE_URL}usertypes/userRolesById`,
+        data:userTypesIds,
+        config: {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "content-Type": "application/json"
+          }
+        }
+      });
     };
-    onChangeUsersTypes = value => {
-      console.log(value);
-      // this.setState({ value });
-    };
-    onOk = () => {
+  onOk = () => {
       this.props.form.validateFields((err, values) => {
         if (!err) {
           this.props.onOk(values);
@@ -288,10 +311,25 @@ export default Form.create()(
             )(
               <Select
                 mode="multiple"
-                placeholder="Choose Applications"
-                onChange={this.onChanngeUsersTypes}
+                placeholder="Choose User Types"
+                onChange={this.onChangeUsersTypes}
               >
                 {userTypesOptions}
+              </Select>
+              
+            )}
+          </Form.Item>
+          <Form.Item {...formItemLayout} label="User Roles">
+            {getFieldDecorator(
+              "userRoles",
+              {}
+            )(
+              <Select
+                mode="multiple"
+                placeholder="Choose User Roles"
+              
+              >
+                {this.state.userRolesOptions}
               </Select>
               // <TreeSelect
               //   showSearch

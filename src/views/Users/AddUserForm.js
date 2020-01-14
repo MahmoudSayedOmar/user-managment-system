@@ -30,10 +30,10 @@ export default Form.create()(
     onChangeUserApplications = value => {
       this.props.onChangeApplications(value);
     };
-    onMouseLeaveApplication = () => {
-      // this.props.onChangeApplications(value);
-      console.log("on mouse leave");
-    };
+    onChanngeUsersTypes = value => {
+      console.log(value)
+      // this.props.onChanngeUsersTypes(value);
+    }
     onChangeUsersTypes = value => {
       console.log(value);
       // this.setState({ value });
@@ -274,7 +274,7 @@ export default Form.create()(
                 mode="multiple"
                 placeholder="Choose Applications"
                 onChange={this.onChangeUserApplications}
-                onMouseLeave={this.onMouseLeaveApplication}
+
               >
                 {corporateApplicationsOptions}
               </Select>
@@ -288,7 +288,7 @@ export default Form.create()(
               <Select
                 mode="multiple"
                 placeholder="Choose Applications"
-                onChange={this.onChangeUsersTypes}
+                onChange={this.onChanngeUsersTypes}
               >
                 {userTypesOptions}
               </Select>

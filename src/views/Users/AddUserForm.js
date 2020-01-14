@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Form,
   Input,
@@ -17,11 +17,22 @@ import { BASE_URL } from "../../http-client/constants";
 const FormItem = Form.Item;
 const { TreeNode } = TreeSelect;
 export default Form.create()(
-  class ImportMediaForm extends React.Component {
-    state = {
-      value: undefined,
-      userRolesOptions:[]
+  class ImportMediaForm extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        userRolesValues: ""
+      };
+      this.updateState = this.updateState.bind(this);
+
+      this.onChangeUsersTypes = this.onChangeUsersTypes.bind(this);
+    }
+
+    updateState = values => {
+      debugger;
+      this.setState({ userRolesValues: values });
     };
+
     static defaultProps = {};
 
     onCancel = () => {
@@ -35,35 +46,26 @@ export default Form.create()(
         this.props.onChangeApplications(value);
       }
     };
-      async  onChangeUsersTypes (value)   {
-        console.log(value);
-        if(value && value.length > 0)
-        {
-          var json = await this.get(value);
-         
-          this.setState ({userRolesOptions:<><Select.Option key="1" value="2">
-          aaa
-        </Select.Option>
-        </>})  
-
-        // this.props.onChanngeUsersTypes(value);
+    onChangeUsersTypes(value) {
+      console.log(value);
+      if (value && value.length > 0) {
+        axios({
+          method: "post",
+          url: `${BASE_URL}role/roleByUserTypesId`,
+          data: value,
+          config: {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "content-Type": "application/json"
+            }
+          }
+        }).then(response => {
+          this.updateState(response.data);
+          console.log(this.updateState);
+        });
       }
     }
-
-    async get(userTypesIds) {
-      return await axios({
-        method: "post",
-        url: `${BASE_URL}usertypes/userRolesById`,
-        data:userTypesIds,
-        config: {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "content-Type": "application/json"
-          }
-        }
-      });
-    };
-  onOk = () => {
+    onOk = () => {
       this.props.form.validateFields((err, values) => {
         if (!err) {
           this.props.onOk(values);
@@ -98,56 +100,20 @@ export default Form.create()(
         )
       );
       let userTypesOptions = this.props.userTypes.map(eachApp => {
-        // console.log(
-        //   this.props.form.getFieldValue("userApplications"),
-        //   "hahahah"
-        // );
         return (
           <Option key={eachApp.id} value={eachApp.id}>
             {eachApp.name}
           </Option>
         );
       });
-      // let userTypesOptions =
-      //   this.props.form.getFieldValue("userApplications") &&
-      //   this.props.form.getFieldValue("userApplications").length > 0
-      //     ? this.props.form
-      //         .getFieldValue("userApplications")
-      //         .map((eachApp, index) => {
-      //           return (
-      //             <TreeNode
-      //               value={eachApp.id}
-      //               title={eachApp.name}
-      //               key={index}
-      //               disabled
-      //             >
-      //               <TreeNode value="leaf1" title="my leaf" key="random" />
-      //               <TreeNode value="leaf2" title="your leaf" key="random1" />
-      //             </TreeNode>
-      //           );
-      //         })
-      //     : "";
-
-      // let userTypesOptions = (
-      //   <TreeNode value="user Types" title="parent 1" key="0-1" disabled>
-      //     <TreeNode value="parent 1-0" title="parent 1-0" key="0-1-1" disabled>
-      //       <TreeNode value="leaf1" title="my leaf" key="random" />
-      //       <TreeNode value="leaf2" title="your leaf" key="random1" />
-      //     </TreeNode>
-      //     <TreeNode
-      //       value="parent 1-1"
-      //       title="parent 1-1"
-      //       key="random2"
-      //       disabled
-      //     >
-      //       <TreeNode
-      //         value="sss"
-      //         title={<b style={{ color: "#08c" }}>sss</b>}
-      //         key="random3"
-      //       />
-      //     </TreeNode>
-      //   </TreeNode>
-      // );
+      let userRolesValues =
+        this.state.userRolesValues && this.state.userRolesValues.length > 0
+          ? this.state.userRolesValues.map(eachRole => (
+              <Option key={eachRole.id} value={eachRole.id}>
+                {eachRole.name}
+              </Option>
+            ))
+          : "";
 
       const onlyNumbers = (rule, value, callback) => {
         if (value && isNaN(value)) {
@@ -316,7 +282,6 @@ export default Form.create()(
               >
                 {userTypesOptions}
               </Select>
-              
             )}
           </Form.Item>
           <Form.Item {...formItemLayout} label="User Roles">
@@ -324,12 +289,8 @@ export default Form.create()(
               "userRoles",
               {}
             )(
-              <Select
-                mode="multiple"
-                placeholder="Choose User Roles"
-              
-              >
-                {this.state.userRolesOptions}
+              <Select mode="multiple" placeholder="Choose User Roles">
+                {userRolesValues}
               </Select>
               // <TreeSelect
               //   showSearch

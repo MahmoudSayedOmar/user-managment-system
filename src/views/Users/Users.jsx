@@ -132,7 +132,8 @@ class Users extends React.Component {
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
         photo: values.photo,
-        corporate: values.corporate
+        corporate: values.corporate,
+        roles: values.userRoles
       });
     } else {
       this.props.onAddUser({
@@ -146,10 +147,11 @@ class Users extends React.Component {
         mobileNumber: values.mobileNumber,
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
-        // corporate: values.corporate,
+        corporate: values.corporate,
         photo: values.photo,
         password: values.password,
-        confirmPassword: values.password
+        confirmPassword: values.password,
+        roles: values.userRoles
       });
     }
 

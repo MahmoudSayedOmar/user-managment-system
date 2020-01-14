@@ -63,6 +63,7 @@ export async function viewUsers() {
 
 ////////////////////////////////////
 export async function onAddUser(values) {
+  console.log(values, "valuess in action creator");
   return async (dispatch, getState) => {
     let state = getState();
     let users = state.users.users;

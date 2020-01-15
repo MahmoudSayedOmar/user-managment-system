@@ -35,6 +35,7 @@ import {
 import { onViewCompanies } from "State/Corporates/action-creator";
 import { viewCorporateDetails } from "State/ApplicationsPortofolio/action-creator";
 import { onViewUserTypesArray } from "../../State/user-types/action-creator";
+import { viewRolesArray } from "../../State/Roles/action-creator";
 // core components
 import moment from "moment";
 import "./Users.css";
@@ -106,6 +107,9 @@ class Users extends React.Component {
   onChangeApplications = value => {
     console.log(value, "value");
     this.props.onViewUserTypesArray(value);
+  };
+  onChangeTypes = value => {
+    this.props.viewRolesArray(value);
   };
   onCancelSettingsModal = () => {
     this.setState({
@@ -275,9 +279,11 @@ class Users extends React.Component {
             ref="addUserForm"
             allCoporates={this.props.allCoporates}
             userTypes={this.props.userTypes}
+            userRoles={this.props.userRoles}
             applicationsPortofolios={this.props.applicationsPortofolios}
             onChangeCorporate={value => this.onChangeCorporate(value)}
             onChangeApplications={value => this.onChangeApplications(value)}
+            onChangeTypes={value => this.onChangeTypes(value)}
           />
         </div>
       </>
@@ -286,10 +292,12 @@ class Users extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state.roles.roles, "roles are here");
   return {
     userTypes: state.userTypes.userTypes,
     allUsers: state.users.users,
     allCoporates: state.companies.companies,
+    userRoles: state.roles.roles,
     applicationsPortofolios:
       state.applicationsPortofolios.applicationsPortofolios
   };
@@ -305,7 +313,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
       onEditUser,
       onDeactivateUser,
       onActivateUser,
-      onViewUserTypesArray
+      onViewUserTypesArray,
+      viewRolesArray
     },
     dispatch
   );

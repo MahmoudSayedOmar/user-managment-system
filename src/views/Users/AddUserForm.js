@@ -23,15 +23,7 @@ export default Form.create()(
       this.state = {
         userRolesValues: ""
       };
-      this.updateState = this.updateState.bind(this);
-
-      this.onChangeUsersTypes = this.onChangeUsersTypes.bind(this);
     }
-
-    updateState = values => {
-      debugger;
-      this.setState({ userRolesValues: values });
-    };
 
     static defaultProps = {};
 
@@ -46,25 +38,11 @@ export default Form.create()(
         this.props.onChangeApplications(value);
       }
     };
-    onChangeUsersTypes(value) {
-      console.log(value);
+    onChangeUsersTypes = value => {
       if (value && value.length > 0) {
-        axios({
-          method: "post",
-          url: `${BASE_URL}role/roleByUserTypesId`,
-          data: value,
-          config: {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              "content-Type": "application/json"
-            }
-          }
-        }).then(response => {
-          this.updateState(response.data);
-          console.log(this.updateState);
-        });
+        this.props.onChangeTypes(value);
       }
-    }
+    };
     onOk = () => {
       this.props.form.validateFields((err, values) => {
         if (!err) {
@@ -107,8 +85,8 @@ export default Form.create()(
         );
       });
       let userRolesValues =
-        this.state.userRolesValues && this.state.userRolesValues.length > 0
-          ? this.state.userRolesValues.map(eachRole => (
+        this.props.userRoles && this.props.userRoles.length > 0
+          ? this.props.userRoles.map(eachRole => (
               <Option key={eachRole.id} value={eachRole.id}>
                 {eachRole.name}
               </Option>
@@ -211,10 +189,7 @@ export default Form.create()(
                 { required: true, message: "Please select default Language!" }
               ]
             })(
-              <Select
-                placeholder="default Language"
-                // onChange={this.handleSelectChange}
-              >
+              <Select placeholder="default Language">
                 <Option value="english">English</Option>
                 <Option value="arabic">Arabic</Option>
               </Select>

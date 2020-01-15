@@ -2,6 +2,20 @@ import { BASE_URL } from "../../http-client/constants";
 import axios from "axios";
 
 export class RolesProxyService {
+  async getUserTypeRolesArray(userTypeArray) {
+    return await axios({
+      method: "post",
+      url: `${BASE_URL}role/roleByUserTypesId`,
+      data: userTypeArray,
+      config: {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-Type": "application/json"
+        }
+      }
+    });
+  }
+
   async getUserTypeRoles(userTypeId: Number) {
     return await axios({
       method: "get",
@@ -15,7 +29,6 @@ export class RolesProxyService {
     });
   }
   async add(userTypeId, newRole) {
-    debugger;
     return await axios({
       method: "post",
       url: `${BASE_URL}role/add/${userTypeId}`,

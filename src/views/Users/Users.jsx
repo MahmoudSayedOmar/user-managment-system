@@ -105,7 +105,6 @@ class Users extends React.Component {
     this.props.viewCorporateDetails(value);
   };
   onChangeApplications = value => {
-    console.log(value, "value");
     this.props.onViewUserTypesArray(value);
   };
   onChangeTypes = value => {
@@ -119,7 +118,6 @@ class Users extends React.Component {
     });
   };
   onAddUser = values => {
-    // console.log(values, "values");
     let dateOfBirth = values.dateOfBirth;
 
     if (values.id && values.id !== "") {

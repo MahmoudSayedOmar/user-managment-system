@@ -77,13 +77,41 @@ export default Form.create()(
           </Option>
         )
       );
-      let userTypesOptions = this.props.userTypes.map(eachApp => {
-        return (
-          <Option key={eachApp.id} value={eachApp.id}>
-            {eachApp.name}
-          </Option>
-        );
-      });
+
+      let userTypesOptions =
+        this.props.form.getFieldValue("userApplications") &&
+        this.props.form.getFieldValue("userApplications").length > 0
+          ? this.props.form
+              .getFieldValue("userApplications")
+              .map((eachPorto, index) => {
+                return (
+                  <TreeNode
+                    value={eachPorto}
+                    title={
+                      this.props.applicationsPortofolios.find(
+                        m => m.id === eachPorto
+                      ).name || null
+                    }
+                    key={index}
+                    disabled={true}
+                  >
+                    {this.props.userTypes.map(eachType => {
+                      
+                      return eachPorto === eachType.appPortoflioId ? (
+                        <TreeNode
+                          value={eachType.id}
+                          title={eachType.name}
+                          key={eachType.id}
+                        />
+                      ) : (
+                        ""
+                      );
+                    })}
+                  </TreeNode>
+                );
+              })
+          : "";
+
       let userRolesValues =
         this.props.userRoles && this.props.userRoles.length > 0
           ? this.props.userRoles.map(eachRole => (
@@ -250,13 +278,19 @@ export default Form.create()(
               "userTypes",
               {}
             )(
-              <Select
-                mode="multiple"
-                placeholder="Choose User Types"
+              <TreeSelect
+                showSearch
+                style={{ width: "100%" }}
+                value={this.state.value}
+                dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+                placeholder="Choose UserTypes"
+                allowClear
+                multiple
+                treeDefaultExpandAll
                 onChange={this.onChangeUsersTypes}
               >
                 {userTypesOptions}
-              </Select>
+              </TreeSelect>
             )}
           </Form.Item>
           <Form.Item {...formItemLayout} label="User Roles">
@@ -267,19 +301,6 @@ export default Form.create()(
               <Select mode="multiple" placeholder="Choose User Roles">
                 {userRolesValues}
               </Select>
-              // <TreeSelect
-              //   showSearch
-              //   style={{ width: "100%" }}
-              //   value={this.state.value}
-              //   dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-              //   placeholder="Choose UserTypes"
-              //   allowClear
-              //   multiple
-              //   treeDefaultExpandAll
-              //   onChange={this.onChangeUsersTypes}
-              // >
-              //   {userTypesOptions}
-              // </TreeSelect>
             )}
           </Form.Item>
           <Form.Item {...formItemLayout} label="Photo">

@@ -103,6 +103,19 @@ class Header extends React.Component {
     }
   }
   render() {
+    console.log(
+      this.props.location.state
+        ? this.props.location.pathname.includes("/corporatedetails/")
+        : "",
+      "idddd"
+    );
+    let title = this.props.location.path
+      ? this.props.location.pathname.includes("/corporatedetails/")
+        ? "corporate name"
+        : ""
+      : "";
+
+    console.log(title, "title feyha eih ");
     return (
       // add or remove classes depending if we are on full-screen-maps page or not
       <Navbar
@@ -134,7 +147,7 @@ class Header extends React.Component {
               </button>
             </div>
             <span style={{ fontWeight: "bold", fontSize: "25px" }}>
-              {this.getBrand()}
+              {title ? title : this.getBrand()}
             </span>
           </div>
           <NavbarToggler onClick={this.toggle}>

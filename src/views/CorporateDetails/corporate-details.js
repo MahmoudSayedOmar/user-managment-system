@@ -155,6 +155,7 @@ class CorporateDetailsContainer extends React.Component {
   }
 
   render() {
+    // console.log(this.props.location.state.id, "iddd");
     return (
       <>
         <div className="content">

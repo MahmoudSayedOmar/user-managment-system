@@ -96,7 +96,6 @@ export default Form.create()(
                     disabled={true}
                   >
                     {this.props.userTypes.map(eachType => {
-                      
                       return eachPorto === eachType.appPortoflioId ? (
                         <TreeNode
                           value={eachType.id}
@@ -113,12 +112,35 @@ export default Form.create()(
           : "";
 
       let userRolesValues =
-        this.props.userRoles && this.props.userRoles.length > 0
-          ? this.props.userRoles.map(eachRole => (
-              <Option key={eachRole.id} value={eachRole.id}>
-                {eachRole.name}
-              </Option>
-            ))
+        this.props.form.getFieldValue("userTypes") &&
+        this.props.form.getFieldValue("userTypes").length > 0
+          ? this.props.form
+              .getFieldValue("userTypes")
+              .map((eachUserType, index) => {
+                return (
+                  <TreeNode
+                    value={eachUserType}
+                    title={
+                      this.props.userTypes.find(m => m.id === eachUserType)
+                        .name || null
+                    }
+                    key={index}
+                    disabled={true}
+                  >
+                    {this.props.userRoles.map(eachUserRole => {
+                      return eachUserType === eachUserRole.userTypeId ? (
+                        <TreeNode
+                          value={eachUserRole.id}
+                          title={eachUserRole.name}
+                          key={eachUserRole.id}
+                        />
+                      ) : (
+                        ""
+                      );
+                    })}
+                  </TreeNode>
+                );
+              })
           : "";
 
       const onlyNumbers = (rule, value, callback) => {
@@ -298,9 +320,21 @@ export default Form.create()(
               "userRoles",
               {}
             )(
-              <Select mode="multiple" placeholder="Choose User Roles">
+              // <Select mode="multiple" placeholder="Choose User Roles">
+              //   {userRolesValues}
+              // </Select>
+              <TreeSelect
+                showSearch
+                style={{ width: "100%" }}
+                value={this.state.value}
+                dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+                placeholder="Choose UserTypes"
+                allowClear
+                multiple
+                treeDefaultExpandAll
+              >
                 {userRolesValues}
-              </Select>
+              </TreeSelect>
             )}
           </Form.Item>
           <Form.Item {...formItemLayout} label="Photo">

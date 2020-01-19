@@ -103,19 +103,12 @@ class Header extends React.Component {
     }
   }
   render() {
-    console.log(
-      this.props.location.state
-        ? this.props.location.pathname.includes("/corporatedetails/")
-        : "",
-      "idddd"
-    );
-    let title = this.props.location.path
-      ? this.props.location.pathname.includes("/corporatedetails/")
-        ? "corporate name"
+    let title = this.props.location.state
+      ? this.props.location.state.navTitle
+        ? this.props.location.state.navTitle
         : ""
       : "";
 
-    console.log(title, "title feyha eih ");
     return (
       // add or remove classes depending if we are on full-screen-maps page or not
       <Navbar

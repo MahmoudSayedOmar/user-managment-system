@@ -290,7 +290,7 @@ class Users extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.roles.roles, "roles are here");
+  // console.log(state.roles.roles, "roles are here");
   return {
     userTypes: state.userTypes.userTypes,
     allUsers: state.users.users,

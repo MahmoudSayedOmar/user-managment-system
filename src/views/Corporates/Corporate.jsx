@@ -138,7 +138,8 @@ class Corporate extends React.Component {
           style={{ cursor: "pointer" }}
           onClick={() => {
             this.props.history.push(`/admin/corporatedetails/${row.id}`, {
-              id: row.id
+              id: row.id,
+              navTitle: row.name + "'s Application Portofilios"
             });
           }}
         >
@@ -247,7 +248,7 @@ class Corporate extends React.Component {
                       rowKey="id"
                       columns={this.columns}
                       dataSource={this.props.allCompanies}
-                      pagination={false}
+                      pagination={{ pageSize: 10 }}
                     />
                   </div>
                 </CardBody>

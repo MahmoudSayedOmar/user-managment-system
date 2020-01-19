@@ -32,6 +32,7 @@ export type ON_VIEW_ROLES_BY_USERTYPE_ARRAY_SUCCESS_ACTION = {
 /////////////////////////////////
 
 export async function viewRolesArray(userTypeArray) {
+  console.log(userTypeArray, "array of types");
   return async (dispatch, getState) => {
     dispatch(onViewUserTypeRolesArray());
     var response = await rolesProxyService.getUserTypeRolesArray(userTypeArray);
@@ -40,6 +41,7 @@ export async function viewRolesArray(userTypeArray) {
     if (response.status === 200) {
       dispatch(onViewRolesArraySuccess(response.data));
       // console.log(getState());
+      console.log(response.data, "data");
       // debugger;
     } else {
       dispatch(onViewRolesArrayFail());
@@ -67,12 +69,10 @@ export async function viewRoles(userTypeId) {
   return async (dispatch, getState) => {
     dispatch(onViewUserTypeRoles());
     var response = await rolesProxyService.getUserTypeRoles(userTypeId);
-    console.log(response.data);
-    debugger;
+
     if (response.status === 200) {
       dispatch(onViewRolesSuccess(response.data));
       console.log(getState());
-      debugger;
     } else {
       dispatch(onViewRolesFail());
     }
@@ -117,11 +117,10 @@ export async function addRole(userTypeId, role) {
     dispatch(onAddRole());
     var response = await rolesProxyService.add(userTypeId, role);
     console.log(response.data);
-    debugger;
+
     if (response.status === 200) {
       dispatch(onAddRoleSuccess(response.data));
       console.log(getState());
-      debugger;
     } else {
       dispatch(onAddRoleFail());
     }

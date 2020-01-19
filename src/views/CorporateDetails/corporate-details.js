@@ -31,7 +31,8 @@ class CorporateDetailsContainer extends React.Component {
           style={{ cursor: "pointer" }}
           onClick={() => {
             this.props.history.push(`/admin/users/types/${row.id}`, {
-              id: row.id
+              id: row.id,
+              navTitle: row.name + "'s Types"
             });
           }}
         >

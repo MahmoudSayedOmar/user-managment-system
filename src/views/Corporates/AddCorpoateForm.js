@@ -92,7 +92,7 @@ export default Form.create()(
               ]
             })(<Input placeholder="Phone Number" />)}
           </Form.Item>
-          <FormItem {...formItemLayout} label="Compnay #Reg.">
+          <FormItem {...formItemLayout} label="Registration Number">
             {getFieldDecorator("corporateRegisterationNumber", {
               rules: [
                 {

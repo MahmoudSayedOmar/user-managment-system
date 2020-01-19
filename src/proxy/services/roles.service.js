@@ -3,6 +3,7 @@ import axios from "axios";
 
 export class RolesProxyService {
   async getUserTypeRolesArray(userTypeArray) {
+    // debugger;
     return await axios({
       method: "post",
       url: `${BASE_URL}role/roleByUserTypesId`,

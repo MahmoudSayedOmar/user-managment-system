@@ -31,16 +31,36 @@ export default Form.create()(
       this.props.onCancel();
     };
     onChangeUserCorporate = value => {
+      this.props.form.setFieldsValue({ userApplications: [] });
+      this.props.form.setFieldsValue({ userTypes: [] });
+      this.props.form.setFieldsValue({ userRoles: [] });
       this.props.onChangeCorporate(value);
     };
+    onChangeUserApplicationsReset = () => {
+      this.props.form.setFieldsValue({ userTypes: [] });
+      this.props.form.setFieldsValue({ userRoles: [] });
+    };
     onChangeUserApplications = value => {
-      if (value && value.length > 0) {
-        this.props.onChangeApplications(value);
+      if (value === false) {
+        this.props.form.setFieldsValue({ userTypes: [] });
+        this.props.form.setFieldsValue({ userRoles: [] });
+        let userApps = this.props.form.getFieldValue("userApplications");
+        if (userApps && userApps.length > 0) {
+          this.props.onChangeApplications(userApps);
+        }
       }
     };
+    onChangeUsersTypesReset = () => {
+      this.props.form.setFieldsValue({ userRoles: [] });
+    };
     onChangeUsersTypes = value => {
-      if (value && value.length > 0) {
-        this.props.onChangeTypes(value);
+      console.log(value, "value");
+      if (value === false) {
+        this.props.form.setFieldsValue({ userRoles: [] });
+        let userTypes = this.props.form.getFieldValue("userTypes");
+        if (userTypes && userTypes.length > 0) {
+          this.props.onChangeTypes(userTypes);
+        }
       }
     };
     onOk = () => {
@@ -95,12 +115,12 @@ export default Form.create()(
                     key={index}
                     disabled={true}
                   >
-                    {this.props.userTypes.map(eachType => {
+                    {this.props.userTypes.map((eachType, index2) => {
                       return eachPorto === eachType.appPortoflioId ? (
                         <TreeNode
                           value={eachType.id}
                           title={eachType.name}
-                          key={eachType.id}
+                          key={index2}
                         />
                       ) : (
                         ""
@@ -276,20 +296,23 @@ export default Form.create()(
               <Select
                 onChange={this.onChangeUserCorporate}
                 placeholder="Choose Corporate"
+                // open={true}
               >
                 {corporatesOptions}
               </Select>
             )}
           </Form.Item>
           <Form.Item {...formItemLayout} label="Choose App. Portofilio">
-            {getFieldDecorator(
-              "userApplications",
-              {}
-            )(
+            {getFieldDecorator("userApplications", {
+              rules: [
+                { required: true, message: "Please choose App. Portofilio" }
+              ]
+            })(
               <Select
                 mode="multiple"
                 placeholder="Choose Applications"
-                onChange={this.onChangeUserApplications}
+                onChange={this.onChangeUserApplicationsReset}
+                onDropdownVisibleChange={this.onChangeUserApplications}
               >
                 {corporateApplicationsOptions}
               </Select>
@@ -309,7 +332,8 @@ export default Form.create()(
                 allowClear
                 multiple
                 treeDefaultExpandAll
-                onChange={this.onChangeUsersTypes}
+                onChange={this.onChangeUsersTypesReset}
+                onDropdownVisibleChange={this.onChangeUsersTypes}
               >
                 {userTypesOptions}
               </TreeSelect>
@@ -320,9 +344,6 @@ export default Form.create()(
               "userRoles",
               {}
             )(
-              // <Select mode="multiple" placeholder="Choose User Roles">
-              //   {userRolesValues}
-              // </Select>
               <TreeSelect
                 showSearch
                 style={{ width: "100%" }}

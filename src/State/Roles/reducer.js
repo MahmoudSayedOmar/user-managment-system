@@ -62,7 +62,7 @@ export function rolesReducer(
       var _roles = state.roles;
       _roles.push(action.payload);
       console.log(_roles);
-      debugger;
+      // debugger;
       return {
         ...state,
         roles: _roles,

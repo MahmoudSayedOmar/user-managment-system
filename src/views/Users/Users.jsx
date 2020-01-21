@@ -29,6 +29,7 @@ import {
   onAddUser,
   onEditUser,
   viewUsers,
+  getUserDetails,
   onDeactivateUser,
   onActivateUser
 } from "State/Users/action-creator";
@@ -58,25 +59,36 @@ class Users extends React.Component {
     // this.props.viewCorporateDetails(this.props.location.state.id);
     // this.props.onViewUserTypes(2);
   }
-
-  onEditRow = id => {
-    const toEditUser = this.props.allUsers.find(i => i.id === id);
-
+  componentWillReceiveProps(nextProps) {
+    if ("toEditUserDetails" in nextProps) {
+      if (nextProps.toEditUserDetails !== this.props.toEditUserDetails) {
+        this.updateFormFields(nextProps.toEditUserDetails);
+      }
+    }
+  }
+  updateFormFields = userEditableData => {
+    const toEditUser = userEditableData;
+    console.log(toEditUser, "userDetails");
     this.setState({
       showAddUserModal: true,
       isEdit: false
     });
     this.setState({
-      modalTitle: "Edit " + toEditUser.fName + " " + toEditUser.mName,
+      modalTitle:
+        "Edit " +
+        toEditUser.user.fName +
+        " " +
+        toEditUser.user.mName +
+        " " +
+        toEditUser.user.lName,
       isEdit: true
     });
 
     this.refs.addUserForm.setFieldsValue({
-      ...toEditUser,
       id: toEditUser.id,
-      fName: toEditUser.fName,
-      mName: toEditUser.mName,
-      lName: toEditUser.lName,
+      fName: toEditUser.user.fName,
+      mName: toEditUser.user.mName,
+      lName: toEditUser.user.lName,
       validateBy: toEditUser.validateBy,
       email: toEditUser.email,
       dateOfBirth: moment(toEditUser.dateOfBirth),
@@ -86,6 +98,10 @@ class Users extends React.Component {
       // corporate: toEditUser.corporate,
       defaultLanguage: toEditUser.defaultLanguage
     });
+  };
+  onEditRow = id => {
+    // const toEditUser = this.props.allUsers.find(i => i.id === id);
+    this.props.getUserDetails(id);
   };
   onDeactivate = id => {
     this.props.onDeactivateUser(id);
@@ -290,14 +306,14 @@ class Users extends React.Component {
 }
 
 function mapStateToProps(state) {
-  // console.log(state.roles.roles, "roles are here");
   return {
     userTypes: state.userTypes.userTypes,
     allUsers: state.users.users,
     allCoporates: state.companies.companies,
     userRoles: state.roles.roles,
     applicationsPortofolios:
-      state.applicationsPortofolios.applicationsPortofolios
+      state.applicationsPortofolios.applicationsPortofolios,
+    toEditUserDetails: state.users.toEditUser
   };
 }
 
@@ -306,6 +322,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
     {
       onViewCompanies,
       viewUsers,
+      getUserDetails,
       viewCorporateDetails,
       onAddUser,
       onEditUser,

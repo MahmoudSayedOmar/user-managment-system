@@ -7,6 +7,9 @@ import { usersInitialState, usersState } from "./state.js";
 // types is your main object under state, so when call it will be state.types.company
 
 type Action =
+  | actions.ON_GET_USER_DETAILS_ACTION
+  | actions.ON_GET_USER_DETAILS_SUCCESS_ACTION
+  | actions.ON_GET_USE_DETAILS_FAIL_ACTION
   | actions.ON_VIEW_USERS_ACTION
   | actions.ON_VIEW_USERS_SUCCESS_ACTION
   | actions.ON_VIEW_USERS_FAIL_ACTION
@@ -34,6 +37,25 @@ export function usersReducer(
       };
     }
     case types.ON_VIEW_USERS_FAIL: {
+      return {
+        ...state
+      };
+    }
+
+    ///////////////
+
+    case types.ON_GET_USER_DETAIILS: {
+      return {
+        ...state
+      };
+    }
+    case types.ON_GET_USER_DETAILS_SUCCESS: {
+      return {
+        ...state,
+        toEditUser: action.payload
+      };
+    }
+    case types.ON_GET_USER_DETAILS_FAIL: {
       return {
         ...state
       };

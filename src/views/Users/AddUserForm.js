@@ -30,6 +30,7 @@ export default Form.create()(
     onCancel = () => {
       this.props.onCancel();
     };
+
     onChangeUserCorporate = value => {
       this.props.form.setFieldsValue({ userApplications: [] });
       this.props.form.setFieldsValue({ userTypes: [] });
@@ -54,7 +55,6 @@ export default Form.create()(
       this.props.form.setFieldsValue({ userRoles: [] });
     };
     onChangeUsersTypes = value => {
-      console.log(value, "value");
       if (value === false) {
         this.props.form.setFieldsValue({ userRoles: [] });
         let userTypes = this.props.form.getFieldValue("userTypes");
@@ -100,7 +100,9 @@ export default Form.create()(
 
       let userTypesOptions =
         this.props.form.getFieldValue("userApplications") &&
-        this.props.form.getFieldValue("userApplications").length > 0
+        this.props.form.getFieldValue("userApplications").length > 0 &&
+        this.props.applicationsPortofolios &&
+        this.props.applicationsPortofolios.length > 0
           ? this.props.form
               .getFieldValue("userApplications")
               .map((eachPorto, index) => {
@@ -133,10 +135,13 @@ export default Form.create()(
 
       let userRolesValues =
         this.props.form.getFieldValue("userTypes") &&
-        this.props.form.getFieldValue("userTypes").length > 0
+        this.props.form.getFieldValue("userTypes").length > 0 &&
+        this.props.userTypes &&
+        this.props.userTypes.length > 0
           ? this.props.form
               .getFieldValue("userTypes")
               .map((eachUserType, index) => {
+                console.log(this.props.userTypes, "all userTypes");
                 return (
                   <TreeNode
                     value={eachUserType}
@@ -214,8 +219,8 @@ export default Form.create()(
               rules: [{ required: true, message: "Please Choose a Gender" }]
             })(
               <Radio.Group>
-                <Radio value="male">male</Radio>
-                <Radio value="female">female</Radio>
+                <Radio value={0}>male</Radio>
+                <Radio value={1}>female</Radio>
               </Radio.Group>
             )}
           </FormItem>

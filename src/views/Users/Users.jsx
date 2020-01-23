@@ -68,7 +68,7 @@ class Users extends React.Component {
   }
   updateFormFields = userEditableData => {
     const toEditUser = userEditableData;
-    console.log(toEditUser, "userDetails");
+    // console.log(toEditUser, "userDetails");
     this.setState({
       showAddUserModal: true,
       isEdit: false
@@ -83,24 +83,53 @@ class Users extends React.Component {
         toEditUser.user.lName,
       isEdit: true
     });
+    if (toEditUser) {
+      let applicationPortofliosArray = [];
+      let userTypesArray = [];
+      if (toEditUser.corporate) {
+        applicationPortofliosArray = toEditUser.applicationPortoflios.map(
+          (eachApp, index) => {
+            return eachApp.id;
+          }
+        );
 
+        this.onChangeCorporate(toEditUser.corporate.id); // to get all the application portofilios to be able to show name and id of them
+        this.onChangeApplications(applicationPortofliosArray);
+      }
+      if (toEditUser.userTypes) {
+        userTypesArray = toEditUser.userTypes.map((eachType, index) => {
+          return eachType.id;
+        });
+        this.onChangeTypes(userTypesArray);
+      }
+    }
     this.refs.addUserForm.setFieldsValue({
-      id: toEditUser.id,
+      id: toEditUser.user.id,
       fName: toEditUser.user.fName,
       mName: toEditUser.user.mName,
       lName: toEditUser.user.lName,
-      validateBy: toEditUser.validateBy,
-      email: toEditUser.email,
-      dateOfBirth: moment(toEditUser.dateOfBirth),
+      validateBy: toEditUser.user.smsVerify ? "sms" : "mail",
+      email: toEditUser.user.email,
+      dateOfBirth: moment(toEditUser.user.dateOfBirth),
       imageURL: toEditUser.photo,
-      sex: toEditUser.sex,
-      mobileNumber: toEditUser.mobileNumber,
-      // corporate: toEditUser.corporate,
-      defaultLanguage: toEditUser.defaultLanguage
+      sex: toEditUser.user.sex,
+      mobileNumber: toEditUser.user.mobileNumber,
+      userCoporate: toEditUser.corporate ? toEditUser.corporate.id : "",
+      userApplications: toEditUser.applicationPortoflios
+        ? toEditUser.applicationPortoflios.map(eachApp => {
+            return eachApp.id;
+          })
+        : [],
+      userTypes: toEditUser.userTypes
+        ? toEditUser.userTypes.map(eachType => eachType.id)
+        : [],
+      userRoles: toEditUser.roles
+        ? toEditUser.roles.map((eachRole, index) => eachRole.id)
+        : [],
+      defaultLanguage: toEditUser.user.defaultLanguage
     });
   };
   onEditRow = id => {
-    // const toEditUser = this.props.allUsers.find(i => i.id === id);
     this.props.getUserDetails(id);
   };
   onDeactivate = id => {
@@ -127,6 +156,10 @@ class Users extends React.Component {
     this.props.viewRolesArray(value);
   };
   onCancelSettingsModal = () => {
+    this.refs.addUserForm.resetFields();
+    this.onChangeCorporate([]); // to get all the application portofilios to be able to show name and id of them
+    this.onChangeApplications([]);
+    this.onChangeTypes([]);
     this.setState({
       modalTitle: "Add User",
       showAddUserModal: false,

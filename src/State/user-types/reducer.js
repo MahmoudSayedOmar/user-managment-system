@@ -135,7 +135,7 @@ export function userTypesReducer(
       };
     }
     case types.SELECT_USER_TYPE: {
-      console.log("selectCorporate:", state);
+      // console.log("selectCorporate:", state);
       return {
         ...state,
         selectedCompanyId: action.payload

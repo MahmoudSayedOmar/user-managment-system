@@ -141,7 +141,6 @@ export default Form.create()(
           ? this.props.form
               .getFieldValue("userTypes")
               .map((eachUserType, index) => {
-                console.log(this.props.userTypes, "all userTypes");
                 return (
                   <TreeNode
                     value={eachUserType}
@@ -219,8 +218,8 @@ export default Form.create()(
               rules: [{ required: true, message: "Please Choose a Gender" }]
             })(
               <Radio.Group>
-                <Radio value={0}>male</Radio>
-                <Radio value={1}>female</Radio>
+                <Radio value="male">male</Radio>
+                <Radio value="female">female</Radio>
               </Radio.Group>
             )}
           </FormItem>

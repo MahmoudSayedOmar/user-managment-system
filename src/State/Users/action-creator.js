@@ -96,8 +96,6 @@ export function onGetUserDetailsFail(): ON_GET_USERS_DETAILS_FAIL_ACTION {
 
 ////////////////////////////////////
 export async function onAddUser(values) {
-  debugger;
-  console.log(values, "valuess in action creator");
   return async (dispatch, getState) => {
     let state = getState();
     let users = state.users.users;

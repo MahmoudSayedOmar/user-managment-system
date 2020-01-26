@@ -60,9 +60,10 @@ export class AuthProxyService {
   }
 
   async editUser(user: UserRegisterModel) {
-    debugger;
+    console.log(user, "user");
+    // debugger;
     return await axios({
-      method: "put",
+      method: "post",
       url: `${BASE_URL}account/edit/${user.id}`,
       data: user,
       config: {
@@ -103,7 +104,7 @@ export class AuthProxyService {
 
   async register(user: UserRegisterModel) {
     console.log(user, "user");
-    debugger;
+    // debugger;
     return await axios({
       method: "post",
       url: `${BASE_URL}account/register`,

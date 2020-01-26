@@ -115,7 +115,7 @@ export function companiesReducer(
       };
     }
     case types.SELECT_COMPANY: {
-      console.log("selectCorporate:", state);
+      // console.log("selectCorporate:", state);
       return {
         ...state,
         selectedCompanyId: action.payload

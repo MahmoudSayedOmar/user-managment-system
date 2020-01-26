@@ -68,7 +68,7 @@ class Users extends React.Component {
   }
   updateFormFields = userEditableData => {
     const toEditUser = userEditableData;
-    // console.log(toEditUser, "userDetails");
+
     this.setState({
       showAddUserModal: true,
       isEdit: false
@@ -112,7 +112,7 @@ class Users extends React.Component {
       email: toEditUser.user.email,
       dateOfBirth: moment(toEditUser.user.dateOfBirth),
       imageURL: toEditUser.photo,
-      sex: toEditUser.user.sex,
+      sex: toEditUser.user.sex === 0 ? "male" : "female",
       mobileNumber: toEditUser.user.mobileNumber,
       userCoporate: toEditUser.corporate ? toEditUser.corporate.id : "",
       userApplications: toEditUser.applicationPortoflios
@@ -167,7 +167,7 @@ class Users extends React.Component {
     });
   };
   onAddUser = values => {
-    let dateOfBirth = values.dateOfBirth;
+    let dateOfBirth = moment(values.dateOfBirth).format("YYYY-MM-DD");
 
     if (values.id && values.id !== "") {
       this.props.onEditUser({
@@ -183,12 +183,13 @@ class Users extends React.Component {
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
         photo: values.photo,
-        corporate: values.corporate,
+        corporate: values.userCoporate,
+        applications: values.userApplications,
+        userTypes: values.userTypes,
         roles: values.userRoles
       });
     } else {
       this.props.onAddUser({
-        // id: this.props.allUsers.length + 1,
         fName: values.fName,
         mName: values.mName,
         lName: values.lName,
@@ -198,10 +199,11 @@ class Users extends React.Component {
         mobileNumber: values.mobileNumber,
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
-        corporate: values.corporate,
-        photo: values.photo,
         password: values.password,
-        confirmPassword: values.password,
+        corporate: values.corporate,
+        applications: values.userApplications,
+        // photo: values.photo,
+        userTypes: values.userTypes,
         roles: values.userRoles
       });
     }
@@ -339,6 +341,7 @@ class Users extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state.users.toEditUser, "to Edit user");
   return {
     userTypes: state.userTypes.userTypes,
     allUsers: state.users.users,

@@ -18,7 +18,7 @@ export class ApplicationsPortofoliosProxyService {
     applicationPortofolio,
     corporateId
   ) {
-    debugger;
+    // debugger;
 
     return await axios({
       method: "post",

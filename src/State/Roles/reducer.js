@@ -3,6 +3,9 @@ import * as actions from "./action-creator";
 import * as types from "./actions";
 
 type Action =
+  | actions.ON_VIEW_ROLES_BY_USERTYPE_ARRAY_ACTION
+  | actions.ON_VIEW_ROLES_BY_USERTYPE_ARRAY_SUCCESS_ACTION
+  | actions.ON_VIEW_ROLES_BY_USERTYPE_ARRAY_FAIL_ACTION
   | actions.ON_VIEW_ROLES_BY_USERTYPE_ID_ACTION
   | actions.ON_VIEW_ROLES_BY_USERTYPE_ID_SUCCESS_ACTION
   | actions.ON_VIEW_ROLES_BY_USERTYPE_ID_FAIL_ACTION;
@@ -12,6 +15,25 @@ export function rolesReducer(
   action: Action
 ): rolesState {
   switch (action.type) {
+    case types.ON_VIEW_ROLES_BY_USERTYPE_ARRAY: {
+      return {
+        ...state,
+        isLoaded: false
+      };
+    }
+    case types.ON_VIEW_ROLES_BY_USERTYPE_ARRAY_SUCCESS: {
+      return {
+        ...state,
+        roles: action.payload,
+        isLoaded: true
+      };
+    }
+    case types.ON_VIEW_ROLES_BY_USERTYPE_ARRAY_FAIL: {
+      return {
+        ...state
+      };
+    }
+
     case types.ON_VIEW_ROLES_BY_USERTYPE_ID: {
       return {
         ...state,
@@ -40,7 +62,7 @@ export function rolesReducer(
       var _roles = state.roles;
       _roles.push(action.payload);
       console.log(_roles);
-      debugger;
+      // debugger;
       return {
         ...state,
         roles: _roles,

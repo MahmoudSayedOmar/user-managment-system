@@ -46,8 +46,10 @@ export async function onViewUserTypesArray(
   appPortoflioId
 ): ON_VIEW_USER_TYPES_ARRAY_ACTION {
   return async dispatch => {
+    // debugger;
     var json = await userTypesService.getByArray(appPortoflioId);
     if (json.status === 200) {
+      // console.log(json.data, "json.data");
       dispatch(onViewUserTypesArraySuccess(json.data));
     } else {
       dispatch(onViewUserTypesArrayFail());
@@ -74,6 +76,7 @@ export async function onViewUserTypes(
   return async dispatch => {
     var json = await userTypesService.get(appPortoflioId);
     if (json.status === 200) {
+      console.log(json.data, "json.data");
       dispatch(onViewUserTypesSuccess(json.data));
     } else {
       dispatch(onViewUserTypesFail());

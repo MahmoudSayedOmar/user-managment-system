@@ -124,7 +124,8 @@ class UserTypes extends React.Component {
           style={{ cursor: "pointer" }}
           onClick={() => {
             this.props.history.push(`/admin/roles/${row.id}`, {
-              id: row.id
+              id: row.id,
+              navTitle: row.name + "'s Roles"
             });
           }}
         >

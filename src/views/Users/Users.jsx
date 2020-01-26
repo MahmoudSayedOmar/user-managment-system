@@ -29,12 +29,14 @@ import {
   onAddUser,
   onEditUser,
   viewUsers,
+  getUserDetails,
   onDeactivateUser,
   onActivateUser
 } from "State/Users/action-creator";
 import { onViewCompanies } from "State/Corporates/action-creator";
 import { viewCorporateDetails } from "State/ApplicationsPortofolio/action-creator";
 import { onViewUserTypesArray } from "../../State/user-types/action-creator";
+import { viewRolesArray } from "../../State/Roles/action-creator";
 // core components
 import moment from "moment";
 import "./Users.css";
@@ -57,34 +59,78 @@ class Users extends React.Component {
     // this.props.viewCorporateDetails(this.props.location.state.id);
     // this.props.onViewUserTypes(2);
   }
-
-  onEditRow = id => {
-    const toEditUser = this.props.allUsers.find(i => i.id === id);
-
+  componentWillReceiveProps(nextProps) {
+    if ("toEditUserDetails" in nextProps) {
+      if (nextProps.toEditUserDetails !== this.props.toEditUserDetails) {
+        this.updateFormFields(nextProps.toEditUserDetails);
+      }
+    }
+  }
+  updateFormFields = userEditableData => {
+    const toEditUser = userEditableData;
+    // console.log(toEditUser, "userDetails");
     this.setState({
       showAddUserModal: true,
       isEdit: false
     });
     this.setState({
-      modalTitle: "Edit " + toEditUser.fName + " " + toEditUser.mName,
+      modalTitle:
+        "Edit " +
+        toEditUser.user.fName +
+        " " +
+        toEditUser.user.mName +
+        " " +
+        toEditUser.user.lName,
       isEdit: true
     });
+    if (toEditUser) {
+      let applicationPortofliosArray = [];
+      let userTypesArray = [];
+      if (toEditUser.corporate) {
+        applicationPortofliosArray = toEditUser.applicationPortoflios.map(
+          (eachApp, index) => {
+            return eachApp.id;
+          }
+        );
 
+        this.onChangeCorporate(toEditUser.corporate.id); // to get all the application portofilios to be able to show name and id of them
+        this.onChangeApplications(applicationPortofliosArray);
+      }
+      if (toEditUser.userTypes) {
+        userTypesArray = toEditUser.userTypes.map((eachType, index) => {
+          return eachType.id;
+        });
+        this.onChangeTypes(userTypesArray);
+      }
+    }
     this.refs.addUserForm.setFieldsValue({
-      ...toEditUser,
-      id: toEditUser.id,
-      fName: toEditUser.fName,
-      mName: toEditUser.mName,
-      lName: toEditUser.lName,
-      validateBy: toEditUser.validateBy,
-      email: toEditUser.email,
-      dateOfBirth: moment(toEditUser.dateOfBirth),
+      id: toEditUser.user.id,
+      fName: toEditUser.user.fName,
+      mName: toEditUser.user.mName,
+      lName: toEditUser.user.lName,
+      validateBy: toEditUser.user.smsVerify ? "sms" : "mail",
+      email: toEditUser.user.email,
+      dateOfBirth: moment(toEditUser.user.dateOfBirth),
       imageURL: toEditUser.photo,
-      sex: toEditUser.sex,
-      mobileNumber: toEditUser.mobileNumber,
-      // corporate: toEditUser.corporate,
-      defaultLanguage: toEditUser.defaultLanguage
+      sex: toEditUser.user.sex,
+      mobileNumber: toEditUser.user.mobileNumber,
+      userCoporate: toEditUser.corporate ? toEditUser.corporate.id : "",
+      userApplications: toEditUser.applicationPortoflios
+        ? toEditUser.applicationPortoflios.map(eachApp => {
+            return eachApp.id;
+          })
+        : [],
+      userTypes: toEditUser.userTypes
+        ? toEditUser.userTypes.map(eachType => eachType.id)
+        : [],
+      userRoles: toEditUser.roles
+        ? toEditUser.roles.map((eachRole, index) => eachRole.id)
+        : [],
+      defaultLanguage: toEditUser.user.defaultLanguage
     });
+  };
+  onEditRow = id => {
+    this.props.getUserDetails(id);
   };
   onDeactivate = id => {
     this.props.onDeactivateUser(id);
@@ -104,10 +150,16 @@ class Users extends React.Component {
     this.props.viewCorporateDetails(value);
   };
   onChangeApplications = value => {
-    console.log(value, "value");
     this.props.onViewUserTypesArray(value);
   };
+  onChangeTypes = value => {
+    this.props.viewRolesArray(value);
+  };
   onCancelSettingsModal = () => {
+    this.refs.addUserForm.resetFields();
+    this.onChangeCorporate([]); // to get all the application portofilios to be able to show name and id of them
+    this.onChangeApplications([]);
+    this.onChangeTypes([]);
     this.setState({
       modalTitle: "Add User",
       showAddUserModal: false,
@@ -115,7 +167,6 @@ class Users extends React.Component {
     });
   };
   onAddUser = values => {
-    // console.log(values, "values");
     let dateOfBirth = values.dateOfBirth;
 
     if (values.id && values.id !== "") {
@@ -132,7 +183,8 @@ class Users extends React.Component {
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
         photo: values.photo,
-        corporate: values.corporate
+        corporate: values.corporate,
+        roles: values.userRoles
       });
     } else {
       this.props.onAddUser({
@@ -146,10 +198,11 @@ class Users extends React.Component {
         mobileNumber: values.mobileNumber,
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
-        // corporate: values.corporate,
+        corporate: values.corporate,
         photo: values.photo,
         password: values.password,
-        confirmPassword: values.password
+        confirmPassword: values.password,
+        roles: values.userRoles
       });
     }
 
@@ -273,9 +326,11 @@ class Users extends React.Component {
             ref="addUserForm"
             allCoporates={this.props.allCoporates}
             userTypes={this.props.userTypes}
+            userRoles={this.props.userRoles}
             applicationsPortofolios={this.props.applicationsPortofolios}
             onChangeCorporate={value => this.onChangeCorporate(value)}
             onChangeApplications={value => this.onChangeApplications(value)}
+            onChangeTypes={value => this.onChangeTypes(value)}
           />
         </div>
       </>
@@ -288,8 +343,10 @@ function mapStateToProps(state) {
     userTypes: state.userTypes.userTypes,
     allUsers: state.users.users,
     allCoporates: state.companies.companies,
+    userRoles: state.roles.roles,
     applicationsPortofolios:
-      state.applicationsPortofolios.applicationsPortofolios
+      state.applicationsPortofolios.applicationsPortofolios,
+    toEditUserDetails: state.users.toEditUser
   };
 }
 
@@ -298,12 +355,14 @@ function mapDispatchToProps(dispatch: Dispatch) {
     {
       onViewCompanies,
       viewUsers,
+      getUserDetails,
       viewCorporateDetails,
       onAddUser,
       onEditUser,
       onDeactivateUser,
       onActivateUser,
-      onViewUserTypesArray
+      onViewUserTypesArray,
+      viewRolesArray
     },
     dispatch
   );

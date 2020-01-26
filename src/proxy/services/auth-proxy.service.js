@@ -60,6 +60,7 @@ export class AuthProxyService {
   }
 
   async editUser(user: UserRegisterModel) {
+    debugger;
     return await axios({
       method: "put",
       url: `${BASE_URL}account/edit/${user.id}`,
@@ -73,6 +74,20 @@ export class AuthProxyService {
     });
   }
 
+  async userdetails(id) {
+    // debugger;
+
+    return await axios({
+      method: "get",
+      url: `${BASE_URL}account/userdetails/${id}`,
+      config: {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-Type": "application/json"
+        }
+      }
+    });
+  }
   async getUsers() {
     return await axios({
       method: "get",
@@ -87,6 +102,8 @@ export class AuthProxyService {
   }
 
   async register(user: UserRegisterModel) {
+    console.log(user, "user");
+    debugger;
     return await axios({
       method: "post",
       url: `${BASE_URL}account/register`,

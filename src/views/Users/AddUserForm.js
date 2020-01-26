@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Form,
   Input,
@@ -17,53 +17,53 @@ import { BASE_URL } from "../../http-client/constants";
 const FormItem = Form.Item;
 const { TreeNode } = TreeSelect;
 export default Form.create()(
-  class ImportMediaForm extends React.Component {
-    state = {
-      value: undefined,
-      userRolesOptions:[]
-    };
+  class ImportMediaForm extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        userRolesValues: ""
+      };
+    }
+
     static defaultProps = {};
 
     onCancel = () => {
       this.props.onCancel();
     };
+
     onChangeUserCorporate = value => {
+      this.props.form.setFieldsValue({ userApplications: [] });
+      this.props.form.setFieldsValue({ userTypes: [] });
+      this.props.form.setFieldsValue({ userRoles: [] });
       this.props.onChangeCorporate(value);
     };
+    onChangeUserApplicationsReset = () => {
+      this.props.form.setFieldsValue({ userTypes: [] });
+      this.props.form.setFieldsValue({ userRoles: [] });
+    };
     onChangeUserApplications = value => {
-      if (value && value.length > 0) {
-        this.props.onChangeApplications(value);
-      }
-    };
-      async  onChangeUsersTypes (value)   {
-        console.log(value);
-        if(value && value.length > 0)
-        {
-          var json = await this.get(value);
-         
-          this.setState ({userRolesOptions:<><Select.Option key="1" value="2">
-          aaa
-        </Select.Option>
-        </>})  
-
-        // this.props.onChanngeUsersTypes(value);
-      }
-    }
-
-    async get(userTypesIds) {
-      return await axios({
-        method: "post",
-        url: `${BASE_URL}usertypes/userRolesById`,
-        data:userTypesIds,
-        config: {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "content-Type": "application/json"
-          }
+      if (value === false) {
+        this.props.form.setFieldsValue({ userTypes: [] });
+        this.props.form.setFieldsValue({ userRoles: [] });
+        let userApps = this.props.form.getFieldValue("userApplications");
+        if (userApps && userApps.length > 0) {
+          this.props.onChangeApplications(userApps);
         }
-      });
+      }
     };
-  onOk = () => {
+    onChangeUsersTypesReset = () => {
+      this.props.form.setFieldsValue({ userRoles: [] });
+    };
+    onChangeUsersTypes = value => {
+      if (value === false) {
+        this.props.form.setFieldsValue({ userRoles: [] });
+        let userTypes = this.props.form.getFieldValue("userTypes");
+        if (userTypes && userTypes.length > 0) {
+          this.props.onChangeTypes(userTypes);
+        }
+      }
+    };
+    onOk = () => {
       this.props.form.validateFields((err, values) => {
         if (!err) {
           this.props.onOk(values);
@@ -97,57 +97,76 @@ export default Form.create()(
           </Option>
         )
       );
-      let userTypesOptions = this.props.userTypes.map(eachApp => {
-        // console.log(
-        //   this.props.form.getFieldValue("userApplications"),
-        //   "hahahah"
-        // );
-        return (
-          <Option key={eachApp.id} value={eachApp.id}>
-            {eachApp.name}
-          </Option>
-        );
-      });
-      // let userTypesOptions =
-      //   this.props.form.getFieldValue("userApplications") &&
-      //   this.props.form.getFieldValue("userApplications").length > 0
-      //     ? this.props.form
-      //         .getFieldValue("userApplications")
-      //         .map((eachApp, index) => {
-      //           return (
-      //             <TreeNode
-      //               value={eachApp.id}
-      //               title={eachApp.name}
-      //               key={index}
-      //               disabled
-      //             >
-      //               <TreeNode value="leaf1" title="my leaf" key="random" />
-      //               <TreeNode value="leaf2" title="your leaf" key="random1" />
-      //             </TreeNode>
-      //           );
-      //         })
-      //     : "";
 
-      // let userTypesOptions = (
-      //   <TreeNode value="user Types" title="parent 1" key="0-1" disabled>
-      //     <TreeNode value="parent 1-0" title="parent 1-0" key="0-1-1" disabled>
-      //       <TreeNode value="leaf1" title="my leaf" key="random" />
-      //       <TreeNode value="leaf2" title="your leaf" key="random1" />
-      //     </TreeNode>
-      //     <TreeNode
-      //       value="parent 1-1"
-      //       title="parent 1-1"
-      //       key="random2"
-      //       disabled
-      //     >
-      //       <TreeNode
-      //         value="sss"
-      //         title={<b style={{ color: "#08c" }}>sss</b>}
-      //         key="random3"
-      //       />
-      //     </TreeNode>
-      //   </TreeNode>
-      // );
+      let userTypesOptions =
+        this.props.form.getFieldValue("userApplications") &&
+        this.props.form.getFieldValue("userApplications").length > 0 &&
+        this.props.applicationsPortofolios &&
+        this.props.applicationsPortofolios.length > 0
+          ? this.props.form
+              .getFieldValue("userApplications")
+              .map((eachPorto, index) => {
+                return (
+                  <TreeNode
+                    value={eachPorto}
+                    title={
+                      this.props.applicationsPortofolios.find(
+                        m => m.id === eachPorto
+                      ).name || null
+                    }
+                    key={index}
+                    disabled={true}
+                  >
+                    {this.props.userTypes.map((eachType, index2) => {
+                      return eachPorto === eachType.appPortoflioId ? (
+                        <TreeNode
+                          value={eachType.id}
+                          title={eachType.name}
+                          key={index2}
+                        />
+                      ) : (
+                        ""
+                      );
+                    })}
+                  </TreeNode>
+                );
+              })
+          : "";
+
+      let userRolesValues =
+        this.props.form.getFieldValue("userTypes") &&
+        this.props.form.getFieldValue("userTypes").length > 0 &&
+        this.props.userTypes &&
+        this.props.userTypes.length > 0
+          ? this.props.form
+              .getFieldValue("userTypes")
+              .map((eachUserType, index) => {
+                console.log(this.props.userTypes, "all userTypes");
+                return (
+                  <TreeNode
+                    value={eachUserType}
+                    title={
+                      this.props.userTypes.find(m => m.id === eachUserType)
+                        .name || null
+                    }
+                    key={index}
+                    disabled={true}
+                  >
+                    {this.props.userRoles.map(eachUserRole => {
+                      return eachUserType === eachUserRole.userTypeId ? (
+                        <TreeNode
+                          value={eachUserRole.id}
+                          title={eachUserRole.name}
+                          key={eachUserRole.id}
+                        />
+                      ) : (
+                        ""
+                      );
+                    })}
+                  </TreeNode>
+                );
+              })
+          : "";
 
       const onlyNumbers = (rule, value, callback) => {
         if (value && isNaN(value)) {
@@ -200,8 +219,8 @@ export default Form.create()(
               rules: [{ required: true, message: "Please Choose a Gender" }]
             })(
               <Radio.Group>
-                <Radio value="male">male</Radio>
-                <Radio value="female">female</Radio>
+                <Radio value={0}>male</Radio>
+                <Radio value={1}>female</Radio>
               </Radio.Group>
             )}
           </FormItem>
@@ -245,10 +264,7 @@ export default Form.create()(
                 { required: true, message: "Please select default Language!" }
               ]
             })(
-              <Select
-                placeholder="default Language"
-                // onChange={this.handleSelectChange}
-              >
+              <Select placeholder="default Language">
                 <Option value="english">English</Option>
                 <Option value="arabic">Arabic</Option>
               </Select>
@@ -285,20 +301,23 @@ export default Form.create()(
               <Select
                 onChange={this.onChangeUserCorporate}
                 placeholder="Choose Corporate"
+                // open={true}
               >
                 {corporatesOptions}
               </Select>
             )}
           </Form.Item>
           <Form.Item {...formItemLayout} label="Choose App. Portofilio">
-            {getFieldDecorator(
-              "userApplications",
-              {}
-            )(
+            {getFieldDecorator("userApplications", {
+              rules: [
+                { required: true, message: "Please choose App. Portofilio" }
+              ]
+            })(
               <Select
                 mode="multiple"
                 placeholder="Choose Applications"
-                onChange={this.onChangeUserApplications}
+                onChange={this.onChangeUserApplicationsReset}
+                onDropdownVisibleChange={this.onChangeUserApplications}
               >
                 {corporateApplicationsOptions}
               </Select>
@@ -309,14 +328,20 @@ export default Form.create()(
               "userTypes",
               {}
             )(
-              <Select
-                mode="multiple"
-                placeholder="Choose User Types"
-                onChange={this.onChangeUsersTypes}
+              <TreeSelect
+                showSearch
+                style={{ width: "100%" }}
+                value={this.state.value}
+                dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+                placeholder="Choose UserTypes"
+                allowClear
+                multiple
+                treeDefaultExpandAll
+                onChange={this.onChangeUsersTypesReset}
+                onDropdownVisibleChange={this.onChangeUsersTypes}
               >
                 {userTypesOptions}
-              </Select>
-              
+              </TreeSelect>
             )}
           </Form.Item>
           <Form.Item {...formItemLayout} label="User Roles">
@@ -324,26 +349,18 @@ export default Form.create()(
               "userRoles",
               {}
             )(
-              <Select
-                mode="multiple"
-                placeholder="Choose User Roles"
-              
+              <TreeSelect
+                showSearch
+                style={{ width: "100%" }}
+                value={this.state.value}
+                dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+                placeholder="Choose UserTypes"
+                allowClear
+                multiple
+                treeDefaultExpandAll
               >
-                {this.state.userRolesOptions}
-              </Select>
-              // <TreeSelect
-              //   showSearch
-              //   style={{ width: "100%" }}
-              //   value={this.state.value}
-              //   dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-              //   placeholder="Choose UserTypes"
-              //   allowClear
-              //   multiple
-              //   treeDefaultExpandAll
-              //   onChange={this.onChangeUsersTypes}
-              // >
-              //   {userTypesOptions}
-              // </TreeSelect>
+                {userRolesValues}
+              </TreeSelect>
             )}
           </Form.Item>
           <Form.Item {...formItemLayout} label="Photo">

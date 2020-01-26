@@ -53,6 +53,7 @@ export async function viewCorporateDetails(corporateId) {
       corporateId
     );
     if (response.status === 200) {
+      // console.log(response.data, "data");
       dispatch(onViewApplicationsPortofoliosSuccess(response.data));
     } else {
       dispatch(onViewApplicationsPortofoliosFail());

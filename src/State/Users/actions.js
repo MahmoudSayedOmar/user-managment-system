@@ -2,6 +2,11 @@ export const ON_VIEW_USERS = "[users] on view users";
 export const ON_VIEW_USERS_SUCCESS = "[users] on view users success";
 export const ON_VIEW_USERS_FAIL = "[users] on view users fail";
 
+export const ON_GET_USER_DETAIILS = "[users] on get user details";
+export const ON_GET_USER_DETAILS_SUCCESS =
+  "[users] on get user details success";
+export const ON_GET_USER_DETAILS_FAIL = "[users] on get user details fail";
+
 export const ON_ADD_USER_ACTION = "[user] on add user";
 export const ON_ADD_USER_SUCCESS_ACTION = "[user] on add user success";
 export const ON_ADD_USER_FAIL_ACTION = "[user] on add user fail";

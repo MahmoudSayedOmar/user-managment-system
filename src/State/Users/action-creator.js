@@ -2,6 +2,10 @@ import * as types from "./actions";
 
 import { authProxyService } from "../../proxy/services";
 
+export type ON_GET_USER_DETAILS_ACTION = { type: String };
+export type ON_GET_USER_DETAILS_SUCCESS_ACTION = { type: String, payload: any };
+export type ON_GET_USER_DETAILS_FAIL_ACTION = { type: String, payload: any };
+
 export type ON_VIEW_USERS_ACTION = { type: String };
 export type ON_VIEW_USERS_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_VIEW_USERS_FAIL_ACTION = { type: String, payload: any };
@@ -29,22 +33,6 @@ export type ON_DEACTIVATE_USER_SUCCESS_ACTION = {
 };
 export type ON_DEACTIVATE_USER_FAIL_ACTION = { type: String, payload: any };
 
-export function onViewUsers(): ON_VIEW_USERS_ACTION {
-  return { type: types.ON_VIEW_USERS };
-}
-export function onViewUsersSuccess(
-  users: UsersModel
-): ON_VIEW_USERS_SUCCESS_ACTION {
-  return { type: types.ON_VIEW_USERS_SUCCESS, payload: users };
-}
-
-export function onViewUSERSFail(): ON_VIEW_USERS_FAIL_ACTION {
-  return {
-    type: types.ON_VIEW_USERS_FAIL,
-    payload: "connection error"
-  };
-}
-
 export async function viewUsers() {
   return async (dispatch, getState) => {
     let state = getState();
@@ -61,13 +49,60 @@ export async function viewUsers() {
   };
 }
 
+export function onViewUsers(): ON_VIEW_USERS_ACTION {
+  return { type: types.ON_VIEW_USERS };
+}
+export function onViewUsersSuccess(
+  users: UsersModel
+): ON_VIEW_USERS_SUCCESS_ACTION {
+  return { type: types.ON_VIEW_USERS_SUCCESS, payload: users };
+}
+
+export function onViewUSERSFail(): ON_VIEW_USERS_FAIL_ACTION {
+  return {
+    type: types.ON_VIEW_USERS_FAIL,
+    payload: "connection error"
+  };
+}
+/////////////////////////////////////////////
+
+export async function getUserDetails(id) {
+  return async (dispatch, getState) => {
+    let response = await authProxyService.userdetails(id);
+    if (response.status === 200) {
+      dispatch(onGetUserDetailsSuccess(response.data));
+    } else {
+      dispatch(onGetUserDetailsFail());
+    }
+    // users.push(values);
+  };
+}
+
+export function onGetUserDetails(): ON_GET_USER_DETAILS_ACTION {
+  return { type: types.ON_GET_USER_DETAIILS };
+}
+export function onGetUserDetailsSuccess(
+  users: UsersModel
+): ON_GET_USER_DETAILS_SUCCESS_ACTION {
+  return { type: types.ON_GET_USER_DETAILS_SUCCESS, payload: users };
+}
+
+export function onGetUserDetailsFail(): ON_GET_USERS_DETAILS_FAIL_ACTION {
+  return {
+    type: types.ON_GET_USER_DETAILS_FAIL,
+    payload: "connection error"
+  };
+}
+
 ////////////////////////////////////
 export async function onAddUser(values) {
+  debugger;
+  console.log(values, "valuess in action creator");
   return async (dispatch, getState) => {
     let state = getState();
     let users = state.users.users;
     let response = await authProxyService.register(values);
-
+    console.log(response, "response");
     if (response.status === 200) {
       users.push(response.data);
       dispatch(onAddUserSuccess(users));
@@ -86,7 +121,7 @@ export async function onEditUser(values) {
     let response = await authProxyService.editUser(values);
 
     if (response.status === 200) {
-      const toEditIndex = users.findIndex(user => user.id == response.data.id);
+      const toEditIndex = users.findIndex(user => user.id === response.data.id);
       users = [...state.users.users];
       users[toEditIndex] = response.data;
       dispatch(onUpdateUserSuccess(users));

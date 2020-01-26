@@ -31,6 +31,7 @@ export function usersReducer(
       };
     }
     case types.ON_VIEW_USERS_SUCCESS: {
+      // console.log(action.payload, "allusers");
       return {
         ...state,
         users: action.payload
@@ -67,6 +68,7 @@ export function usersReducer(
       };
     }
     case types.ON_ADD_USER_SUCCESS_ACTION: {
+      // console.log(action.payload, "payload");
       return {
         ...state,
         users: action.payload

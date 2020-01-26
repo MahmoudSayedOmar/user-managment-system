@@ -1,6 +1,8 @@
-const PROD_BASE_URL = "";
+const PROD_BASE_URL = "http://81.10.30.157:8090/api/";
 const DEV_BASE_URL = "https://localhost:44345/api/";
 
 const DEV = true;
 
 export const BASE_URL = DEV ? DEV_BASE_URL : PROD_BASE_URL;
+
+

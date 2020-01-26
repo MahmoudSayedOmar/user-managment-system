@@ -2,6 +2,7 @@ import { BASE_URL } from "../../http-client/constants";
 
 import axios from "axios";
 
+
 export class UserTypesService {
   async get(appPortoflioId) {
     return await axios({

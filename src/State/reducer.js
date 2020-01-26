@@ -8,8 +8,11 @@ import { moduleReducer } from "./ExtraModules/reducer";
 import { submitCodeReducer } from "./SubmitCode/reducer";
 import { userTypesReducer } from "./user-types/reducer";
 import { rolesReducer } from "./Roles/reducer";
+import { initialState } from "./state";
 
-export const combinedReducer = combineReducers({
+import storage from "redux-persist/lib/storage";
+
+export const appReducer = combineReducers({
   authorization: authorizationReducer,
   companies: companiesReducer,
   users: usersReducer,
@@ -20,3 +23,14 @@ export const combinedReducer = combineReducers({
   userTypes: userTypesReducer,
   roles: rolesReducer
 });
+
+export const combinedReducer = (state, action) => {
+  debugger;
+  if (action.type === "USER_LOGOUT") {
+    state = initialState;
+    debugger;
+    storage.removeItem("persist:root");
+  }
+
+  return appReducer(state, action);
+};

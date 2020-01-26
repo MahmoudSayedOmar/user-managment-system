@@ -31,8 +31,11 @@ import {
 } from "reactstrap";
 
 import routes from "routes.js";
+import { connect } from "react-redux";
+import { Dispatch, bindActionCreators } from "redux";
+import { tryLogOut } from "../../State/Authorization/action-creator";
 
-class Header extends React.Component {
+class HeaderComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,6 +46,10 @@ class Header extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.dropdownToggle = this.dropdownToggle.bind(this);
     this.sidebarToggle = React.createRef();
+  }
+
+  static mapDispatchToProps(dispatch: Dispatch) {
+    return bindActionCreators({ tryLogOut }, dispatch);
   }
   toggle() {
     if (this.state.isOpen) {
@@ -182,7 +189,13 @@ class Header extends React.Component {
                     <DropdownItem>View Profile</DropdownItem>
                   </Link>
 
-                  <Link to="/logout">
+                  <Link
+                    to="/logout"
+                    onClick={() => {
+                      this.props.tryLogOut();
+                      debugger;
+                    }}
+                  >
                     <DropdownItem>Log Out</DropdownItem>
                   </Link>
                 </DropdownMenu>
@@ -195,4 +208,7 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export const Header = connect(
+  null,
+  HeaderComponent.mapDispatchToProps
+)(HeaderComponent);

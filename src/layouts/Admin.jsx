@@ -2,7 +2,7 @@ import React from "react";
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
+import { Header } from "components/Navbars/DemoNavbar.jsx";
 import { CorporateDetailsScreen } from "../views/CorporateDetails/corporate-details";
 import { UserTypesScreen } from "../views/user-types/user-types";
 import { UserTypeDetailsScreen } from "../views/UserTypeDetails/user-type-details";
@@ -44,7 +44,7 @@ class Dashboard extends React.Component {
       <div className="wrapper">
         <Sidebar {...this.props} routes={routes} />
         <div className="main-panel" ref={this.mainPanel}>
-          <DemoNavbar {...this.props} routes={routes} />
+          <Header {...this.props} routes={routes} />
           <Switch>
             <Redirect
               path={routes[0].layout}

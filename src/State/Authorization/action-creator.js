@@ -92,3 +92,15 @@ export function profileViewingFail(): LOGIN_FAIL_Action {
   const errorMsg = "Invalid Credentials";
   return { type: types.VIEW_PROFILE_FAIL, payload: errorMsg };
 }
+/********************************************* */
+export type LOGOUT_ACTION = { type: string };
+
+export async function tryLogOut() {
+  return async dispatch => {
+    dispatch(LogOut());
+  };
+}
+
+export function LogOut(): LOGOUT_ACTION {
+  return { type: types.LOGOUT };
+}

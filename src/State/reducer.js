@@ -8,6 +8,7 @@ import { moduleReducer } from "./ExtraModules/reducer";
 import { submitCodeReducer } from "./SubmitCode/reducer";
 import { userTypesReducer } from "./user-types/reducer";
 import { rolesReducer } from "./Roles/reducer";
+
 export const combinedReducer = combineReducers({
   authorization: authorizationReducer,
   companies: companiesReducer,

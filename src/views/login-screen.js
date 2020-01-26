@@ -7,7 +7,6 @@ import { LoginComponent } from "../components/Login/login-component";
 import { tryLogin } from "../State/Authorization/action-creator";
 
 class LoginContainer extends React.Component {
-
   props: {
     isLoggedIn: boolean,
     loading: boolean,
@@ -19,7 +18,8 @@ class LoginContainer extends React.Component {
     return {
       loading: state.authorization.loading,
       errorMessage: state.authorization.errorMessage,
-      isLoggedIn: state.authorization.isLoggedIn
+      isLoggedIn: state.authorization.isLoggedIn,
+      authorization: state.authorization
     };
   }
 
@@ -28,8 +28,25 @@ class LoginContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("obj", this.nextProps);
+    debugger;
     if (nextProps.isLoggedIn === true) {
-      this.props.history.push("/admin");
+      // console.log(this.props);
+      // debugger;
+      // this.props.cookies.set("authorization", this.props.authorization, {
+      //   path: "/"
+      // });
+      // debugger;
+      // var x = this.props.cookies.get("authorization");
+      // console.log("cookies", this.props);
+      // console.log("auth", x);
+      // debugger;
+      // this.props.cookies.remove("authorization", { path: "/" });
+      // console.log("cookies", this.props.cookies);
+      // debugger;
+      console.log("history", nextProps.history);
+      debugger;
+      nextProps.history.push("/admin/user-page");
     }
   }
   render() {
@@ -47,8 +64,11 @@ class LoginContainer extends React.Component {
           {this.props.loading ? (
             "loading..."
           ) : (
-              <LoginComponent tryLogin={this.props.tryLogin} errorMessage={this.props.errorMessage} />
-            )}
+            <LoginComponent
+              tryLogin={this.props.tryLogin}
+              errorMessage={this.props.errorMessage}
+            />
+          )}
         </div>
       </div>
     );

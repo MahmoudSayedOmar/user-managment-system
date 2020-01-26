@@ -25,7 +25,7 @@ import Icons from "views/Icons.jsx";
 import Typography from "views/Typography.jsx";
 import TableList from "views/Tables.jsx";
 import Maps from "views/Map.jsx";
-import UserPage from "views/User.jsx";
+import { UserProfileScreen } from "views/UserProfile/user-profile";
 import { DefaultApplicationsScreen } from "./views/default-apps/default-applications-screen";
 var routes = [
   {
@@ -82,7 +82,7 @@ var routes = [
     path: "/user-page",
     name: "User Profile",
     icon: "nc-icon nc-single-02",
-    component: UserPage,
+    component: UserProfileScreen,
     layout: "/admin"
   },
   {

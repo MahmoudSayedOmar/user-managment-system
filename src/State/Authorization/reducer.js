@@ -21,11 +21,9 @@ export function authorizationReducer(
     }
 
     case types.LOGIN_SUCCESS: {
+      console.log(action.payload);
       return {
-        ...state,
-        token: action.payload,
-        isLoggedIn: true,
-        loading: false
+        ...action.payload
       };
     }
 
@@ -35,6 +33,25 @@ export function authorizationReducer(
         isLoggedIn: false,
         errorMessage: action.payload,
         loading: false
+      };
+    }
+    case types.ON_VIEW_PROFILE: {
+      return {
+        ...state
+      };
+    }
+
+    case types.VIEW_PROFILE_SUCCESS: {
+      console.log(action.payload);
+      return {
+        ...state,
+        userProfile: action.payload
+      };
+    }
+
+    case types.VIEW_PROFILE_FAIL: {
+      return {
+        ...state
       };
     }
     default:

@@ -1,60 +1,54 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import ReactDOM from "react-dom";
-import { createBrowserHistory } from "history";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import promiseMiddleware from "redux-promise";
 import thunkMiddleware from "redux-thunk";
 import { createStore, applyMiddleware } from "redux";
+import { createBrowserHistory } from "history";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss?v=1.1.0";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import { LoginScreen } from "./views/login-screen";
-import { UserConfirmScreen } from "./views/UserConfirm/UserConfirm";
-import AdminLayout from "layouts/Admin.jsx";
+
 import { combinedReducer } from "./State/reducer";
+import { Router, Route, Switch, Redirect, withRouter } from "react-router-dom";
+
 import "antd/dist/antd.css";
+
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+
+import { PersistGate } from "redux-persist/integration/react";
+
+//import { CookiesProvider } from "react-cookie";
+import App from "./App";
+
+const history = createBrowserHistory();
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["authorization"]
+};
+const persistedReducer = persistReducer(persistConfig, combinedReducer);
 const store = createStore(
-  combinedReducer,
+  persistedReducer,
   composeWithDevTools(applyMiddleware(promiseMiddleware, thunkMiddleware))
 );
-const hist = createBrowserHistory();
-//
+const persistor = persistStore(store);
 
 ReactDOM.render(
+  // <CookiesProvider>
   <Provider store={store}>
-    <Router history={hist}>
-      <Switch>
-        <Route path="/login" component={LoginScreen} />
-        <Route path="/userConfirm" component={UserConfirmScreen} />
-
-        <Route path="/admin" render={props => <AdminLayout {...props} />} />
-
-        <Redirect path="/" to="/login" />
-      </Switch>
+    <Router history={history}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Router>
   </Provider>,
+  // </CookiesProvider>
   document.getElementById("root")
 );

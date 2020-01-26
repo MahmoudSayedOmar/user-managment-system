@@ -6,6 +6,9 @@ export interface AuthorizationState {
   isRegistered: boolean;
   errorMessage: string;
   loading: boolean;
+  role: Array;
+  screens: Array;
+  userProfile: Object;
 }
 
 export const AuthorizationInitialState: AuthorizationState = {
@@ -14,5 +17,8 @@ export const AuthorizationInitialState: AuthorizationState = {
   isLoggedIn: false,
   isRegistered: false,
   errorMessage: "",
-  loading: false
+  loading: false,
+  role: [],
+  screens: [],
+  userProfile: {}
 };

@@ -47,12 +47,14 @@ export function onViewApplicationsPortofoliosFail(): ON_VIEW_APPLICATIONPORTOFOL
 }
 
 export async function viewCorporateDetails(corporateId) {
+  // debugger;
   return async (dispatch, getState) => {
     dispatch(SelectCorporate(corporateId));
     const response = await applicationsPortofoliosProxyService.getCorporateApplicationsPortofolios(
       corporateId
     );
     if (response.status === 200) {
+      // debugger;
       console.log(response.data, "data");
       dispatch(onViewApplicationsPortofoliosSuccess(response.data));
     } else {

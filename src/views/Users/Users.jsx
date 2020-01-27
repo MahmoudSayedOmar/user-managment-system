@@ -341,14 +341,18 @@ class Users extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.users.toEditUser, "to Edit user");
+  // console.log(
+  //   state.applicationsPortofolios.applicationsPortofolios.applicationPortoflios,
+  //   "to Edit user"
+  // );
   return {
     userTypes: state.userTypes.userTypes,
     allUsers: state.users.users,
     allCoporates: state.companies.companies,
     userRoles: state.roles.roles,
     applicationsPortofolios:
-      state.applicationsPortofolios.applicationsPortofolios,
+      state.applicationsPortofolios.applicationsPortofolios
+        .applicationPortoflios,
     toEditUserDetails: state.users.toEditUser
   };
 }

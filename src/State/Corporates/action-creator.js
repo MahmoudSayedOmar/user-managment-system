@@ -32,7 +32,7 @@ export type ON_UPDATE_COMPANY_FAIL_ACTION = { type: String, payload: any };
 export async function onViewCompanies(): ON_VIEW_COMPANIES_ACTION {
   return async (dispatch, getState) => {
     // let state = getState();
-    debugger;
+    // debugger;
     var json = await corporateService.get();
     if (json.status === 200) {
       dispatch(onViewCompaniesSuccess(json.data));

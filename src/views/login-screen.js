@@ -29,7 +29,7 @@ class LoginContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     console.log("obj", this.nextProps);
-    debugger;
+    // debugger;
     if (nextProps.isLoggedIn === true) {
       // console.log(this.props);
       // debugger;

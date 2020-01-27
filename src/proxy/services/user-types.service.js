@@ -2,7 +2,6 @@ import { BASE_URL } from "../../http-client/constants";
 
 import axios from "axios";
 
-
 export class UserTypesService {
   async get(appPortoflioId) {
     return await axios({
@@ -18,7 +17,7 @@ export class UserTypesService {
   }
 
   async add(newUserType, appPortoflioId) {
-    debugger;
+    // debugger;
     return await axios({
       method: "post",
       url: `${BASE_URL}usertypes/add/${appPortoflioId}`,

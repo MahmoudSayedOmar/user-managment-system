@@ -25,10 +25,10 @@ export const appReducer = combineReducers({
 });
 
 export const combinedReducer = (state, action) => {
-  debugger;
+  // debugger;
   if (action.type === "USER_LOGOUT") {
     state = initialState;
-    debugger;
+    // debugger;
     storage.removeItem("persist:root");
   }
 

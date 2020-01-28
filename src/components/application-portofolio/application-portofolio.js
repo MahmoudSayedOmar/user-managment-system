@@ -31,6 +31,7 @@ export default class ApplicationsPortofoliosListingComponent extends React.Compo
   };
 
   handleCancel = () => {
+    this.refs.applicationPort.resetFields();
     this.setState({
       visible: false
     });
@@ -43,12 +44,14 @@ export default class ApplicationsPortofoliosListingComponent extends React.Compo
           modalText={this.state.modalText}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
+          baseApplications={this.props.baseApplications}
+          ref="applicationPort"
         />
         <ListingComponent
           modalTitle={"Application Portofolio"}
           columns={this.props.columns}
           dataSource={this.props.dataSource}
-          pagination={false}
+          pagination={{ pageSize: 10 }}
           listingType={"Corprate Name Application Portofolio"}
           onAddModal={this.showModal}
         />

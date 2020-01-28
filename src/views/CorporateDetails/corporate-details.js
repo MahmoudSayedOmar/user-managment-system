@@ -28,7 +28,6 @@ class CorporateDetailsContainer extends React.Component {
   }
   onEditCorporate = values => {
     if (values.id && values.id !== "") {
-      // console.log(values.id, "values.id");
       this.props.onUpdateCorporate({
         ...this.state.corporateData,
         name: values.corporateName,
@@ -111,18 +110,20 @@ class CorporateDetailsContainer extends React.Component {
       title: "Extra Modules",
       dataIndex: "extraModules",
       key: "extraModules",
-      render: extraModules => (
-        <span>
-          {" "}
-          {_.map(extraModules, module => {
-            return (
-              <Tag color="blue" key={module.module.id}>
-                {module.module.name}
-              </Tag>
-            );
-          })}
-        </span>
-      )
+      render: extraModules => {
+        return (
+          <span>
+            {" "}
+            {_.map(extraModules, module => {
+              return (
+                <Tag color="blue" key={module.moduleId}>
+                  {module.module.name}
+                </Tag>
+              );
+            })}
+          </span>
+        );
+      }
     },
 
     {
@@ -164,8 +165,8 @@ class CorporateDetailsContainer extends React.Component {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  console.log("row", row);
-                  console.log("Key", eachKey);
+                  // console.log("row", row);
+                  // console.log("Key", eachKey);
 
                   this.props.changeApplicationPortofolioActivationStatus(
                     row.id,
@@ -209,10 +210,6 @@ class CorporateDetailsContainer extends React.Component {
     this.props.tryGetAllDefaultApplications();
   }
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps, "next Props data");
-    // console.log(this.props.corporateData, "corporate data");
-    console.log(this.props.corporateData.applicationPortoflios, "props");
-    console.log(nextProps.corporateData, "next");
     if (nextProps.corporateData && nextProps.corporateData.length > 0) {
       if (
         this.props.corporateData.applicationPortoflios !==
@@ -256,9 +253,8 @@ class CorporateDetailsContainer extends React.Component {
     }
   }
   render() {
-    console.log(this.state.applicationPortoflios, "applicationsPorotofilios");
     let corporateData = this.state.corporateData;
-    console.log(this.state.corporateData, "state");
+
     return (
       <>
         <div className="content">
@@ -351,6 +347,7 @@ class CorporateDetailsContainer extends React.Component {
                   onAddApplicationPortofolio={
                     this.props.addApplicationPortofolioToCorporate
                   }
+                  baseApplications={this.props.baseApplications}
                 />
               </Provider>
             </Col>

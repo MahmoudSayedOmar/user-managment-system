@@ -17,7 +17,55 @@ export default Form.create()(
   class AddApplicationPortofolioModal extends React.Component {
     constructor(props) {
       super(props);
+      this.state = {
+        extraModulesOptions: [],
+        defaultApps: ""
+      };
     }
+    onSelectbaseModules = value => {
+      this.props.form.setFieldsValue({ extramodules: [] });
+      let extraModulesArray = this.props.baseApplications.find(
+        eachExtraModule => eachExtraModule.id === value
+      ).modulesDefaultApp;
+
+      let extraModuleOptions = [];
+      let defaultAppsArray = [];
+      for (var m = 0; m < extraModulesArray.length; m++) {
+        if (extraModulesArray[m].isDefault === false) {
+          extraModuleOptions.push(extraModulesArray[m]);
+        } else if (extraModulesArray[m].isDefault === true) {
+          defaultAppsArray.push(extraModulesArray[m]);
+        }
+      }
+
+      if (defaultAppsArray.length > 0) {
+        this.setState({
+          defaultApps: defaultAppsArray.map((eachDefaultApp, index) => {
+            return (
+              <span key={index}>
+                {index === 0 ? "Default Apps : " : ""}
+                {eachDefaultApp.title}
+                {index === defaultAppsArray.length - 1 ? ".  " : ", "}
+              </span>
+            );
+          })
+        });
+      }
+      if (extraModuleOptions.length > 0) {
+        this.setState({
+          extraModulesOptions: extraModuleOptions.map(baseApplication => {
+            return (
+              <Select.Option
+                key={baseApplication.id}
+                value={baseApplication.id}
+              >
+                {baseApplication.title}
+              </Select.Option>
+            );
+          })
+        });
+      }
+    };
     onOk = () => {
       this.props.form.validateFields((err, values) => {
         if (!err) {
@@ -30,11 +78,15 @@ export default Form.create()(
 
             isActive: true
           });
+          this.setState({ defaultApps: "" });
           this.props.form.resetFields();
         }
       });
     };
-
+    cancelForm = () => {
+      this.setState({ defaultApps: "" });
+      this.props.onCancel();
+    };
     render() {
       const { getFieldDecorator } = this.props.form;
       const formItemLayout = {
@@ -45,11 +97,6 @@ export default Form.create()(
       const { Option } = Select;
       const { visible, modalText, onOk, onCancel } = this.props;
       const extraModules = [];
-      for (let i = 10; i < 36; i++) {
-        extraModules.push(
-          <Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>
-        );
-      }
 
       return (
         <div>
@@ -59,7 +106,7 @@ export default Form.create()(
                 title="New Application Portofolio"
                 visible={visible}
                 onOk={this.onOk}
-                onCancel={onCancel}
+                onCancel={this.cancelForm}
               >
                 <Form>
                   <Form.Item
@@ -80,7 +127,15 @@ export default Form.create()(
                       />
                     )}
                   </Form.Item>
-                  <Form.Item {...formItemLayout} label="Base Application">
+                  <Form.Item
+                    {...formItemLayout}
+                    label="Base Application"
+                    help={
+                      this.state.defaultApps !== ""
+                        ? this.state.defaultApps
+                        : ""
+                    }
+                  >
                     {getFieldDecorator("baseapplictaion", {
                       rules: [
                         {
@@ -89,7 +144,10 @@ export default Form.create()(
                         }
                       ]
                     })(
-                      <Select placeholder="Select Base Application">
+                      <Select
+                        placeholder="Select Base Application"
+                        onChange={this.onSelectbaseModules}
+                      >
                         {_.map(context.baseApplications, baseApplication => {
                           return (
                             <Option
@@ -117,13 +175,7 @@ export default Form.create()(
                         mode="multiple"
                         placeholder="Please select your extra modules"
                       >
-                        {_.map(context.modules, module => {
-                          return (
-                            <Option key={module.id} value={module.id}>
-                              {module.title}
-                            </Option>
-                          );
-                        })}
+                        {this.state.extraModulesOptions}
                       </Select>
                     )}
                   </Form.Item>

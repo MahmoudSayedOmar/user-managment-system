@@ -93,11 +93,13 @@ export default Form.create()(
       let corporateApplicationsOptions =
         this.props.applicationsPortofolios &&
         this.props.applicationsPortofolios.length > 0
-          ? this.props.applicationsPortofolios.map(eachApp => (
-              <Option key={eachApp.id} value={eachApp.id}>
-                {eachApp.name}
-              </Option>
-            ))
+          ? this.props.applicationsPortofolios.map((eachApp, index) => {
+              return (
+                <Option key={eachApp.id} value={eachApp.id}>
+                  {eachApp.name}
+                </Option>
+              );
+            })
           : "";
 
       let userTypesOptions =
@@ -114,7 +116,11 @@ export default Form.create()(
                     title={
                       this.props.applicationsPortofolios.find(
                         m => m.id === eachPorto
-                      ).name || null
+                      )
+                        ? this.props.applicationsPortofolios.find(
+                            m => m.id === eachPorto
+                          ).name
+                        : ""
                     }
                     key={index}
                     disabled={true}

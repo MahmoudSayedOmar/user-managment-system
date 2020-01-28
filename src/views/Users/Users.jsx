@@ -182,7 +182,7 @@ class Users extends React.Component {
         mobileNumber: values.mobileNumber,
         defaultLanguage: values.defaultLanguage,
         validateBy: values.validateBy,
-        photo: values.photo,
+        // photo: values.photo,
         corporate: values.userCoporate,
         applications: values.userApplications,
         userTypes: values.userTypes,
@@ -341,10 +341,6 @@ class Users extends React.Component {
 }
 
 function mapStateToProps(state) {
-  // console.log(
-  //   state.applicationsPortofolios.applicationsPortofolios.applicationPortoflios,
-  //   "to Edit user"
-  // );
   return {
     userTypes: state.userTypes.userTypes,
     allUsers: state.users.users,

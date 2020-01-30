@@ -35,6 +35,7 @@ export async function tryLogin(user: UserLoginModel) {
           role: decodedToken["role"],
           screens
         });
+        // console.log(authState, "authState");
         // debugger;
 
         dispatch(loginSuccess(authState));

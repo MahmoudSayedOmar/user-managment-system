@@ -45,19 +45,6 @@ export class UserTypesService {
     });
   }
 
-  async add(newUserType, appPortoflioId) {
-    return await axios({
-      method: "post",
-      url: `${BASE_URL}usertypes/add/${appPortoflioId}`,
-      data: newUserType,
-      config: {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "content-Type": "application/json"
-        }
-      }
-    });
-  }
   async update(value) {
     return await axios({
       method: "put",
@@ -85,8 +72,9 @@ export class UserTypesService {
     });
   }
   async activate(id) {
+    debugger;
     return await axios({
-      method: "post",
+      method: "put",
       url: `${BASE_URL}usertypes/activate/${id}`,
       config: {
         headers: {

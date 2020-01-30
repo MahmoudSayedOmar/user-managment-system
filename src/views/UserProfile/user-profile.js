@@ -109,8 +109,8 @@ class User extends React.Component {
                 <CardBody>
                   {this.props.userProfile.userApplicationPortolios != undefined
                     ? this.props.userProfile.userApplicationPortolios.map(
-                        userApplicationPortolio => (
-                          <Row>
+                        (userApplicationPortolio, index2) => (
+                          <Row key={index2}>
                             <Col md="12">
                               <label>
                                 Application :
@@ -125,12 +125,14 @@ class User extends React.Component {
                                 </thead>
                                 <tbody>
                                   {userApplicationPortolio.userUserTypes.map(
-                                    userType => (
-                                      <tr>
+                                    (userType, index1) => (
+                                      <tr key={index1}>
                                         <td>{userType.userType}</td>
                                         <td>
-                                          {userType.roles.map(role => (
-                                            <Tag color="blue">{role.role}</Tag>
+                                          {userType.roles.map((role, index) => (
+                                            <Tag color="blue" key={index}>
+                                              {role.role}
+                                            </Tag>
                                           ))}
                                         </td>
                                       </tr>

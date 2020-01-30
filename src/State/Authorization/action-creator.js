@@ -2,6 +2,10 @@ import { UserLoginModel } from "../../proxy";
 import { authProxyService } from "../../proxy/services";
 import * as types from "./actions";
 
+import axios from "axios";
+
+import { HttpClient } from "../../proxy/services/axoisconfig";
+
 var jwtDecode = require("jwt-decode");
 
 export type ON_LOGIN_Action = { type: string };
@@ -16,7 +20,9 @@ export async function tryLogin(user: UserLoginModel) {
     dispatch(onLogin(user));
     try {
       let response = await authProxyService.login(user);
+      // debugger;
       if (response.status === 200) {
+        // debugger;
         var result = response.data;
         var token = result["token"];
         var screens = result["screens"];
@@ -29,8 +35,14 @@ export async function tryLogin(user: UserLoginModel) {
           role: decodedToken["role"],
           screens
         });
+        // console.log(authState, "authState");
+        // debugger;
 
         dispatch(loginSuccess(authState));
+        axios.interceptors.request.use(function(config) {
+          config.headers.Authorization = `Bearer ${authState.token}`;
+          return config;
+        });
       } else {
         dispatch(loginFail());
       }
@@ -62,14 +74,14 @@ export type VIEW_PROFILE_FAIL_Action = { type: string, payload: string };
 
 export async function tryViewProfile() {
   return async (dispatch, getState) => {
-    // var user = getState().authorization.username;
-    debugger;
+    //  var user = getState().authorization.username;
+    // debugger;
     dispatch(onViewProfile());
     try {
       let response = await authProxyService.viewProfile(9);
       if (response.status === 200) {
         console.log(response.data);
-        debugger;
+        // debugger;
 
         dispatch(profileViewingSuccess(response.data));
       } else {

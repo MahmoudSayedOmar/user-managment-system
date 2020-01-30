@@ -29,7 +29,7 @@ class LoginContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     console.log("obj", this.nextProps);
-    debugger;
+    // debugger;
     if (nextProps.isLoggedIn === true) {
       // console.log(this.props);
       // debugger;
@@ -46,7 +46,7 @@ class LoginContainer extends React.Component {
       // debugger;
       console.log("history", nextProps.history);
       debugger;
-      nextProps.history.push("/admin/user-page");
+      nextProps.history.push("/admin/corporates/corporates");
     }
   }
   render() {

@@ -88,6 +88,7 @@ class Corporate extends React.Component {
   };
 
   onCancelSettingsModal = () => {
+    this.refs.addCorporateForm.resetFields();
     this.setState({
       modalTitle: "Add Corporate",
       showAddCorporateModal: false
@@ -139,7 +140,8 @@ class Corporate extends React.Component {
           onClick={() => {
             this.props.history.push(`/admin/corporatedetails/${row.id}`, {
               id: row.id,
-              navTitle: row.name + "'s Application Portofilios"
+              // navTitle: row.name + "'s Application Portofilios"
+              navTitle: " Corporate Application Portofilios"
             });
           }}
         >
@@ -262,8 +264,6 @@ class Corporate extends React.Component {
             onOk={this.onAddCorporate}
             visible={this.state.showAddCorporateModal}
             ref="addCorporateForm"
-            media={this.props.medias}
-            plugins={this.props.plugins}
           />
         </div>
       </>

@@ -91,10 +91,9 @@ class UserTypes extends React.Component {
 
   onAddUserType = values => {
     if (values.id && values.id !== "") {
+      console.log("we are here in edit");
       this.props.onUpdateUserType({
-        ...this.props.allCompanies.find(
-          eachcompany => eachcompany.id === values.id
-        ),
+        ...this.props.userTypes.find(eachType => eachType.id === values.id),
 
         name: values.name
       });
@@ -181,13 +180,6 @@ class UserTypes extends React.Component {
               />
             </Tooltip>
           )}
-
-          <Tooltip placement="top" title="Application User types">
-            <Icon
-              type="file-add"
-              style={{ fontSize: "20px", cursor: "pointer" }}
-            />
-          </Tooltip>
         </span>
       )
     }
@@ -245,6 +237,7 @@ class UserTypes extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state.userTypes.userTypes, "userTypes");
   return {
     userTypes: state.userTypes.userTypes
   };

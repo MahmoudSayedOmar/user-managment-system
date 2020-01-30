@@ -5,7 +5,8 @@ export class ApplicationsPortofoliosProxyService {
   async getCorporateApplicationsPortofolios(corporateId: Number) {
     return await axios({
       method: "get",
-      url: `${BASE_URL}ApplicationPortoflios/GetAll/${corporateId}`,
+      // url: `${BASE_URL}ApplicationPortoflios/GetAll/${corporateId}`,
+      url: `${BASE_URL}Corporates/get/${corporateId}`,
       config: {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -14,12 +15,30 @@ export class ApplicationsPortofoliosProxyService {
       }
     });
   }
+  ////////
+  async editApplicationPortofolioToCorporate(applicationPortofolio) {
+    // debugger;
+    // console.log(applicationPortofolio, "application porotofilio");
+    return await axios({
+      method: "put",
+      url: `${BASE_URL}ApplicationPortoflios/edit/${applicationPortofolio.id}`,
+      data: applicationPortofolio,
+      config: {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-Type": "application/json"
+        }
+      }
+    });
+  }
+  ///////////
+
   async addApplicationPortofolioToCorporate(
     applicationPortofolio,
     corporateId
   ) {
     debugger;
-
+    console.log(applicationPortofolio, "appliation porotofolio");
     return await axios({
       method: "post",
       url: `${BASE_URL}ApplicationPortoflios/add/${corporateId}`,

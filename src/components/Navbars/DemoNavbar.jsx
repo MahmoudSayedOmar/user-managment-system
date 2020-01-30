@@ -193,7 +193,7 @@ class HeaderComponent extends React.Component {
                     to="/logout"
                     onClick={() => {
                       this.props.tryLogOut();
-                      debugger;
+                      // debugger;
                     }}
                   >
                     <DropdownItem>Log Out</DropdownItem>

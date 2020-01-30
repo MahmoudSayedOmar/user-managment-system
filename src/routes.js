@@ -27,6 +27,7 @@ import TableList from "views/Tables.jsx";
 import Maps from "views/Map.jsx";
 import { UserProfileScreen } from "views/UserProfile/user-profile";
 import { DefaultApplicationsScreen } from "./views/default-apps/default-applications-screen";
+import { MenusScreen } from "./views/MenuContainer/Menu-Container";
 var routes = [
   {
     path: "/corporates/corporates",
@@ -96,7 +97,7 @@ var routes = [
     path: "/typography",
     name: "Typography",
     icon: "nc-icon nc-caps-small",
-    component: Typography,
+    component: MenusScreen,
     layout: "/admin"
   }
 ];

@@ -6,7 +6,10 @@ import { ModulesProxyService } from "./modules-service";
 import { SubmitCodeProxyService } from "./submit-code-proxy-service";
 import { UserTypesService } from "./user-types.service";
 import { RolesProxyService } from "./roles.service";
+import { MenusProxyService } from "./menu-service";
+import { ScreensProxyService } from "./screen-service";
 
+const menusProxyService = new MenusProxyService();
 const authProxyService = new AuthProxyService();
 const submitCodeProxyService = new SubmitCodeProxyService();
 const corporateService = new CorporateService();
@@ -15,6 +18,7 @@ const applicationsPortofoliosProxyService = new ApplicationsPortofoliosProxyServ
 const modulesProxyService = new ModulesProxyService();
 const userTypesService = new UserTypesService();
 const rolesProxyService = new RolesProxyService();
+const screensProxyService = new ScreensProxyService();
 
 export {
   authProxyService,
@@ -24,5 +28,7 @@ export {
   userTypesService,
   modulesProxyService,
   submitCodeProxyService,
-  rolesProxyService
+  rolesProxyService,
+  menusProxyService,
+  screensProxyService
 };

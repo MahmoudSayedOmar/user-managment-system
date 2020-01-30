@@ -16,7 +16,10 @@ import {
 
 import { rolesInitialState, rolesState } from "./Roles/state";
 
+import { menusInitialState, menusState } from "./Menus/state";
+
 import { modulesInitialState, ModulesState } from "./ExtraModules/state";
+import { screenInitialState, screenState } from "./Screen/state";
 
 export type State = {
   authorization: AuthorizationState,
@@ -26,7 +29,9 @@ export type State = {
   applicationsPortofolios: applicationsPortofoliosState,
   modules: ModulesState,
   submitCode: submitCodeState,
-  roles: rolesState
+  roles: rolesState,
+  menus: menusState,
+  screens: screenState
 };
 
 export const initialState = {
@@ -37,5 +42,7 @@ export const initialState = {
   applicationsPortofolios: applicationsPortofoliosInitialState,
   modules: modulesInitialState,
   submitCode: submitCodeInitialState,
-  roles: rolesInitialState
+  roles: rolesInitialState,
+  menus: menusInitialState,
+  screens: screenInitialState
 };

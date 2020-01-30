@@ -10,6 +10,8 @@ import { userTypesReducer } from "./user-types/reducer";
 import { rolesReducer } from "./Roles/reducer";
 import { initialState } from "./state";
 
+import { menusReducer } from "./Menus/reducer";
+import { screenReducer } from "./Screen/reducer";
 import storage from "redux-persist/lib/storage";
 
 export const appReducer = combineReducers({
@@ -21,7 +23,9 @@ export const appReducer = combineReducers({
   module: moduleReducer,
   submitCode: submitCodeReducer,
   userTypes: userTypesReducer,
-  roles: rolesReducer
+  roles: rolesReducer,
+  menus: menusReducer,
+  screens: screenReducer
 });
 
 export const combinedReducer = (state, action) => {

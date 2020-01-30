@@ -88,6 +88,7 @@ class Corporate extends React.Component {
   };
 
   onCancelSettingsModal = () => {
+    this.refs.addCorporateForm.resetFields();
     this.setState({
       modalTitle: "Add Corporate",
       showAddCorporateModal: false

@@ -57,10 +57,8 @@ class UserConfirm extends React.Component {
   };
 
   render() {
-    // if (this.props.params.email) {
-    //   console.log(this.props.params.email);
-    // }
     const { getFieldDecorator } = this.props.form;
+
     return (
       <>
         <div className="auth-wrapper">

@@ -19,7 +19,8 @@
 import Dashboard from "views/Dashboard.jsx";
 import Corporate from "views/Corporates/Corporate.jsx";
 import Users from "views/Users/Users.jsx";
-import { UserTypesScreen } from "./views/user-types/user-types";
+
+import Rolescontrol from "views/Rolescontrol/Rolescontrol.jsx";
 import Notifications from "views/Notifications.jsx";
 import Icons from "views/Icons.jsx";
 import Typography from "views/Typography.jsx";
@@ -42,6 +43,14 @@ var routes = [
     component: DefaultApplicationsScreen,
     layout: "/admin"
   },
+
+  {
+    path: "/rolescontrol/rolescontrol",
+    name: "Add Roles on Control",
+    icon: "nc-icon nc-single-02",
+    component: Rolescontrol,
+    layout: "/admin"
+  },
   {
     path: "/users/users",
     name: "Users",
@@ -49,7 +58,6 @@ var routes = [
     component: Users,
     layout: "/admin"
   },
-
   {
     path: "/dashboard",
     name: "Dashboard",

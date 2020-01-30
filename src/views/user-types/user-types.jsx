@@ -180,13 +180,6 @@ class UserTypes extends React.Component {
               />
             </Tooltip>
           )}
-
-          <Tooltip placement="top" title="Application User types">
-            <Icon
-              type="file-add"
-              style={{ fontSize: "20px", cursor: "pointer" }}
-            />
-          </Tooltip>
         </span>
       )
     }

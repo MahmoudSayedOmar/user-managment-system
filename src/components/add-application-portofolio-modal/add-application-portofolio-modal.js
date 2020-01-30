@@ -69,15 +69,28 @@ export default Form.create()(
     onOk = () => {
       this.props.form.validateFields((err, values) => {
         if (!err) {
-          this.props.onOk({
-            name: values.applicationportofolio,
-            baseAPPId: values.baseapplictaion,
-            extraModules: _.map(values.extramodules, extraModule => {
-              return { moduleId: extraModule };
-            }),
+          if (values.id && values.id !== "") {
+            this.props.onEdit({
+              id: values.id,
+              Name: values.applicationportofolio,
+              baseAPPId: values.baseapplictaion,
+              extraModules: _.map(values.extramodules, extraModule => {
+                return { moduleId: extraModule };
+              }),
 
-            isActive: true
-          });
+              isActive: true
+            });
+          } else {
+            this.props.onOk({
+              name: values.applicationportofolio,
+              baseAPPId: values.baseapplictaion,
+              extraModules: _.map(values.extramodules, extraModule => {
+                return { moduleId: extraModule };
+              }),
+
+              isActive: true
+            });
+          }
           this.setState({ defaultApps: "" });
           this.props.form.resetFields();
         }
@@ -109,6 +122,10 @@ export default Form.create()(
                 onCancel={this.cancelForm}
               >
                 <Form>
+                  <FormItem style={{ display: "none" }}>
+                    {getFieldDecorator("id")(<Input type="hidden" />)}
+                  </FormItem>
+
                   <Form.Item
                     {...formItemLayout}
                     label=" Application Portofolio Name"
@@ -131,7 +148,9 @@ export default Form.create()(
                     {...formItemLayout}
                     label="Base Application"
                     help={
-                      this.state.defaultApps !== ""
+                      this.props.defaultApps && this.props.defaultApps !== ""
+                        ? this.props.defaultApps
+                        : this.state.defaultApps !== ""
                         ? this.state.defaultApps
                         : ""
                     }
@@ -175,7 +194,10 @@ export default Form.create()(
                         mode="multiple"
                         placeholder="Please select your extra modules"
                       >
-                        {this.state.extraModulesOptions}
+                        {this.props.extraModulesOptions &&
+                        this.props.extraModulesOptions.length > 0
+                          ? this.props.extraModulesOptions
+                          : this.state.extraModulesOptions}
                       </Select>
                     )}
                   </Form.Item>

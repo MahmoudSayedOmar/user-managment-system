@@ -3,8 +3,6 @@ import { UserLoginModel, UserRegisterModel } from "../../proxy";
 
 import axios from "axios";
 
-
-
 export class AuthProxyService {
   async login(user: UserLoginModel) {
     return await axios({
@@ -62,8 +60,6 @@ export class AuthProxyService {
   }
 
   async editUser(user: UserRegisterModel) {
-    console.log(user, "user");
-    // debugger;
     return await axios({
       method: "post",
       url: `${BASE_URL}account/edit/${user.id}`,
@@ -105,8 +101,6 @@ export class AuthProxyService {
   }
 
   async register(user: UserRegisterModel) {
-    console.log(user, "user");
-    // debugger;
     return await axios({
       method: "post",
       url: `${BASE_URL}account/register`,

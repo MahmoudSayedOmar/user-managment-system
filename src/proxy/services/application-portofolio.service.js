@@ -15,12 +15,30 @@ export class ApplicationsPortofoliosProxyService {
       }
     });
   }
+  ////////
+  async editApplicationPortofolioToCorporate(applicationPortofolio) {
+    // debugger;
+    // console.log(applicationPortofolio, "application porotofilio");
+    return await axios({
+      method: "put",
+      url: `${BASE_URL}ApplicationPortoflios/edit/${applicationPortofolio.id}`,
+      data: applicationPortofolio,
+      config: {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-Type": "application/json"
+        }
+      }
+    });
+  }
+  ///////////
+
   async addApplicationPortofolioToCorporate(
     applicationPortofolio,
     corporateId
   ) {
-    // debugger;
-
+    debugger;
+    console.log(applicationPortofolio, "appliation porotofolio");
     return await axios({
       method: "post",
       url: `${BASE_URL}ApplicationPortoflios/add/${corporateId}`,

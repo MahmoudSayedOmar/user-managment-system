@@ -118,6 +118,81 @@ export function onAddApplicationsPortofoliosFail(): ON_ADD_APPLICATIONPORTOFOLIO
 }
 
 /***************************************/
+/////////////////////// EDIT IS HERE ///////////////////////
+/***************************************/
+export type ON_EDIT_APPLICATIONPORTOFOLIO_ACTION = { type: String };
+export type ON_EDIT_APPLICATIONPORTOFOLIO_SUCCESS_ACTION = {
+  type: String,
+  payload: Array
+};
+export type ON_EDIT_APPLICATIONPORTOFOLIO_FAIL_ACTION = {
+  type: String,
+  payload: String
+};
+
+export async function editApplicationPortofolioToCorporate(
+  applicationPortofolio
+) {
+  return async (dispatch, getState) => {
+    dispatch(onEditApplicationsPortofolios());
+    const state = getState();
+    var corporateId = state.companies.selectedCompanyId;
+    let ApplicationPortofoliosObject = {
+      ...applicationPortofolio,
+      CorporateId: corporateId
+    };
+
+    const response = await applicationsPortofoliosProxyService.editApplicationPortofolioToCorporate(
+      ApplicationPortofoliosObject
+    );
+    debugger;
+    console.log(response, "response");
+    if (response.status === 200) {
+      // debugger;
+      let appPortoto =
+        state.applicationsPortofolios.applicationsPortofolios
+          .applicationPortoflios;
+      console.log(appPortoto, "appporot");
+      const toEditIndex = appPortoto.findIndex(
+        app => app.id === response.data.id
+      );
+      appPortoto = [
+        ...state.applicationsPortofolios.applicationsPortofolios
+          .applicationPortoflios
+      ]; // important to create a copy, otherwise you'll modify state outside of setState call
+      appPortoto[toEditIndex] = response.data;
+      console.log(response.data, "response.data");
+      console.log(appPortoto, "updated");
+      dispatch(onEditApplicationsPortofoliosSuccess(appPortoto));
+    } else {
+      dispatch(onEditApplicationsPortofoliosFail());
+    }
+  };
+}
+
+export function onEditApplicationsPortofolios(): ON_EDIT_APPLICATIONPORTOFOLIO_ACTION {
+  return {
+    type: types.ON_EDIT_APPLICATIONPORTOFOLIO
+  };
+}
+
+export function onEditApplicationsPortofoliosSuccess(
+  applications: any
+): ON_EDIT_APPLICATIONPORTOFOLIO_SUCCESS_ACTION {
+  return {
+    type: types.ON_EDIT_APPLICATIONPORTOFOLIO_SUCCESS,
+    payload: applications
+  };
+}
+
+export function onEditApplicationsPortofoliosFail(): ON_EDIT_APPLICATIONPORTOFOLIO_FAIL_ACTION {
+  return {
+    type: types.ON_EDIT_APPLICATIONPORTOFOLIO_FAIL,
+    payload: "Faild to Add application portofolio"
+  };
+}
+
+/***************************************/
 
 export type ON_CHANGE_ACTIVATION_STATUS_ACTION = { type: String };
 export type ON_CHANGE_ACTIVATION_STATUS_SUCCESS_ACTION = {

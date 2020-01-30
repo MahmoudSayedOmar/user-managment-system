@@ -12,6 +12,7 @@ import { tryGetAllDefaultApplications } from "../../State/DefaultApplications/ac
 import {
   viewCorporateDetails,
   addApplicationPortofolioToCorporate,
+  editApplicationPortofolioToCorporate,
   changeApplicationPortofolioActivationStatus
 } from "../../State/ApplicationsPortofolio/action-creator";
 import { onUpdateCorporate } from "State/Corporates/action-creator";
@@ -23,9 +24,14 @@ class CorporateDetailsContainer extends React.Component {
       showAddCorporateModal: false,
       modalTitle: "Add Corporate",
       applicationPortoflios: [],
-      corporateData: {}
+      corporateData: {},
+      applicationEditedId: ""
     };
   }
+  onResetEditState = () => {
+    // this function is to reset the applicationEditedId, to open the modal when adding ;
+    this.setState({ applicationEditedId: "" });
+  };
   onEditCorporate = values => {
     if (values.id && values.id !== "") {
       this.props.onUpdateCorporate({
@@ -54,8 +60,10 @@ class CorporateDetailsContainer extends React.Component {
       showAddCorporateModal: false
     });
   };
-
-  onEditRow = () => {
+  onEditRow = id => {
+    this.setState({ applicationEditedId: id });
+  };
+  onEditCompany = () => {
     // const toEditCorporate = this.props.allCompanies.find(i => i.id === id);
     let corporateData = this.state.corporateData;
     this.setState({ modalTitle: "Edit " + corporateData.name });
@@ -117,7 +125,7 @@ class CorporateDetailsContainer extends React.Component {
             {_.map(extraModules, module => {
               return (
                 <Tag color="blue" key={module.moduleId}>
-                  {module.module.name}
+                  {module.module ? module.module.name : ""}
                 </Tag>
               );
             })}
@@ -132,6 +140,16 @@ class CorporateDetailsContainer extends React.Component {
       key: "isActive",
       render: (eachKey, row) => (
         <span>
+          <Icon
+            type="edit"
+            style={{
+              fontSize: "20px",
+
+              cursor: "pointer",
+              paddingRight: "5px"
+            }}
+            onClick={() => this.onEditRow(row.id)}
+          />
           {row.isActive ? (
             <Popconfirm
               title="Are you sure deActivate this application portofolio?"
@@ -182,6 +200,10 @@ class CorporateDetailsContainer extends React.Component {
   ];
 
   static mapStatetToProps(state) {
+    console.log(
+      state.applicationsPortofolios.applicationsPortofolios,
+      "application portofilio"
+    );
     return {
       // selectedCompany: state.companies.selectedCompany,
       allCompanies: state.companies.companies,
@@ -196,6 +218,7 @@ class CorporateDetailsContainer extends React.Component {
       {
         viewCorporateDetails,
         addApplicationPortofolioToCorporate,
+        editApplicationPortofolioToCorporate,
         tryGetAllModules,
         changeApplicationPortofolioActivationStatus,
         tryGetAllDefaultApplications,
@@ -276,7 +299,7 @@ class CorporateDetailsContainer extends React.Component {
                               cursor: "pointer",
                               paddingRight: "5px"
                             }}
-                            onClick={() => this.onEditRow()}
+                            onClick={() => this.onEditCompany()}
                           />
                         </Tooltip>
                       </span>
@@ -347,7 +370,12 @@ class CorporateDetailsContainer extends React.Component {
                   onAddApplicationPortofolio={
                     this.props.addApplicationPortofolioToCorporate
                   }
+                  onEditApplicationPortofolio={
+                    this.props.editApplicationPortofolioToCorporate
+                  }
                   baseApplications={this.props.baseApplications}
+                  applicationEditedId={this.state.applicationEditedId}
+                  resetEditState={this.onResetEditState}
                 />
               </Provider>
             </Col>

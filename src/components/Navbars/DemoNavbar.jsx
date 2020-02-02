@@ -29,27 +29,34 @@ import {
   DropdownItem,
   Container
 } from "reactstrap";
-
+import { viewUsers, getUserDetails } from "State/Users/action-creator";
 import routes from "routes.js";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
 import { tryLogOut } from "../../State/Authorization/action-creator";
-
+import { Icon, Tooltip, Popover } from "antd";
 class HeaderComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
       dropdownOpen: false,
-      color: "transparent"
+      color: "transparent",
+      visibleCorporates: false,
+      visibleDefaultApps: false
     };
     this.toggle = this.toggle.bind(this);
     this.dropdownToggle = this.dropdownToggle.bind(this);
+    this.dropdownToggleCorporate = this.dropdownToggleCorporate.bind(this);
+    this.dropdownToggleDefaultApps = this.dropdownToggleDefaultApps.bind(this);
     this.sidebarToggle = React.createRef();
   }
 
   static mapDispatchToProps(dispatch: Dispatch) {
-    return bindActionCreators({ tryLogOut }, dispatch);
+    return bindActionCreators(
+      { tryLogOut, viewUsers, getUserDetails },
+      dispatch
+    );
   }
   toggle() {
     if (this.state.isOpen) {
@@ -68,6 +75,39 @@ class HeaderComponent extends React.Component {
   dropdownToggle(e) {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+
+  dropdownToggleDefaultApps(visibility) {
+    if (visibility === false) {
+      let currentUser = this.props.currentUser;
+      let allUsers = this.props.allUsers;
+
+      let userId = allUsers.find(eachUser => {
+        return eachUser.email === currentUser.username;
+      });
+      if (userId) {
+        this.props.getUserDetails(userId.id);
+      }
+    }
+    this.setState({
+      visibleDefaultApps: !this.state.visibleDefaultApps
+    });
+  }
+  dropdownToggleCorporate(visibility) {
+    if (visibility === false) {
+      let currentUser = this.props.currentUser;
+      let allUsers = this.props.allUsers;
+
+      let userId = allUsers.find(eachUser => {
+        return eachUser.email === currentUser.username;
+      });
+      if (userId) {
+        this.props.getUserDetails(userId.id);
+      }
+    }
+    this.setState({
+      visibleCorporates: !this.state.visibleCorporates
     });
   }
   getBrand() {
@@ -97,6 +137,10 @@ class HeaderComponent extends React.Component {
     }
   }
   componentDidMount() {
+    if (this.props.allUsers && this.props.allUsers.length > 0) {
+    } else {
+      this.props.viewUsers();
+    }
     window.addEventListener("resize", this.updateColor.bind(this));
   }
   componentDidUpdate(e) {
@@ -109,6 +153,10 @@ class HeaderComponent extends React.Component {
       this.sidebarToggle.current.classList.toggle("toggled");
     }
   }
+
+  handleVisibleChange = visible => {
+    this.setState({ visible });
+  };
   render() {
     let title = this.props.location.state
       ? this.props.location.state.navTitle
@@ -160,17 +208,114 @@ class HeaderComponent extends React.Component {
             navbar
             className="justify-content-end"
           >
-            {/* <form>
-              <InputGroup className="no-border">
-                <Input placeholder="Search..." />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText>
-                    <i className="nc-icon nc-zoom-split" />
-                  </InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </form> */}
             <Nav navbar>
+              <Dropdown
+                nav
+                isOpen={this.state.visibleCorporates}
+                toggle={e =>
+                  this.dropdownToggleCorporate(this.state.visibleCorporates)
+                }
+              >
+                <DropdownToggle caret nav>
+                  <Icon
+                    type="project"
+                    style={{
+                      paddingRight: "5px",
+                      paddingTop: "7px",
+                      fontSize: "25px",
+                      cursor: "pointer"
+                    }}
+                  />
+                </DropdownToggle>
+
+                <DropdownMenu right>
+                  <div style={{ padding: "10px", width: "250px" }}>
+                    <div
+                      style={{
+                        width: "100%",
+                        borderBottom: "thin solid #000",
+                        paddingBottom: "2px"
+                      }}
+                    >
+                      Companies
+                    </div>
+                    <div
+                      style={{
+                        width: "100%",
+                        paddingTop: "2px"
+                      }}
+                    >
+                      <ul>
+                        {this.props.toEditUserDetails ? (
+                          this.props.toEditUserDetails.corporate ? (
+                            <li key={this.props.toEditUserDetails.corporate.id}>
+                              {this.props.toEditUserDetails.corporate.name}
+                            </li>
+                          ) : (
+                            ""
+                          )
+                        ) : (
+                          ""
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+                </DropdownMenu>
+              </Dropdown>
+
+              <Dropdown
+                nav
+                isOpen={this.state.visibleDefaultApps}
+                toggle={e =>
+                  this.dropdownToggleDefaultApps(this.state.visibleDefaultApps)
+                }
+              >
+                <DropdownToggle caret nav>
+                  <Icon
+                    type="project"
+                    style={{
+                      paddingRight: "5px",
+                      paddingTop: "7px",
+                      fontSize: "25px",
+                      cursor: "pointer"
+                    }}
+                  />
+                </DropdownToggle>
+
+                <DropdownMenu right>
+                  <div style={{ padding: "10px", width: "250px" }}>
+                    <div
+                      style={{
+                        width: "100%",
+                        borderBottom: "thin solid #000",
+                        paddingBottom: "2px"
+                      }}
+                    >
+                      Application Portofilios
+                    </div>
+                    <div
+                      style={{
+                        width: "100%",
+                        paddingTop: "2px"
+                      }}
+                    >
+                      <ul>
+                        {this.props.toEditUserDetails
+                          ? this.props.toEditUserDetails.applicationPortoflios
+                            ? this.props.toEditUserDetails.applicationPortoflios.map(
+                                eachApp => {
+                                  return (
+                                    <li key={eachApp.id}>{eachApp.name}</li>
+                                  );
+                                }
+                              )
+                            : ""
+                          : ""}
+                      </ul>
+                    </div>
+                  </div>
+                </DropdownMenu>
+              </Dropdown>
               <Dropdown
                 nav
                 isOpen={this.state.dropdownOpen}
@@ -207,8 +352,17 @@ class HeaderComponent extends React.Component {
     );
   }
 }
+function mapStateToProps(state) {
+  console.log(state.users.toEditUser, "to edit user");
+  return {
+    allUsers: state.users.users,
+    currentUser: state.authorization,
+    toEditUserDetails: state.users.toEditUser
+    // allCompanies: state.companies.companies
+  };
+}
 
 export const Header = connect(
-  null,
+  mapStateToProps,
   HeaderComponent.mapDispatchToProps
 )(HeaderComponent);

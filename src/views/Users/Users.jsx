@@ -70,7 +70,6 @@ class Users extends React.Component {
     const toEditUser = userEditableData;
 
     this.setState({
-      showAddUserModal: true,
       isEdit: false
     });
     this.setState({
@@ -130,6 +129,9 @@ class Users extends React.Component {
     });
   };
   onEditRow = id => {
+    this.setState({
+      showAddUserModal: true
+    });
     this.props.getUserDetails(id);
   };
   onDeactivate = id => {

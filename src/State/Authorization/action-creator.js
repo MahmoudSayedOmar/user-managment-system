@@ -23,6 +23,7 @@ export async function tryLogin(user: UserLoginModel) {
       // debugger;
       if (response.status === 200) {
         // debugger;
+        // console.log(response.data, "data");
         var result = response.data;
         var token = result["token"];
         var screens = result["screens"];

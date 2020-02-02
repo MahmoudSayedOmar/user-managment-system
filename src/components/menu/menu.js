@@ -27,7 +27,7 @@ export default class MenusListingComponent extends React.Component {
   handleOk = menu => {
     this.props.onAddMenu(this.props.currentApplicationPortofolio, menu);
     //console.log(menu);
-    debugger;
+    // debugger;
     this.setState({
       visible: false
     });
@@ -40,7 +40,7 @@ export default class MenusListingComponent extends React.Component {
   };
 
   render() {
-    debugger;
+    // debugger;
     return (
       <div>
         <AddMenuForm

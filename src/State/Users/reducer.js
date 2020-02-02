@@ -31,7 +31,7 @@ export function usersReducer(
       };
     }
     case types.ON_VIEW_USERS_SUCCESS: {
-      // console.log(action.payload, "allusers");
+      console.log(action.payload, "allusers");
       return {
         ...state,
         users: action.payload

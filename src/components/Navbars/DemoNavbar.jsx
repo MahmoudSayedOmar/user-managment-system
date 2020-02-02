@@ -353,7 +353,7 @@ class HeaderComponent extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  console.log(state.users.toEditUser, "to edit user");
+  console.log(state.users.users, "to edit user");
   return {
     allUsers: state.users.users,
     currentUser: state.authorization,

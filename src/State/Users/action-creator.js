@@ -39,7 +39,8 @@ export async function viewUsers() {
     let users = state.users.users;
     let response = await authProxyService.getUsers();
     if (response.status === 200) {
-      users.push(response.data);
+      // console.log(response.data, "response.data");
+      // users.push(response.data);
       dispatch(onViewUsersSuccess(response.data));
     } else {
       console.log(response.statusText);

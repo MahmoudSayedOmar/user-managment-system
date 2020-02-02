@@ -15,7 +15,7 @@ export class MenusProxyService {
     });
   }
   async mapMenusToScreens(menuId, screensIds) {
-    debugger;
+    // debugger;
     return await axios({
       method: "post",
       url: `${BASE_URL}Menu/mapscreenstomenu/${menuId}`,
@@ -29,7 +29,7 @@ export class MenusProxyService {
     });
   }
   async addMenu(applicationportofolioId, menu) {
-    debugger;
+    // debugger;
 
     return await axios({
       method: "post",
@@ -45,7 +45,7 @@ export class MenusProxyService {
   }
 
   async changeMenuActivationStatus(MenuId, newStatus) {
-    debugger;
+    // debugger;
     if (newStatus) {
       return await axios({
         method: "put",

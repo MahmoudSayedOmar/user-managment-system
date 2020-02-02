@@ -272,7 +272,7 @@ class HeaderComponent extends React.Component {
               >
                 <DropdownToggle caret nav>
                   <Icon
-                    type="project"
+                    type="global"
                     style={{
                       paddingRight: "5px",
                       paddingTop: "7px",

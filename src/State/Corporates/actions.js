@@ -3,6 +3,10 @@ export const ON_VIEW_COMPANIES_SUCCESS =
   "[companies] on view companies success";
 export const ON_VIEW_COMPANIES_FAIL = "[companies] on view companies fail";
 
+export const ON_VIEW_COMPANY = "[companies] on view company";
+export const ON_VIEW_COMPANY_SUCCESS = "[companies] on view company success";
+export const ON_VIEW_COMPANY_FAIL = "[companies] on view company fail";
+
 export const ON_ADD_COMPANY_ACTION = "[company] on add company";
 export const ON_ADD_COMPANY_SUCCESS_ACTION = "[company] on add company success";
 export const ON_ADD_COMPANY_FAIL_ACTION = "[company] on add company fail";

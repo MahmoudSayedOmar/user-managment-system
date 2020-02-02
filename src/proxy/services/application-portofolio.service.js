@@ -5,8 +5,8 @@ export class ApplicationsPortofoliosProxyService {
   async getCorporateApplicationsPortofolios(corporateId: Number) {
     return await axios({
       method: "get",
-      // url: `${BASE_URL}ApplicationPortoflios/GetAll/${corporateId}`,
-      url: `${BASE_URL}Corporates/get/${corporateId}`,
+      url: `${BASE_URL}ApplicationPortoflios/GetAll/${corporateId}`,
+      // url: `${BASE_URL}Corporates/get/${corporateId}`,
       config: {
         headers: {
           "Access-Control-Allow-Origin": "*",

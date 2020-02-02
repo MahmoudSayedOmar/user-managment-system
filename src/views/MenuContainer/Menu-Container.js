@@ -34,7 +34,17 @@ class MenusContainer extends React.Component {
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
-
+  componentDidMount() {
+    if (this.props.location.state) {
+      this.props.tryViewMenus(this.props.location.state.id);
+      this.props.tryGetApplicationportofolioAllScreensById(
+        this.props.location.state.id
+      );
+      this.setState({
+        currentApplicationPortofolio: this.props.location.state.id
+      });
+    }
+  }
   componentWillReceiveProps(nextProps) {
     this.setState({
       options: nextProps.screens.map(screen => ({
@@ -45,7 +55,7 @@ class MenusContainer extends React.Component {
   }
 
   showModal = () => {
-    debugger;
+    // debugger;
     this.setState({
       visible: true
     });
@@ -53,7 +63,7 @@ class MenusContainer extends React.Component {
 
   handleOk = screens => {
     this.props.mapMenuToScreens(this.state.selectedMenuTobeEdited.id, screens);
-    debugger;
+    // debugger;
     this.setState({
       visible: false
     });
@@ -137,6 +147,10 @@ class MenusContainer extends React.Component {
   ];
 
   static mapStatetToProps(state) {
+    console.log(
+      state.applicationsPortofolios.applicationsPortofolios,
+      "tatatat"
+    );
     return {
       menus: state.menus.menus,
       screens: state.screens.screens,
@@ -158,31 +172,17 @@ class MenusContainer extends React.Component {
     );
   }
 
-  onChange(value) {
-    this.props.tryViewMenus(value);
-    this.props.tryGetApplicationportofolioAllScreensById(value);
-    this.setState({ currentApplicationPortofolio: value });
-  }
+  // onChange(value) {
+  //   this.props.tryViewMenus(value);
+  //   this.props.tryGetApplicationportofolioAllScreensById(value);
+  //   this.setState({ currentApplicationPortofolio: value });
+  // }
   render() {
     const { Option } = Select;
 
     return (
       <>
         <div className="content">
-          <Select
-            style={{ width: 200 }}
-            placeholder="Select an applicationportofolio"
-            onChange={this.onChange.bind(this)}
-          >
-            {this.props.applicationsPortofolios.map(applicationsPortofolio => (
-              <Option
-                key={applicationsPortofolio.id}
-                value={applicationsPortofolio.id}
-              >
-                {applicationsPortofolio.name}
-              </Option>
-            ))}
-          </Select>
           <Row>
             <Col md="12">
               <MenusListingComponent

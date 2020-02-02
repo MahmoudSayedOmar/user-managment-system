@@ -69,7 +69,7 @@ export function applicationsPortofoliosReducer(
     }
 
     case types.ON_EDIT_APPLICATIONPORTOFOLIO_SUCCESS: {
-      console.log(action.payload, "action.payload");
+      // console.log(action.payload, "action.payload");
       return {
         ...state,
         applicationsPortofolios: action.payload

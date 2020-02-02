@@ -34,7 +34,7 @@ import {
   onActivateUser
 } from "State/Users/action-creator";
 import { onViewCompanies } from "State/Corporates/action-creator";
-import { viewCorporateDetails } from "State/ApplicationsPortofolio/action-creator";
+import { viewCorporateApplicationPortofilio } from "State/ApplicationsPortofolio/action-creator";
 import { onViewUserTypesArray } from "../../State/user-types/action-creator";
 import { viewRolesArray } from "../../State/Roles/action-creator";
 // core components
@@ -146,7 +146,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       onViewCompanies,
       viewUsers,
       getUserDetails,
-      viewCorporateDetails,
+      viewCorporateApplicationPortofilio,
       onAddUser,
       onEditUser,
       onDeactivateUser,

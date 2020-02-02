@@ -46,7 +46,7 @@ export function onViewApplicationsPortofoliosFail(): ON_VIEW_APPLICATIONPORTOFOL
   };
 }
 
-export async function viewCorporateDetails(corporateId) {
+export async function viewCorporateApplicationPortofilio(corporateId) {
   // debugger;
   return async (dispatch, getState) => {
     dispatch(SelectCorporate(corporateId));
@@ -145,7 +145,7 @@ export async function editApplicationPortofolioToCorporate(
     const response = await applicationsPortofoliosProxyService.editApplicationPortofolioToCorporate(
       ApplicationPortofoliosObject
     );
-    debugger;
+    // debugger;
     console.log(response, "response");
     if (response.status === 200) {
       // debugger;

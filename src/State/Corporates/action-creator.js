@@ -4,7 +4,11 @@ import { corporateService } from "../../proxy/services";
 export type ON_VIEW_COMPANIES_ACTION = { type: String };
 export type ON_VIEW_COMPANIES_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_VIEW_COMPANIES_FAIL_ACTION = { type: String, payload: any };
-
+//////////
+export type ON_VIEW_COMPANY_ACTION = { type: String };
+export type ON_VIEW_COMPANY_SUCCESS_ACTION = { type: String, payload: any };
+export type ON_VIEW_COMPANY_FAIL_ACTION = { type: String, payload: any };
+////////////////////////////
 export type ON_ADD_COMPANY_ACTION = { type: String };
 export type ON_ADD_COMPANY_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_ADD_COMPANY_FAIL_ACTION = { type: String, payload: any };
@@ -15,8 +19,6 @@ export type ON_DEACTIVATE_COMPANY_SUCCESS_ACTION = {
   payload: any
 };
 export type ON_DEACTIVATE_COMPANY_FAIL_ACTION = { type: String, payload: any };
-
-/////////////
 
 export type ON_ACTIVATE_COMPANY_ACTION = { type: String };
 export type ON_ACTIVATE_COMPANY_SUCCESS_ACTION = {
@@ -52,7 +54,36 @@ export function onViewCompaniesFail(): ON_VIEW_COMPANIES_FAIL_ACTION {
     payload: "connection error"
   };
 }
-///////////////
+/////////////// viewing company details
+export async function onViewCompany(id): ON_VIEW_COMPANY_ACTION {
+  console.log(id, "iddd to get company");
+  // debugger;
+  return async (dispatch, getState) => {
+    // let state = getState();
+    // debugger;
+    var json = await corporateService.getCompanyDetails(id);
+    if (json.status === 200) {
+      // console.log(json.data, "data goes here");
+      dispatch(onViewCompanySuccess(json.data));
+    } else {
+      dispatch(onViewCompanyFail());
+    }
+  };
+}
+export function onViewCompanySuccess(company): ON_VIEW_COMPANY_SUCCESS_ACTION {
+  // console.log(company, " to reducer");
+  // debugger;
+
+  return { type: types.ON_VIEW_COMPANY_SUCCESS, payload: company };
+}
+export function onViewCompanyFail(): ON_VIEW_COMPANY_FAIL_ACTION {
+  return {
+    type: types.ON_VIEW_COMPANY_FAIL,
+    payload: "connection error"
+  };
+}
+
+////////////////
 export async function onAddCorporate(values) {
   return async (dispatch, getState) => {
     let state = getState();
@@ -69,6 +100,7 @@ export async function onAddCorporate(values) {
   };
 }
 
+///////////////////////////////
 export function onAddCompanySuccess(
   companies: CompaniesModel
 ): ON_ADD_COMPANY_SUCCESS_ACTION {

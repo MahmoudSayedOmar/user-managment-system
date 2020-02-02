@@ -9,12 +9,15 @@ import { companiesInitialState, companiesState } from "./state";
 type Action =
   | actions.ON_VIEW_COMPIES_ACTION
   | actions.ON_VIEW_COMPANIES_SUCCESS_ACTION
+  | actions.ON_VIEW_COMPANIES_FAIL_ACTION
+  | actions.ON_VIEW_COMPANY_ACTION
+  | actions.ON_VIEW_COMPANY_SUCCESS_ACTION
+  | actions.ON_VIEW_COMPANY_FAIL_ACTION
   | actions.ON_DEACTIVATE_COMPANY_ACTION
   | actions.ON_DEACTIVATE_COMPANY_SUCCESS_ACTION
   | actions.ON_DEACTIVATE_COMPANY_Fail_ACTION
   | actions.ON_ADD_COMPANY_ACTION
   | actions.ON_ADD_COMPANY_SUCCESS_ACTION
-  | actions.ON_VIEW_COMPANIES_FAIL_ACTIONa
   | actions.ON_UPDATE_COMPANY_ACTION
   | actions.ON_UPDATE_COMPANY_SUCCESS_ACTION
   | actions.ON_UPDATE_COMPANY_FAIL_ACTION
@@ -25,6 +28,27 @@ export function companiesReducer(
   action: Action
 ): companiesState {
   switch (action.type) {
+    ////////////
+    case types.ON_VIEW_COMPANY: {
+      return {
+        ...state
+      };
+    }
+    case types.ON_VIEW_COMPANY_SUCCESS: {
+      console.log(action.payload, "payload");
+      // debugger;
+      return {
+        ...state,
+        selectedCompany: action.payload
+      };
+    }
+    case types.ON_VIEW_COMPANY_FAIL: {
+      return {
+        ...state
+      };
+    }
+    ////////////////////
+
     case types.ON_VIEW_COMPANIES: {
       return {
         ...state

@@ -10,12 +10,15 @@ import ApplicationsPortofoliosListingComponent from "../../components/applicatio
 import { tryGetAllModules } from "../../State/ExtraModules/action-creator";
 import { tryGetAllDefaultApplications } from "../../State/DefaultApplications/action-creator";
 import {
-  viewCorporateDetails,
+  viewCorporateApplicationPortofilio,
   addApplicationPortofolioToCorporate,
   editApplicationPortofolioToCorporate,
   changeApplicationPortofolioActivationStatus
 } from "../../State/ApplicationsPortofolio/action-creator";
-import { onUpdateCorporate } from "State/Corporates/action-creator";
+import {
+  onUpdateCorporate,
+  onViewCompany
+} from "State/Corporates/action-creator";
 import AddCorpoateForm from "../Corporates/AddCorpoateForm";
 class CorporateDetailsContainer extends React.Component {
   constructor(props) {
@@ -194,12 +197,31 @@ class CorporateDetailsContainer extends React.Component {
               />
             </Tooltip>
           )}
+          <Tooltip placement="top" title="Adding Menus">
+            <Icon
+              onClick={() => {
+                console.log(row, "rowww");
+                this.props.history.push(`/admin/typography/${row.id}`, {
+                  id: row.id,
+                  navTitle: row.name + "'s Menus"
+                });
+              }}
+              type="file-add"
+              style={{ fontSize: "20px", cursor: "pointer" }}
+            />
+          </Tooltip>
         </span>
       )
     }
   ];
 
   static mapStatetToProps(state) {
+    // console.log(
+    //   state.applicationsPortofolios.applicationsPortofolios
+    //     .applicationPortoflios,
+    //   "application portofilio"
+    // );
+    console.log(state.companies.selectedCompany, "application portofilio");
     console.log(
       state.applicationsPortofolios.applicationsPortofolios,
       "application portofilio"
@@ -207,7 +229,10 @@ class CorporateDetailsContainer extends React.Component {
     return {
       // selectedCompany: state.companies.selectedCompany,
       allCompanies: state.companies.companies,
-      corporateData: state.applicationsPortofolios.applicationsPortofolios,
+      corporateData: state.companies.selectedCompany,
+
+      applicationPortoflios:
+        state.applicationsPortofolios.applicationsPortofolios, // last .applicationPortoflios will be removed when the fix is done also in backend
       baseApplications: state.defaultApplications.defaultApplications,
       modules: state.module.modules
     };
@@ -216,7 +241,8 @@ class CorporateDetailsContainer extends React.Component {
   static mapDispatchToProps(dispatch: Dispatch) {
     return bindActionCreators(
       {
-        viewCorporateDetails,
+        viewCorporateApplicationPortofilio,
+        onViewCompany,
         addApplicationPortofolioToCorporate,
         editApplicationPortofolioToCorporate,
         tryGetAllModules,
@@ -228,22 +254,23 @@ class CorporateDetailsContainer extends React.Component {
     );
   }
   componentDidMount() {
-    this.props.viewCorporateDetails(this.props.location.state.id);
+    this.props.viewCorporateApplicationPortofilio(this.props.location.state.id);
+    this.props.onViewCompany(this.props.location.state.id);
     this.props.tryGetAllModules();
     this.props.tryGetAllDefaultApplications();
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.corporateData && nextProps.corporateData.length > 0) {
-      if (
-        this.props.corporateData.applicationPortoflios !==
-        nextProps.corporateData
-      )
+    if (
+      nextProps.applicationPortoflios &&
+      nextProps.applicationPortoflios.length > 0
+    ) {
+      if (this.props.applicationPortoflios !== nextProps.applicationPortoflios)
         this.setState({
-          applicationPortoflios: nextProps.corporateData
+          applicationPortoflios: nextProps.applicationPortoflios
         });
     } else {
       this.setState({
-        applicationPortoflios: this.props.corporateData.applicationPortoflios
+        applicationPortoflios: this.props.applicationPortoflios
       });
     }
     if ("allCompanies" in nextProps) {

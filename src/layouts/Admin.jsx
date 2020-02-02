@@ -6,6 +6,7 @@ import { Header } from "components/Navbars/DemoNavbar.jsx";
 import { CorporateDetailsScreen } from "../views/CorporateDetails/corporate-details";
 import { UserTypesScreen } from "../views/user-types/user-types";
 import { UserTypeDetailsScreen } from "../views/UserTypeDetails/user-type-details";
+import { MenusScreen } from "../views/MenuContainer/Menu-Container";
 
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
@@ -67,6 +68,7 @@ class Dashboard extends React.Component {
               path="/admin/corporatedetails"
               component={CorporateDetailsScreen}
             />
+            <Route path="/admin/typography" component={MenusScreen} />
           </Switch>
         </div>
       </div>

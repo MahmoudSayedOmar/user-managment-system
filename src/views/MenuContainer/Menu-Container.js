@@ -86,26 +86,28 @@ class MenusContainer extends React.Component {
       key: "isActive",
       render: (eachKey, row) => (
         <span>
-          <Icon
-            type="edit"
-            style={{
-              fontSize: "20px",
+          <Tooltip placement="top" title="Map menu to screens">
+            <Icon
+              type="retweet"
+              style={{
+                fontSize: "20px",
 
-              cursor: "pointer",
-              paddingRight: "5px"
-            }}
-            onClick={() => {
-              this.setState(
-                {
-                  selectedMenuTobeEdited: row,
-                  selectedScreens: row.screensIds
-                },
-                () => {
-                  this.showModal();
-                }
-              );
-            }}
-          />
+                cursor: "pointer",
+                paddingRight: "5px"
+              }}
+              onClick={() => {
+                this.setState(
+                  {
+                    selectedMenuTobeEdited: row,
+                    selectedScreens: row.screensIds
+                  },
+                  () => {
+                    this.showModal();
+                  }
+                );
+              }}
+            />
+          </Tooltip>
           {row.isActive ? (
             <Popconfirm
               title="Are you sure deActivate this application portofolio?"

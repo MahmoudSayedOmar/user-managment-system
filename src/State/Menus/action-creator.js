@@ -137,7 +137,7 @@ export async function mapMenuToScreens(menuId, newScreensIds) {
     // debugger;
     if (response.status === 200) {
       menus = menus.map(menu => {
-        if (menu.id == menuId) {
+        if (menu.id === menuId) {
           menu.screensIds = newScreensIds;
         }
         return menu;

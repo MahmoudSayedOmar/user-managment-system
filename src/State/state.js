@@ -21,6 +21,8 @@ import { menusInitialState, menusState } from "./Menus/state";
 import { modulesInitialState, ModulesState } from "./ExtraModules/state";
 import { screenInitialState, screenState } from "./Screen/state";
 
+import {RoleControlInitialState,RoleControlState} from "./RoleControls/state"
+
 export type State = {
   authorization: AuthorizationState,
   companies: companiesState,
@@ -31,7 +33,8 @@ export type State = {
   submitCode: submitCodeState,
   roles: rolesState,
   menus: menusState,
-  screens: screenState
+  screens: screenState,
+  roleControl:RoleControlState
 };
 
 export const initialState = {
@@ -44,5 +47,6 @@ export const initialState = {
   submitCode: submitCodeInitialState,
   roles: rolesInitialState,
   menus: menusInitialState,
-  screens: screenInitialState
+  screens: screenInitialState,
+  roleControl:rolesInitialState
 };

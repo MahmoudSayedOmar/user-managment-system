@@ -22,3 +22,4 @@ export const ON_CHANGE_ACTIVATION_STATUS_SUCCESS =
   "[role] on change activation status success";
 export const ON_CHANGE_ACTIVATION_STATUS_FAIL =
   "[role] on change activation status fail";
+

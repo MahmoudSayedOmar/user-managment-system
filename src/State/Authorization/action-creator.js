@@ -28,6 +28,7 @@ export async function tryLogin(user: UserLoginModel) {
         var token = result["token"];
         var screens = result["screens"];
         var menus = result["menus"];
+        var userId = result["userId"];
 
         var decodedToken = jwtDecode(token);
         var authState = Object.assign({}, getState().authorization, {
@@ -37,7 +38,8 @@ export async function tryLogin(user: UserLoginModel) {
           isRegistered: true,
           role: decodedToken["role"],
           screens,
-          menus
+          menus,
+          userId
         });
         console.log(authState.menus);
         dispatch(loginSuccess(authState));
@@ -76,11 +78,10 @@ export type VIEW_PROFILE_FAIL_Action = { type: string, payload: string };
 
 export async function tryViewProfile() {
   return async (dispatch, getState) => {
-    //  var user = getState().authorization.username;
-    // debugger;
+    var userId = getState().authorization.userId;
     dispatch(onViewProfile());
     try {
-      let response = await authProxyService.viewProfile(9);
+      let response = await authProxyService.viewProfile(userId);
       if (response.status === 200) {
         console.log(response.data);
         // debugger;

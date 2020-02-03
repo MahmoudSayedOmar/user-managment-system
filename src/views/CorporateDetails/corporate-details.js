@@ -200,8 +200,7 @@ class CorporateDetailsContainer extends React.Component {
           <Tooltip placement="top" title="Adding Menus">
             <Icon
               onClick={() => {
-                console.log(row, "rowww");
-                this.props.history.push(`/admin/typography/${row.id}`, {
+                this.props.history.push(`/admin/menus/${row.id}`, {
                   id: row.id,
                   navTitle: row.name + "'s Menus"
                 });
@@ -216,16 +215,6 @@ class CorporateDetailsContainer extends React.Component {
   ];
 
   static mapStatetToProps(state) {
-    // console.log(
-    //   state.applicationsPortofolios.applicationsPortofolios
-    //     .applicationPortoflios,
-    //   "application portofilio"
-    // );
-    console.log(state.companies.selectedCompany, "application portofilio");
-    console.log(
-      state.applicationsPortofolios.applicationsPortofolios,
-      "application portofilio"
-    );
     return {
       // selectedCompany: state.companies.selectedCompany,
       allCompanies: state.companies.companies,

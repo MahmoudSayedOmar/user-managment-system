@@ -29,7 +29,11 @@ import {
   DropdownItem,
   Container
 } from "reactstrap";
-import { viewUsers, getUserDetails } from "State/Users/action-creator";
+import {
+  viewUsers,
+  getUserDetails,
+  userSelectedApp
+} from "State/Users/action-creator";
 import routes from "routes.js";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
@@ -54,7 +58,7 @@ class HeaderComponent extends React.Component {
 
   static mapDispatchToProps(dispatch: Dispatch) {
     return bindActionCreators(
-      { tryLogOut, viewUsers, getUserDetails },
+      { tryLogOut, viewUsers, getUserDetails, userSelectedApp },
       dispatch
     );
   }
@@ -139,8 +143,23 @@ class HeaderComponent extends React.Component {
   componentDidMount() {
     if (this.props.allUsers && this.props.allUsers.length > 0) {
     } else {
-      this.props.viewUsers();
+      this.props.viewUsers().then(() => {
+        let currentUser = this.props.currentUser;
+        let allUsers = this.props.allUsers;
+
+        let userId = allUsers.find(
+          eachUser => eachUser.email === currentUser.username
+        );
+        if (userId) {
+          this.props.getUserDetails(userId.id).then(() => {
+            this.changeAppPort(
+              this.props.toEditUserDetails.applicationPortoflios[0]
+            );
+          });
+        }
+      });
     }
+
     window.addEventListener("resize", this.updateColor.bind(this));
   }
   componentDidUpdate(e) {
@@ -156,6 +175,13 @@ class HeaderComponent extends React.Component {
 
   handleVisibleChange = visible => {
     this.setState({ visible });
+  };
+  changeAppPort = (id, clicked) => {
+    if (clicked === "clicked") {
+      this.dropdownToggleDefaultApps(this.state.visibleDefaultApps);
+    }
+
+    this.props.userSelectedApp(id);
   };
   render() {
     let title = this.props.location.state
@@ -272,7 +298,7 @@ class HeaderComponent extends React.Component {
               >
                 <DropdownToggle caret nav>
                   <Icon
-                    type="global"
+                    type="appstore"
                     style={{
                       paddingRight: "5px",
                       paddingTop: "7px",
@@ -281,7 +307,7 @@ class HeaderComponent extends React.Component {
                     }}
                   />
                 </DropdownToggle>
-
+                {this.props.userSelectedAppPort.name}{" "}
                 <DropdownMenu right>
                   <div style={{ padding: "10px", width: "250px" }}>
                     <div
@@ -305,7 +331,15 @@ class HeaderComponent extends React.Component {
                             ? this.props.toEditUserDetails.applicationPortoflios.map(
                                 eachApp => {
                                   return (
-                                    <li key={eachApp.id}>{eachApp.name}</li>
+                                    <li
+                                      style={{ cursor: "pointer" }}
+                                      key={eachApp.id}
+                                      onClick={() =>
+                                        this.changeAppPort(eachApp, "clicked")
+                                      }
+                                    >
+                                      {eachApp.name}
+                                    </li>
                                   );
                                 }
                               )
@@ -353,11 +387,13 @@ class HeaderComponent extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  // console.log(state.users.users, "to edit user");
+  // console.log(state.users.userSelectedAppPort, "to edit user");
+  // console.log(state.authorization, "to edit user");
   return {
     allUsers: state.users.users,
     currentUser: state.authorization,
-    toEditUserDetails: state.users.toEditUser
+    toEditUserDetails: state.users.toEditUser,
+    userSelectedAppPort: state.users.userSelectedAppPort
     // allCompanies: state.companies.companies
   };
 }

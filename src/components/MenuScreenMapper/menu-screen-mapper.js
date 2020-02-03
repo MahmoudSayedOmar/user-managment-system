@@ -39,8 +39,6 @@ export const MenuScreenMapperForm = Form.create()(
 
       let FormItems = (
         <Form>
-          {getFieldDecorator("id")(<Input type="hidden" />)}
-
           <FormItem {...formItemLayout} label="Menu Mapping Form">
             {getFieldDecorator("name", {
               rules: [{ required: true, message: "Please Write Menu Name!" }]

@@ -6,6 +6,16 @@ export type ON_GET_USER_DETAILS_ACTION = { type: String };
 export type ON_GET_USER_DETAILS_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_GET_USER_DETAILS_FAIL_ACTION = { type: String, payload: any };
 
+export type ON_GET_USER_SELECTEDAPP_ACTION = { type: String };
+export type ON_GET_USER_SELECTEDAPP_SUCCESS_ACTION = {
+  type: String,
+  payload: any
+};
+export type ON_GET_USER_SELECTEDAPP_FAIL_ACTION = {
+  type: String,
+  payload: any
+};
+
 export type ON_VIEW_USERS_ACTION = { type: String };
 export type ON_VIEW_USERS_SUCCESS_ACTION = { type: String, payload: any };
 export type ON_VIEW_USERS_FAIL_ACTION = { type: String, payload: any };
@@ -65,6 +75,38 @@ export function onViewUSERSFail(): ON_VIEW_USERS_FAIL_ACTION {
     payload: "connection error"
   };
 }
+///////////////////////// GET USER POROTOFILIOS
+export async function userSelectedApp(selectedApp) {
+  return async (dispatch, getState) => {
+    // let response = await authProxyService.userdetails(id);
+
+    if (selectedApp && selectedApp.id) {
+      dispatch(onGetUserSelectedAppSuccess(selectedApp));
+    } else {
+      dispatch(onGetUserSelectedAppFail());
+    }
+  };
+}
+
+export function onGetUserSelectedApp(): ON_GET_USER_SELECTEDAPP_ACTION {
+  return { type: types.ON_GET_USER_SELECTEDAPP };
+}
+export function onGetUserSelectedAppSuccess(
+  userSelectedAppPort
+): ON_GET_USER_SELECTEDAPP_SUCCESS_ACTION {
+  return {
+    type: types.ON_GET_USER_SELECTEDAPP_SUCCESS,
+    payload: userSelectedAppPort
+  };
+}
+
+export function onGetUserSelectedAppFail(): ON_GET_USERS_SELECTEDAPP_FAIL_ACTION {
+  return {
+    type: types.ON_GET_USER_SELECTEDAPP_FAIL,
+    payload: "connection error"
+  };
+}
+
 /////////////////////////////////////////////
 
 export async function getUserDetails(id) {

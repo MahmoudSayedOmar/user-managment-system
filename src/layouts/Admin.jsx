@@ -68,7 +68,7 @@ class Dashboard extends React.Component {
               path="/admin/corporatedetails"
               component={CorporateDetailsScreen}
             />
-            <Route path="/admin/typography" component={MenusScreen} />
+            <Route path="/admin/menus" component={MenusScreen} />
           </Switch>
         </div>
       </div>

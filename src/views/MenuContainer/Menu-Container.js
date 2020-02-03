@@ -149,10 +149,6 @@ class MenusContainer extends React.Component {
   ];
 
   static mapStatetToProps(state) {
-    console.log(
-      state.applicationsPortofolios.applicationsPortofolios,
-      "tatatat"
-    );
     return {
       menus: state.menus.menus,
       screens: state.screens.screens,
@@ -174,11 +170,6 @@ class MenusContainer extends React.Component {
     );
   }
 
-  // onChange(value) {
-  //   this.props.tryViewMenus(value);
-  //   this.props.tryGetApplicationportofolioAllScreensById(value);
-  //   this.setState({ currentApplicationPortofolio: value });
-  // }
   render() {
     const { Option } = Select;
 

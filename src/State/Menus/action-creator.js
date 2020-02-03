@@ -11,7 +11,7 @@ export async function tryViewMenus(value) {
     if (json.status === 200) {
       // debugger;
       dispatch(onViewMenusSuccess(json.data));
-      console.log("Mahmoud", getState(json.data));
+      // console.log("Mahmoud", getState(json.data));
     } else {
       dispatch(onViewMenusFail());
     }

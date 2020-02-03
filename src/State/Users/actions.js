@@ -7,6 +7,14 @@ export const ON_GET_USER_DETAILS_SUCCESS =
   "[users] on get user details success";
 export const ON_GET_USER_DETAILS_FAIL = "[users] on get user details fail";
 
+/////
+export const ON_GET_USER_SELECTEDAPP = "[users] on get user selectedapp";
+export const ON_GET_USER_SELECTEDAPP_SUCCESS =
+  "[users] on get user selectedapp success";
+export const ON_GET_USER_SELECTEDAPP_FAIL =
+  "[users] on get user selectedapp fail";
+
+///
 export const ON_ADD_USER_ACTION = "[user] on add user";
 export const ON_ADD_USER_SUCCESS_ACTION = "[user] on add user success";
 export const ON_ADD_USER_FAIL_ACTION = "[user] on add user fail";

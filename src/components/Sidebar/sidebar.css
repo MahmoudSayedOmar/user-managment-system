@@ -1,0 +1,35 @@
+.ant-menu-sub.ant-menu-inline {
+  background-color: transparent !important;
+}
+.optionsColor {
+  color: #fff;
+}
+.menu-item-selected {
+  background-color: transparent !important;
+}
+
+.ant-menu-item-selected {
+  color: #1890ff !important;
+}
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: transparent !important;
+}
+
+.afooter1:link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.afooter1:visited {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.afooter1:active {
+  color: #ffffff;
+  text-decoration: none;
+}
+.afooter1:hover {
+  color: #a6ce39;
+  text-decoration: none;
+}

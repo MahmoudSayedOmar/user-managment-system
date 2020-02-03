@@ -21,10 +21,10 @@ import { NavLink, Link } from "react-router-dom";
 import { Nav } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
-import { Menu, Dropdown, Button } from "antd";
-
+import { Menu, Dropdown, Button, Icon } from "antd";
+import "./sidebar.css";
 var ps;
-
+const { SubMenu } = Menu;
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
@@ -49,65 +49,52 @@ class Sidebar extends React.Component {
     }
   }
   render() {
+    console.log(this.props.menus.subMenus, "all menu and submenu");
     let menus = [];
-    this.props.menus.subMenus.map(menu => {
-      menus.push({
-        name: menu.name,
-        component: (
-          <Menu>
+    console.log(this.props.menus.subMenus[0].name, "name");
+    this.props.menus.subMenus.map(menu =>
+      menus.push(
+        <Menu
+          onClick={this.handleClick}
+          // defaultSelectedKeys={["1"]}
+          // defaultOpenKeys={[this.props.menus.subMenus[0].name]}
+          mode="inline"
+          style={{ color: "#fff", backgroundColor: "transparent" }}
+        >
+          <SubMenu
+            key={menu.name}
+            title={
+              <span>
+                <Icon type="mail" />
+                <span>{menu.name}</span>
+              </span>
+            }
+          >
             {this.props.routes.map((prop, key) => {
-              if (menu.screens.filter(s => s.name == prop.name).length > 0) {
+              if (menu.screens.filter(s => s.name === prop.name).length > 0) {
                 return (
-                  <Menu.Item>
-                    <Link
-                      to={prop.layout + prop.path}
-                      className="link"
-                      //  activeClassName="active"
-                    >
-                      <i className={prop.icon} />
-                      <p>{prop.name}</p>
+                  <Menu.Item
+                    className="optionsColor"
+                    key="1"
+                    style={{ backgroundColor: "transparent" }}
+                  >
+                    <Link to={prop.layout + prop.path} className="afooter1">
+                      {prop.name}
                     </Link>
                   </Menu.Item>
                 );
               }
             })}
-          </Menu>
-        )
-      });
-    });
+          </SubMenu>
+        </Menu>
+      )
+    );
 
     return (
       <div className="sidebar" data-color="black" data-active-color="info">
         <div className="logo">Medaf Investmenet</div>
         <div className="sidebar-wrapper" ref={this.sidebar}>
-          <Nav>
-            {menus.map(menu => (
-              <Dropdown overlay={menu.component} placement="bottomLeft">
-                <Button>{menu.name}</Button>
-              </Dropdown>
-            ))}
-
-            {this.props.routes.map((prop, key) => {
-              return (
-                <li
-                  className={
-                    this.activeRoute(prop.path) +
-                    (prop.pro ? " active-pro" : "")
-                  }
-                  key={key}
-                >
-                  <NavLink
-                    to={prop.layout + prop.path}
-                    className="nav-link"
-                    activeClassName="active"
-                  >
-                    <i className={prop.icon} />
-                    <p>{prop.name}</p>
-                  </NavLink>
-                </li>
-              );
-            })}
-          </Nav>
+          {menus}
         </div>
       </div>
     );

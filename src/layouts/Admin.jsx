@@ -47,8 +47,8 @@ class Dashboard extends React.Component {
         _routes.push(route);
       }
     });
-    console.log("MEMEMEMEME", this.props.menus);
-    debugger;
+    // console.log("MEMEMEMEME", this.props.menus);
+    // debugger;
     return (
       <div className="wrapper">
         <Sidebar

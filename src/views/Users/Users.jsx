@@ -349,8 +349,7 @@ function mapStateToProps(state) {
     allCoporates: state.companies.companies,
     userRoles: state.roles.roles,
     applicationsPortofolios:
-      state.applicationsPortofolios.applicationsPortofolios
-        .applicationPortoflios,
+      state.applicationsPortofolios.applicationsPortofolios,
     toEditUserDetails: state.users.toEditUser
   };
 }

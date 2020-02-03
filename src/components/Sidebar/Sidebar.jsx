@@ -17,12 +17,11 @@
 
 */
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { Nav } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
-
-
+import { Menu, Dropdown, Button } from "antd";
 
 var ps;
 
@@ -50,11 +49,44 @@ class Sidebar extends React.Component {
     }
   }
   render() {
+    let menus = [];
+    this.props.menus.subMenus.map(menu => {
+      menus.push({
+        name: menu.name,
+        component: (
+          <Menu>
+            {this.props.routes.map((prop, key) => {
+              if (menu.screens.filter(s => s.name == prop.name).length > 0) {
+                return (
+                  <Menu.Item>
+                    <Link
+                      to={prop.layout + prop.path}
+                      className="link"
+                      //  activeClassName="active"
+                    >
+                      <i className={prop.icon} />
+                      <p>{prop.name}</p>
+                    </Link>
+                  </Menu.Item>
+                );
+              }
+            })}
+          </Menu>
+        )
+      });
+    });
+
     return (
       <div className="sidebar" data-color="black" data-active-color="info">
         <div className="logo">Medaf Investmenet</div>
         <div className="sidebar-wrapper" ref={this.sidebar}>
           <Nav>
+            {menus.map(menu => (
+              <Dropdown overlay={menu.component} placement="bottomLeft">
+                <Button>{menu.name}</Button>
+              </Dropdown>
+            ))}
+
             {this.props.routes.map((prop, key) => {
               return (
                 <li

@@ -40,18 +40,33 @@ class Dashboard extends React.Component {
     }
   }
   render() {
+    var _routes = [];
+    routes.map(route => {
+      if (this.props.screens.filter(s => s.name == route.name).length > 0) {
+        _routes.push(route);
+      }
+    });
+    console.log("MEMEMEMEME", this.props.menus);
+    debugger;
     return (
       <div className="wrapper">
-        <Sidebar {...this.props} routes={routes} />
+        <Sidebar
+          {...this.props}
+          routes={_routes}
+          menus={this.props.menus}
+          screens={this.props.screens}
+        />
         <div className="main-panel" ref={this.mainPanel}>
-          <Header {...this.props} routes={routes} />
+          <Header {...this.props} routes={_routes} />
           <Switch>
-            <Redirect
-              path={routes[0].layout}
-              exact
-              to={routes[0].layout + routes[0].path}
-            />
-            {routes.map((prop, key) => {
+            {_routes.length > 0 ? (
+              <Redirect
+                path={_routes[0].layout}
+                exact
+                to={_routes[0].layout + _routes[0].path}
+              />
+            ) : null}
+            {_routes.map((prop, key) => {
               return (
                 <Route
                   path={prop.layout + prop.path}
@@ -76,7 +91,9 @@ class Dashboard extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    homeData: state.companies
+    homeData: state.companies,
+    screens: state.authorization.screens,
+    menus: state.authorization.menus
   };
 }
 

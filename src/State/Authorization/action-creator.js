@@ -27,6 +27,8 @@ export async function tryLogin(user: UserLoginModel) {
         var result = response.data;
         var token = result["token"];
         var screens = result["screens"];
+        var menus = result["menus"];
+
         var decodedToken = jwtDecode(token);
         var authState = Object.assign({}, getState().authorization, {
           token,
@@ -34,11 +36,10 @@ export async function tryLogin(user: UserLoginModel) {
           loading: false,
           isRegistered: true,
           role: decodedToken["role"],
-          screens
+          screens,
+          menus
         });
-        // console.log(authState, "authState");
-        // debugger;
-
+        console.log(authState.menus);
         dispatch(loginSuccess(authState));
         axios.interceptors.request.use(function(config) {
           config.headers.Authorization = `Bearer ${authState.token}`;

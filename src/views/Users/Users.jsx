@@ -34,7 +34,7 @@ import {
   onActivateUser
 } from "State/Users/action-creator";
 import { onViewCompanies } from "State/Corporates/action-creator";
-import { viewCorporateDetails } from "State/ApplicationsPortofolio/action-creator";
+import { viewCorporateApplicationPortofilio } from "State/ApplicationsPortofolio/action-creator";
 import { onViewUserTypesArray } from "../../State/user-types/action-creator";
 import { viewRolesArray } from "../../State/Roles/action-creator";
 // core components
@@ -56,7 +56,7 @@ class Users extends React.Component {
   componentDidMount() {
     this.props.viewUsers();
     this.props.onViewCompanies();
-    // this.props.viewCorporateDetails(this.props.location.state.id);
+    // this.props.viewCorporateApplicationPortofilio(this.props.location.state.id);
     // this.props.onViewUserTypes(2);
   }
   componentWillReceiveProps(nextProps) {
@@ -149,7 +149,7 @@ class Users extends React.Component {
     });
   };
   onChangeCorporate = value => {
-    this.props.viewCorporateDetails(value);
+    this.props.viewCorporateApplicationPortofilio(value);
   };
   onChangeApplications = value => {
     this.props.onViewUserTypesArray(value);
@@ -349,8 +349,7 @@ function mapStateToProps(state) {
     allCoporates: state.companies.companies,
     userRoles: state.roles.roles,
     applicationsPortofolios:
-      state.applicationsPortofolios.applicationsPortofolios
-        .applicationPortoflios,
+      state.applicationsPortofolios.applicationsPortofolios,
     toEditUserDetails: state.users.toEditUser
   };
 }
@@ -361,7 +360,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
       onViewCompanies,
       viewUsers,
       getUserDetails,
-      viewCorporateDetails,
+      viewCorporateApplicationPortofilio,
       onAddUser,
       onEditUser,
       onDeactivateUser,

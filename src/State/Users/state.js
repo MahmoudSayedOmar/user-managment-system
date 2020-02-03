@@ -4,6 +4,7 @@ export interface usersState {
   users: userDto[];
   toEditUser: userDto;
   loading: boolean;
+  userSelectedAppPort: {};
   // isShow:Boolean
 }
 
@@ -12,5 +13,6 @@ export const usersInitialState: usersState = {
 
   users: [],
   toEditUser: {},
-  loading: false
+  loading: false,
+  userSelectedAppPort: {}
 };

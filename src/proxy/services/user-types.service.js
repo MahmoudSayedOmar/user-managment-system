@@ -72,7 +72,7 @@ export class UserTypesService {
     });
   }
   async activate(id) {
-    debugger;
+    // debugger;
     return await axios({
       method: "put",
       url: `${BASE_URL}usertypes/activate/${id}`,

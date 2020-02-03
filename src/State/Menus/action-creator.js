@@ -9,9 +9,9 @@ export async function tryViewMenus(value) {
   return async (dispatch, getState) => {
     var json = await menusProxyService.getMenus(value);
     if (json.status === 200) {
-      debugger;
+      // debugger;
       dispatch(onViewMenusSuccess(json.data));
-      console.log("Mahmoud", getState(json.data));
+      // console.log("Mahmoud", getState(json.data));
     } else {
       dispatch(onViewMenusFail());
     }
@@ -47,7 +47,7 @@ export async function onAddMenu(applicationportofolioId, values) {
       applicationportofolioId,
       values
     );
-    debugger;
+    // debugger;
     if (response.status === 200) {
       menus.push(response.data);
       dispatch(onAddMenuSuccess(menus));
@@ -81,12 +81,12 @@ export type ON_CHANGE_ACTIVATION_STATUS_FAIL_ACTION = {
 export async function changeMenuActivationStatus(menuId, newStatus) {
   return async (dispatch, getState) => {
     dispatch(onChangeActivationStatus());
-    debugger;
+    // debugger;
     const response = await menusProxyService.changeMenuActivationStatus(
       menuId,
       newStatus
     );
-    debugger;
+    // debugger;
     if (response.status === 200) {
       dispatch(onChangeActivationStatusSuccess(response.data));
     } else {
@@ -127,22 +127,22 @@ export type ON_MAP_MENU_TO_SCREENS_FAIL = { type: String };
 export async function mapMenuToScreens(menuId, newScreensIds) {
   return async (dispatch, getState) => {
     dispatch(onMapScreensToMenu());
-    debugger;
+    // debugger;
     let state = getState();
     let menus = state.menus.menus;
     const response = await menusProxyService.mapMenusToScreens(
       menuId,
       newScreensIds
     );
-    debugger;
+    // debugger;
     if (response.status === 200) {
       menus = menus.map(menu => {
-        if (menu.id == menuId) {
+        if (menu.id === menuId) {
           menu.screensIds = newScreensIds;
         }
         return menu;
       });
-      debugger;
+      // debugger;
       dispatch(onMapScreensToMenuSuccess(menus));
     } else {
       dispatch(onMapScreensToMenuFail());

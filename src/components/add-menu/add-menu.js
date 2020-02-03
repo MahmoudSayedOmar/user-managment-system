@@ -32,17 +32,6 @@ export const AddMenuForm = Form.create()(
         wrapperCol: { span: 15 }
       };
 
-      const onlyNumbers = (rule, value, callback) => {
-        if (value && isNaN(value)) {
-          callback("Numbers Only Please");
-          return;
-        } else if (value && value < 0) {
-          callback("it can't be negative number");
-          return;
-        } else {
-          callback();
-        }
-      };
       let FormItems = (
         <Form>
           {getFieldDecorator("id")(<Input type="hidden" />)}

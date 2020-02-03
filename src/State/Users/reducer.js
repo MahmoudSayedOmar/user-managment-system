@@ -10,6 +10,9 @@ type Action =
   | actions.ON_GET_USER_DETAILS_ACTION
   | actions.ON_GET_USER_DETAILS_SUCCESS_ACTION
   | actions.ON_GET_USE_DETAILS_FAIL_ACTION
+  | actions.ON_GET_USER_SELECTEDAPP_ACTION
+  | actions.ON_GET_USER_SELECTEDAPP_SUCCESS_ACTION
+  | actions.ON_GET_USE_SELECTEDAPP_FAIL_ACTION
   | actions.ON_VIEW_USERS_ACTION
   | actions.ON_VIEW_USERS_SUCCESS_ACTION
   | actions.ON_VIEW_USERS_FAIL_ACTION
@@ -31,7 +34,6 @@ export function usersReducer(
       };
     }
     case types.ON_VIEW_USERS_SUCCESS: {
-      // console.log(action.payload, "allusers");
       return {
         ...state,
         users: action.payload
@@ -57,6 +59,23 @@ export function usersReducer(
       };
     }
     case types.ON_GET_USER_DETAILS_FAIL: {
+      return {
+        ...state
+      };
+    }
+    //////////
+    case types.ON_GET_USER_SELECTEDAPP: {
+      return {
+        ...state
+      };
+    }
+    case types.ON_GET_USER_SELECTEDAPP_SUCCESS: {
+      return {
+        ...state,
+        userSelectedAppPort: action.payload
+      };
+    }
+    case types.ON_GET_USER_SELECTEDAPP_FAIL: {
       return {
         ...state
       };

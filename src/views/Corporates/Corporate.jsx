@@ -272,7 +272,7 @@ class Corporate extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state, "state is here");
+  // console.log(state, "state is here");
   return {
     allCompanies: state.companies.companies
   };

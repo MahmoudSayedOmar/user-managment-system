@@ -23,12 +23,12 @@ import Users from "views/Users/Users.jsx";
 import Rolescontrol from "views/Rolescontrol/Rolescontrol.jsx";
 import Notifications from "views/Notifications.jsx";
 import Icons from "views/Icons.jsx";
-import Typography from "views/Typography.jsx";
+
 import TableList from "views/Tables.jsx";
 import Maps from "views/Map.jsx";
 import { UserProfileScreen } from "views/UserProfile/user-profile";
 import { DefaultApplicationsScreen } from "./views/default-apps/default-applications-screen";
-import { MenusScreen } from "./views/MenuContainer/Menu-Container";
+
 var routes = [
   {
     path: "/corporates/corporates",
@@ -99,13 +99,6 @@ var routes = [
     name: "Table List",
     icon: "nc-icon nc-tile-56",
     component: TableList,
-    layout: "/admin"
-  },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-caps-small",
-    component: MenusScreen,
     layout: "/admin"
   }
 ];

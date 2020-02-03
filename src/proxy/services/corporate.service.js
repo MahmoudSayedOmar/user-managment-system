@@ -1,14 +1,14 @@
 import { BASE_URL } from "../../http-client/constants";
 
-import abc, { HttpClient } from "../services/axoisconfig"
+import abc, { HttpClient } from "../services/axoisconfig";
 import axios from "axios";
 
 axios.interceptors.request.use(
   config => {
     if (!config.headers.Authorization) {
-      var localstroag=localStorage.getItem('persist:root');
-        var auth= JSON.parse(localstroag).authorization;
-        var token=JSON.parse(auth).token;
+      var localstroag = localStorage.getItem("persist:root");
+      var auth = JSON.parse(localstroag).authorization;
+      var token = JSON.parse(auth).token;
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -20,11 +20,26 @@ axios.interceptors.request.use(
 );
 
 export class CorporateService {
+  async getCompanyDetails(id) {
+    console.log(id, "id");
+    // debugger;
+
+    return await axios({
+      method: "get",
+      url: `${BASE_URL}corporates/get/${id}`,
+      config: {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-Type": "application/json"
+        }
+      }
+    });
+  }
   async get() {
     return await axios({
       method: "get",
       url: `${BASE_URL}corporates/get`,
-      config:{
+      config: {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "content-Type": "application/json"

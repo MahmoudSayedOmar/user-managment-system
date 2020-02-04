@@ -215,6 +215,10 @@ class CorporateDetailsContainer extends React.Component {
   ];
 
   static mapStatetToProps(state) {
+    console.log(
+      state.applicationsPortofolios.applicationsPortofolios,
+      "application porotofflios"
+    );
     return {
       // selectedCompany: state.companies.selectedCompany,
       allCompanies: state.companies.companies,

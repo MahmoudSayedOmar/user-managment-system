@@ -105,6 +105,7 @@ export default class ApplicationsPortofoliosListingComponent extends React.Compo
     });
   };
   handleEdit = applicationPortofolio => {
+    console.log(applicationPortofolio, "to edit");
     this.props.onEditApplicationPortofolio(applicationPortofolio);
     this.setState({
       visible: false

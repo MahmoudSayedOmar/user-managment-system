@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Nav } from "reactstrap";
@@ -49,9 +31,8 @@ class Sidebar extends React.Component {
     }
   }
   render() {
-    console.log(this.props.menus.subMenus, "all menu and submenu");
     let menus = [];
-    console.log(this.props.menus.subMenus[0].name, "name");
+
     this.props.menus.subMenus.map(menu =>
       menus.push(
         <Menu
@@ -65,12 +46,12 @@ class Sidebar extends React.Component {
             key={menu.name}
             title={
               <span>
-                <Icon type="mail" />
                 <span>{menu.name}</span>
               </span>
             }
           >
             {this.props.routes.map((prop, key) => {
+              console.log(prop.icon);
               if (menu.screens.filter(s => s.name === prop.name).length > 0) {
                 return (
                   <Menu.Item
@@ -79,6 +60,10 @@ class Sidebar extends React.Component {
                     style={{ backgroundColor: "transparent" }}
                   >
                     <Link to={prop.layout + prop.path} className="afooter1">
+                      <i
+                        className={prop.icon}
+                        style={{ marginRight: "10px" }}
+                      />
                       {prop.name}
                     </Link>
                   </Menu.Item>

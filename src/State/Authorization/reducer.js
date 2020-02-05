@@ -21,7 +21,7 @@ export function authorizationReducer(
     }
 
     case types.LOGIN_SUCCESS: {
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...action.payload
       };

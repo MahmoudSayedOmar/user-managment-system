@@ -95,7 +95,8 @@ function mapStateToProps(state) {
   return {
     homeData: state.companies,
     screens: state.authorization.screens,
-    menus: state.authorization.menus
+    menus: state.authorization.menus,
+    toEditUserDetails: state.users.toEditUser
   };
 }
 

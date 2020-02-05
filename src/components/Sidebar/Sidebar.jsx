@@ -31,18 +31,20 @@ class Sidebar extends React.Component {
     }
   }
   render() {
+    console.log(this.props, "current user");
     let menus = [];
 
-    this.props.menus.subMenus.map(menu =>
+    this.props.menus.subMenus.map((menu, index) =>
       menus.push(
         <Menu
           onClick={this.handleClick}
           // defaultSelectedKeys={["1"]}
-          // defaultOpenKeys={[this.props.menus.subMenus[0].name]}
+          defaultOpenKeys={[this.props.menus.subMenus[index].name]}
           mode="inline"
           style={{ color: "#fff", backgroundColor: "transparent" }}
         >
           <SubMenu
+            // defaultSelectedKeys={["1"]}
             key={menu.name}
             title={
               <span>
@@ -51,12 +53,11 @@ class Sidebar extends React.Component {
             }
           >
             {this.props.routes.map((prop, key) => {
-              console.log(prop.icon);
+              // console.log(prop.icon);
               if (menu.screens.filter(s => s.name === prop.name).length > 0) {
                 return (
                   <Menu.Item
                     className="optionsColor"
-                    key="1"
                     style={{ backgroundColor: "transparent" }}
                   >
                     <Link to={prop.layout + prop.path} className="afooter1">
@@ -77,7 +78,17 @@ class Sidebar extends React.Component {
 
     return (
       <div className="sidebar" data-color="black" data-active-color="info">
-        <div className="logo">Medaf Investmenet</div>
+        <div className="logo">
+          {
+            <span style={{ fontWeight: "bold" }}>
+              {this.props.toEditUserDetails
+                ? this.props.toEditUserDetails.corporate
+                  ? this.props.toEditUserDetails.corporate.name
+                  : ""
+                : ""}
+            </span>
+          }
+        </div>
         <div className="sidebar-wrapper" ref={this.sidebar}>
           {menus}
         </div>

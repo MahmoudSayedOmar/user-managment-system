@@ -172,7 +172,7 @@ class Corporate extends React.Component {
       key: "isActive",
       render: (eachKey, row) => (
         <span>
-          <Icon
+          {/* <Icon
             type="edit"
             style={{
               fontSize: "20px",
@@ -181,7 +181,7 @@ class Corporate extends React.Component {
               paddingRight: "5px"
             }}
             onClick={() => this.onEditRow(row.id)}
-          />
+          /> */}
           {row.isActive ? (
             <Popconfirm
               title="Are you sure deActivate this Company?"
@@ -214,13 +214,6 @@ class Corporate extends React.Component {
               />
             </Tooltip>
           )}
-
-          <Tooltip placement="top" title="Corporate Applications">
-            <Icon
-              type="file-add"
-              style={{ fontSize: "20px", cursor: "pointer" }}
-            />
-          </Tooltip>
         </span>
       )
     }

@@ -20,13 +20,15 @@ export async function tryLogin(user: UserLoginModel) {
     dispatch(onLogin(user));
     try {
       let response = await authProxyService.login(user);
-
+      // debugger;
+      console.log(response, "response");
       if (response.status === 200) {
         var result = response.data;
         var token = result["token"];
         var screens = result["screens"];
         var menus = result["menus"];
         var userId = result["userId"];
+        var userNoCorporate = "ddd";
 
         var decodedToken = jwtDecode(token);
         var authState = Object.assign({}, getState().authorization, {
@@ -37,9 +39,12 @@ export async function tryLogin(user: UserLoginModel) {
           role: decodedToken["role"],
           screens,
           menus,
-          userId
+          userId,
+          userNoCorporate
         });
-        console.log(authState.menus);
+        // console.log(authState.menus);
+        // console.log(authState.userNoCorporate, "userCorporate yes or no");
+        // debugger;
         dispatch(loginSuccess(authState));
         axios.interceptors.request.use(function(config) {
           config.headers.Authorization = `Bearer ${authState.token}`;

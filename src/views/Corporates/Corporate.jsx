@@ -277,9 +277,10 @@ function mapDispatchToProps(dispatch: Dispatch) {
       onViewCompanies,
       // onShowCompanies //  onInitFunction: mainObject => dispatch(actions.onShowCompnay(mainObject))
       onAddCorporate,
-      onDeactivateCorporate,
+
       onUpdateCorporate,
-      onActivateCorporate
+      onActivateCorporate,
+      onDeactivateCorporate
     },
     dispatch
   );

@@ -20,12 +20,25 @@ export default class ListingComponent extends React.Component {
     onAddModal: () => void
   };
 
+  onGoBack = () => {
+    console.log("we are here");
+    this.props.onGoBack();
+  };
   render() {
     return (
       <div className="content">
         <Card>
           <CardBody className="all-icons">
             <div className="eachCompnentButtonSection">
+              {this.props.goBackText ? (
+                <div className="buttonLeft">
+                  <Button type="primary" size="small" onClick={this.onGoBack}>
+                    Back To {this.props.goBackText}
+                  </Button>
+                </div>
+              ) : (
+                ""
+              )}
               <div className="buttonRight">
                 <Button
                   type="primary"

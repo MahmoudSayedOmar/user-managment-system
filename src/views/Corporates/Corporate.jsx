@@ -214,6 +214,19 @@ class Corporate extends React.Component {
               />
             </Tooltip>
           )}
+          <Tooltip placement="top" title="Corporate Applications">
+            <Icon
+              type="file-add"
+              style={{ fontSize: "20px", cursor: "pointer" }}
+              onClick={() => {
+                this.props.history.push(`/admin/corporatedetails/${row.id}`, {
+                  id: row.id,
+                  // navTitle: row.name + "'s Application Portofilios"
+                  navTitle: " Corporate Application Portofilios"
+                });
+              }}
+            />
+          </Tooltip>
         </span>
       )
     }

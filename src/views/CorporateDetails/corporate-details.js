@@ -407,6 +407,9 @@ class CorporateDetailsContainer extends React.Component {
               >
                 <ApplicationsPortofoliosListingComponent
                   columns={this.columns}
+                  goBack={() => {
+                    this.props.history.push("../corporates/corporates");
+                  }}
                   dataSource={this.state.applicationPortoflios}
                   pagination={false}
                   listingType={"Corprate Name Application Portofolio"}

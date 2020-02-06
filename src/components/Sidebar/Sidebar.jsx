@@ -33,7 +33,7 @@ class Sidebar extends React.Component {
   render() {
     console.log(this.props, "current user");
     let menus = [];
-
+    // console.log(this.props.menus, "menussss");
     this.props.menus.subMenus.map((menu, index) =>
       menus.push(
         <Menu
@@ -45,10 +45,10 @@ class Sidebar extends React.Component {
         >
           <SubMenu
             // defaultSelectedKeys={["1"]}
-            key={menu.name}
+            key={menu ? menu.name : ""}
             title={
               <span>
-                <span>{menu.name}</span>
+                <span>{menu ? menu.name : ""}</span>
               </span>
             }
           >
@@ -57,6 +57,7 @@ class Sidebar extends React.Component {
               if (menu.screens.filter(s => s.name === prop.name).length > 0) {
                 return (
                   <Menu.Item
+                    key={key}
                     className="optionsColor"
                     style={{ backgroundColor: "transparent" }}
                   >

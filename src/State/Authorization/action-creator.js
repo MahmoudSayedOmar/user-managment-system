@@ -28,7 +28,7 @@ export async function tryLogin(user: UserLoginModel) {
         var screens = result["screens"];
         var menus = result["menus"];
         var userId = result["userId"];
-        var userNoCorporate = "ddd";
+        var userNoCorporate = "ddd"; // make it -1 user will not be able to login
 
         var decodedToken = jwtDecode(token);
         var authState = Object.assign({}, getState().authorization, {

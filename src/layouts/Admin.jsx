@@ -94,10 +94,12 @@ class Dashboard extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state.authorization.menus, "all menusmenus");
   return {
     homeData: state.companies,
     screens: state.authorization.screens,
-    menus: state.authorization.menus
+    menus: state.authorization.menus,
+    toEditUserDetails: state.users.toEditUser
   };
 }
 

@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Nav } from "reactstrap";
@@ -49,36 +31,41 @@ class Sidebar extends React.Component {
     }
   }
   render() {
-    console.log(this.props.menus.subMenus, "all menu and submenu");
+    console.log(this.props, "current user");
     let menus = [];
-    console.log(this.props.menus.subMenus[0].name, "name");
-    this.props.menus.subMenus.map(menu =>
+    // console.log(this.props.menus, "menussss");
+    this.props.menus.subMenus.map((menu, index) =>
       menus.push(
         <Menu
           onClick={this.handleClick}
           // defaultSelectedKeys={["1"]}
-          // defaultOpenKeys={[this.props.menus.subMenus[0].name]}
+          defaultOpenKeys={[this.props.menus.subMenus[index].name]}
           mode="inline"
           style={{ color: "#fff", backgroundColor: "transparent" }}
         >
           <SubMenu
-            key={menu.name}
+            // defaultSelectedKeys={["1"]}
+            key={menu ? menu.name : ""}
             title={
               <span>
-                <Icon type="mail" />
-                <span>{menu.name}</span>
+                <span>{menu ? menu.name : ""}</span>
               </span>
             }
           >
             {this.props.routes.map((prop, key) => {
+              // console.log(prop.icon);
               if (menu.screens.filter(s => s.name === prop.name).length > 0) {
                 return (
                   <Menu.Item
+                    key={key}
                     className="optionsColor"
-                    key="1"
                     style={{ backgroundColor: "transparent" }}
                   >
                     <Link to={prop.layout + prop.path} className="afooter1">
+                      <i
+                        className={prop.icon}
+                        style={{ marginRight: "10px" }}
+                      />
                       {prop.name}
                     </Link>
                   </Menu.Item>
@@ -92,7 +79,17 @@ class Sidebar extends React.Component {
 
     return (
       <div className="sidebar" data-color="black" data-active-color="info">
-        <div className="logo">Medaf Investmenet</div>
+        <div className="logo">
+          {
+            <span style={{ fontWeight: "bold" }}>
+              {this.props.toEditUserDetails
+                ? this.props.toEditUserDetails.corporate
+                  ? this.props.toEditUserDetails.corporate.name
+                  : ""
+                : ""}
+            </span>
+          }
+        </div>
         <div className="sidebar-wrapper" ref={this.sidebar}>
           {menus}
         </div>

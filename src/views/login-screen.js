@@ -19,7 +19,8 @@ class LoginContainer extends React.Component {
       loading: state.authorization.loading,
       errorMessage: state.authorization.errorMessage,
       isLoggedIn: state.authorization.isLoggedIn,
-      authorization: state.authorization
+      authorization: state.authorization,
+      userNoCorporate: state.authorization.userNoCorporate
     };
   }
 
@@ -30,7 +31,11 @@ class LoginContainer extends React.Component {
   componentWillReceiveProps(nextProps) {
     // console.log("obj", this.nextProps);
     // debugger;
-    if (nextProps.isLoggedIn === true) {
+    // console.log(nextProps.userNoCorporate, "userNoCorporate state");
+
+    if (nextProps.userNoCorporate === -1) {
+      // this.props.history.push("/logout");
+    } else if (nextProps.isLoggedIn === true) {
       // console.log(this.props);
       // debugger;
       // this.props.cookies.set("authorization", this.props.authorization, {
@@ -61,7 +66,16 @@ class LoginContainer extends React.Component {
               className="img-responsive"
             />
           </div>
-          {this.props.loading ? (
+
+          {this.props.userNoCorporate === -1 ? (
+            <div>
+              <center></center>
+              <LoginComponent
+                tryLogin={this.props.tryLogin}
+                errorMessage="Please contact system adminstrator"
+              />
+            </div>
+          ) : this.props.loading ? (
             "loading..."
           ) : (
             <LoginComponent

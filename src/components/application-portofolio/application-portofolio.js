@@ -105,6 +105,7 @@ export default class ApplicationsPortofoliosListingComponent extends React.Compo
     });
   };
   handleEdit = applicationPortofolio => {
+    console.log(applicationPortofolio, "to edit");
     this.props.onEditApplicationPortofolio(applicationPortofolio);
     this.setState({
       visible: false
@@ -150,6 +151,8 @@ export default class ApplicationsPortofoliosListingComponent extends React.Compo
           columns={this.props.columns}
           dataSource={this.props.dataSource}
           pagination={{ pageSize: 10 }}
+          onGoBack={() => this.props.goBack()}
+          goBackText="Corporates"
           listingType={"Corprate Name Application Portofolio"}
           onAddModal={this.showModal}
         />

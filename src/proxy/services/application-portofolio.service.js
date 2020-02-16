@@ -16,12 +16,12 @@ export class ApplicationsPortofoliosProxyService {
     });
   }
   ////////
-  async editApplicationPortofolioToCorporate(applicationPortofolio) {
+  async editApplicationPortofolioToCorporate(Id, applicationPortofolio) {
     // debugger;
     // console.log(applicationPortofolio, "application porotofilio");
     return await axios({
       method: "put",
-      url: `${BASE_URL}ApplicationPortoflios/edit/${applicationPortofolio.id}`,
+      url: `${BASE_URL}ApplicationPortoflios/edit/${Id}`,
       data: applicationPortofolio,
       config: {
         headers: {

@@ -237,60 +237,6 @@ class HeaderComponent extends React.Component {
             <Nav navbar>
               <Dropdown
                 nav
-                isOpen={this.state.visibleCorporates}
-                toggle={e =>
-                  this.dropdownToggleCorporate(this.state.visibleCorporates)
-                }
-              >
-                <DropdownToggle caret nav>
-                  <Icon
-                    type="project"
-                    style={{
-                      paddingRight: "5px",
-                      paddingTop: "7px",
-                      fontSize: "25px",
-                      cursor: "pointer"
-                    }}
-                  />
-                </DropdownToggle>
-
-                <DropdownMenu right>
-                  <div style={{ padding: "10px", width: "250px" }}>
-                    <div
-                      style={{
-                        width: "100%",
-                        borderBottom: "thin solid #000",
-                        paddingBottom: "2px"
-                      }}
-                    >
-                      Companies
-                    </div>
-                    <div
-                      style={{
-                        width: "100%",
-                        paddingTop: "2px"
-                      }}
-                    >
-                      <ul>
-                        {this.props.toEditUserDetails ? (
-                          this.props.toEditUserDetails.corporate ? (
-                            <li key={this.props.toEditUserDetails.corporate.id}>
-                              {this.props.toEditUserDetails.corporate.name}
-                            </li>
-                          ) : (
-                            ""
-                          )
-                        ) : (
-                          ""
-                        )}
-                      </ul>
-                    </div>
-                  </div>
-                </DropdownMenu>
-              </Dropdown>
-
-              <Dropdown
-                nav
                 isOpen={this.state.visibleDefaultApps}
                 toggle={e =>
                   this.dropdownToggleDefaultApps(this.state.visibleDefaultApps)
@@ -307,7 +253,7 @@ class HeaderComponent extends React.Component {
                     }}
                   />
                 </DropdownToggle>
-                {this.props.userSelectedAppPort.name}{" "}
+                {this.props.userSelectedAppPort.name}
                 <DropdownMenu right>
                   <div style={{ padding: "10px", width: "250px" }}>
                     <div

@@ -137,29 +137,23 @@ export async function editApplicationPortofolioToCorporate(
     dispatch(onEditApplicationsPortofolios());
     const state = getState();
     var corporateId = state.companies.selectedCompanyId;
-    let ApplicationPortofoliosObject = {
-      ...applicationPortofolio,
-      CorporateId: corporateId
-    };
-
-    const response = await applicationsPortofoliosProxyService.editApplicationPortofolioToCorporate(
-      ApplicationPortofoliosObject
-    );
+    console.log(JSON.stringify(applicationPortofolio));
     // debugger;
-    console.log(response, "response");
+    const response = await applicationsPortofoliosProxyService.editApplicationPortofolioToCorporate(
+      applicationPortofolio.id,
+      applicationPortofolio
+    );
+    // console.log(response, "response");
+    // debugger;
+    // console.log(response, "response");
     if (response.status === 200) {
       // debugger;
-      let appPortoto =
-        state.applicationsPortofolios.applicationsPortofolios
-          .applicationPortoflios;
+      let appPortoto = state.applicationsPortofolios.applicationsPortofolios;
       console.log(appPortoto, "appporot");
       const toEditIndex = appPortoto.findIndex(
         app => app.id === response.data.id
       );
-      appPortoto = [
-        ...state.applicationsPortofolios.applicationsPortofolios
-          .applicationPortoflios
-      ]; // important to create a copy, otherwise you'll modify state outside of setState call
+      appPortoto = [...state.applicationsPortofolios.applicationsPortofolios]; // important to create a copy, otherwise you'll modify state outside of setState call
       appPortoto[toEditIndex] = response.data;
       console.log(response.data, "response.data");
       console.log(appPortoto, "updated");

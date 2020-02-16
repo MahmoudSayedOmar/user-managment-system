@@ -17,7 +17,9 @@ import {
 } from "../../State/ApplicationsPortofolio/action-creator";
 import {
   onUpdateCorporate,
-  onViewCompany
+  onViewCompany,
+  onActivateCorporate,
+  onDeactivateCorporate
 } from "State/Corporates/action-creator";
 import AddCorpoateForm from "../Corporates/AddCorpoateForm";
 class CorporateDetailsContainer extends React.Component {
@@ -56,7 +58,12 @@ class CorporateDetailsContainer extends React.Component {
       showAddCorporateModal: false
     });
   };
-
+  onDeactivate = id => {
+    this.props.onDeactivateCorporate(id);
+  };
+  onActivate = id => {
+    this.props.onActivateCorporate(id);
+  };
   onCancelSettingsModal = () => {
     this.setState({
       modalTitle: "Add Corporate",
@@ -215,8 +222,11 @@ class CorporateDetailsContainer extends React.Component {
   ];
 
   static mapStatetToProps(state) {
+    console.log(
+      state.applicationsPortofolios.applicationsPortofolios,
+      "application porotofflios"
+    );
     return {
-      // selectedCompany: state.companies.selectedCompany,
       allCompanies: state.companies.companies,
       corporateData: state.companies.selectedCompany,
 
@@ -232,6 +242,8 @@ class CorporateDetailsContainer extends React.Component {
       {
         viewCorporateApplicationPortofilio,
         onViewCompany,
+        onActivateCorporate,
+        onDeactivateCorporate,
         addApplicationPortofolioToCorporate,
         editApplicationPortofolioToCorporate,
         tryGetAllModules,
@@ -335,27 +347,42 @@ class CorporateDetailsContainer extends React.Component {
                     </Descriptions.Item>
 
                     <Descriptions.Item label="Active/Not Active">
-                      {corporateData.isActive ? (
-                        <Tooltip placement="top" title="Active">
-                          <Icon
-                            type="eye"
-                            style={{
-                              paddingRight: "5px",
-                              fontSize: "20px"
-                            }}
-                          />
-                        </Tooltip>
-                      ) : (
-                        <Tooltip placement="top" title="Not Active">
-                          <Icon
-                            type="eye-invisible"
-                            style={{
-                              paddingRight: "5px",
-                              fontSize: "20px"
-                            }}
-                          />
-                        </Tooltip>
-                      )}
+                      <span>
+                        {corporateData.isActive ? (
+                          <Popconfirm
+                            title="Are you sure deActivate this Company?"
+                            onConfirm={() =>
+                              this.onDeactivate(corporateData.id)
+                            }
+                            okText="Yes"
+                            cancelText="No"
+                          >
+                            <Tooltip placement="top" title="DeActivate">
+                              <Icon
+                                type="eye"
+                                style={{
+                                  paddingRight: "5px",
+                                  fontSize: "20px",
+                                  cursor: "pointer"
+                                }}
+                                // onClick={() => this.onDeleteRow()}
+                              />
+                            </Tooltip>
+                          </Popconfirm>
+                        ) : (
+                          <Tooltip placement="top" title="Activate">
+                            <Icon
+                              type="eye-invisible"
+                              style={{
+                                paddingRight: "5px",
+                                fontSize: "20px",
+                                cursor: "pointer"
+                              }}
+                              onClick={() => this.onActivate(corporateData.id)}
+                            />
+                          </Tooltip>
+                        )}
+                      </span>
                     </Descriptions.Item>
                     <Descriptions.Item label="phone No.">
                       {corporateData.phoneNo}
@@ -380,6 +407,9 @@ class CorporateDetailsContainer extends React.Component {
               >
                 <ApplicationsPortofoliosListingComponent
                   columns={this.columns}
+                  goBack={() => {
+                    this.props.history.push("../corporates/corporates");
+                  }}
                   dataSource={this.state.applicationPortoflios}
                   pagination={false}
                   listingType={"Corprate Name Application Portofolio"}

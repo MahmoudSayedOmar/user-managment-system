@@ -70,6 +70,7 @@ export default Form.create()(
       this.props.form.validateFields((err, values) => {
         if (!err) {
           if (values.id && values.id !== "") {
+            console.log(values, "values");
             this.props.onEdit({
               id: values.id,
               Name: values.applicationportofolio,

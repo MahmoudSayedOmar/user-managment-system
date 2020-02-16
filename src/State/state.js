@@ -21,7 +21,10 @@ import { menusInitialState, menusState } from "./Menus/state";
 import { modulesInitialState, ModulesState } from "./ExtraModules/state";
 import { screenInitialState, screenState } from "./Screen/state";
 
-import {RoleControlInitialState,RoleControlState} from "./RoleControls/state"
+import {
+  RoleScreensControlInitialState,
+  RoleScreensControlState
+} from "./RoleControls/state";
 
 export type State = {
   authorization: AuthorizationState,
@@ -34,7 +37,7 @@ export type State = {
   roles: rolesState,
   menus: menusState,
   screens: screenState,
-  roleControl:RoleControlState
+  roleControl: RoleScreensControlState
 };
 
 export const initialState = {
@@ -48,5 +51,5 @@ export const initialState = {
   roles: rolesInitialState,
   menus: menusInitialState,
   screens: screenInitialState,
-  roleControl:rolesInitialState
+  roleControl: RoleScreensControlInitialState
 };

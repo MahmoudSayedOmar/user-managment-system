@@ -1,5 +1,4 @@
 import * as types from "./actions";
-
 import { authProxyService } from "../../proxy/services";
 
 export type ON_GET_USER_DETAILS_ACTION = { type: String };
@@ -45,8 +44,6 @@ export type ON_DEACTIVATE_USER_FAIL_ACTION = { type: String, payload: any };
 
 export async function viewUsers() {
   return async (dispatch, getState) => {
-    let state = getState();
-    let users = state.users.users;
     let response = await authProxyService.getUsers();
     if (response.status === 200) {
       // console.log(response.data, "response.data");

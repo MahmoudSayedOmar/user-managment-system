@@ -92,6 +92,13 @@ export function applicationsPortofoliosReducer(
         ...state
       };
     }
+    case types.SET_SELECTED_APPLICATIONPORTOFOLIOID: {
+      debugger;
+      return {
+        ...state,
+        selectedApplicationPortofolioId: action.payload
+      };
+    }
     default:
       return state;
   }

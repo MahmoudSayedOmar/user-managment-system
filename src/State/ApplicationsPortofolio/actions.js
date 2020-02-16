@@ -26,3 +26,5 @@ export const ON_CHANGE_ACTIVATION_STATUS_FAIL =
   "[application] on change activation status fail";
 
 export const SELECT_COMPANY = "[company] select company";
+export const SET_SELECTED_APPLICATIONPORTOFOLIOID =
+  "[application] set selected applicationportofolio id";

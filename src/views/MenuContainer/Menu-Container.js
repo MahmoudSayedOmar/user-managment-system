@@ -40,6 +40,7 @@ class MenusContainer extends React.Component {
       this.props.tryGetApplicationportofolioAllScreensById(
         this.props.location.state.id
       );
+
       this.setState({
         currentApplicationPortofolio: this.props.location.state.id
       });

@@ -7,6 +7,7 @@ import { CorporateDetailsScreen } from "../views/CorporateDetails/corporate-deta
 import { UserTypesScreen } from "../views/user-types/user-types";
 import { UserTypeDetailsScreen } from "../views/UserTypeDetails/user-type-details";
 import { MenusScreen } from "../views/MenuContainer/Menu-Container";
+import { UserProfileScreen } from "../views/UserProfile/user-profile";
 
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
@@ -60,13 +61,13 @@ class Dashboard extends React.Component {
         <div className="main-panel" ref={this.mainPanel}>
           <Header {...this.props} routes={_routes} />
           <Switch>
-            {_routes.length > 0 ? (
+            {/* {_routes.length > 0 ? (
               <Redirect
                 path={_routes[0].layout}
                 exact
                 to={_routes[0].layout + _routes[0].path}
               />
-            ) : null}
+            ) : null} */}
             {_routes.map((prop, key) => {
               return (
                 <Route
@@ -76,14 +77,15 @@ class Dashboard extends React.Component {
                 />
               );
             })}
-            <Route path="/admin/roles" component={UserTypeDetailsScreen} />
+            {/* <Route path="/admin/roles" component={UserTypeDetailsScreen} />
 
             <Route path="/admin/users/types" component={UserTypesScreen} />
             <Route
               path="/admin/corporatedetails"
               component={CorporateDetailsScreen}
             />
-            <Route path="/admin/menus" component={MenusScreen} />
+            <Route path="/admin/menus" component={MenusScreen} /> */}
+            <Route path="/" component={UserProfileScreen} />
           </Switch>
         </div>
       </div>

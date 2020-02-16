@@ -1,10 +1,7 @@
-
-
-
-export interface RoleControlState{
-    roleControls:RoleControlDto[]
+export interface RoleScreensControlState {
+  roleScreensControls: RoleControlDto[];
 }
 
-export const RoleControlInitialState:RoleControlState={
-    roleControls:[]
-}
+export const RoleScreensControlInitialState: RoleScreensControlState = {
+  roleScreensControls: []
+};

@@ -10,13 +10,44 @@ import { connect } from "react-redux";
 import { viewRoles, addRole } from "../../State/Roles/action-creator";
 
 import RolesListingComponent from "../../components/role/role";
+import {
+  tryGetRoleControlsById,
+  tryMapRoleControlsById
+} from "../../State/Controls/action-creator";
 
 class UserTypeDetailsContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selectedRoleTobeEdited: {},
+      visible: false
+    };
 
-    this.state = {};
+    this.showModal = this.showModal.bind(this);
+    this.handleOk = this.handleOk.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
+  showModal = () => {
+    this.setState({
+      visible: true
+    });
+  };
+
+  handleOk = screenControlsMapper => {
+    this.props.tryMapRoleControlsById(
+      this.state.selectedRoleTobeEdited.id,
+      screenControlsMapper
+    );
+    this.setState({
+      visible: false
+    });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      visible: false
+    });
+  };
   columns = [
     {
       title: "Role",
@@ -29,18 +60,33 @@ class UserTypeDetailsContainer extends React.Component {
       key: "isActive",
       render: (eachKey, row) => (
         <span>
+          <Tooltip placement="top" title="Map menu to screens">
+            <Icon
+              type="retweet"
+              style={{
+                fontSize: "20px",
+
+                cursor: "pointer",
+                paddingRight: "5px"
+              }}
+              onClick={() => {
+                this.props.tryGetRoleControlsById(row.id);
+                debugger;
+                this.setState(
+                  {
+                    selectedRoleTobeEdited: row
+                  },
+                  () => {
+                    this.showModal();
+                  }
+                );
+              }}
+            />
+          </Tooltip>
           {row.isActive ? (
             <Popconfirm
               title="Are you sure deActivate this application portofolio?"
-              onConfirm={() => {
-                console.log("row", row);
-                console.log("Key", eachKey);
-
-                //   this.props.changeApplicationPortofolioActivationStatus(
-                //     row.id,
-                //     false
-                //   );
-              }}
+              onConfirm={() => {}}
               okText="Yes"
               cancelText="No"
             >
@@ -64,15 +110,7 @@ class UserTypeDetailsContainer extends React.Component {
                   fontSize: "20px",
                   cursor: "pointer"
                 }}
-                onClick={() => {
-                  console.log("row", row);
-                  console.log("Key", eachKey);
-
-                  // this.props.changeApplicationPortofolioActivationStatus(
-                  //   row.id,
-                  //   true
-                  // );
-                }}
+                onClick={() => {}}
               />
             </Tooltip>
           )}
@@ -83,12 +121,17 @@ class UserTypeDetailsContainer extends React.Component {
 
   static mapStatetToProps(state) {
     return {
-      roles: state.roles.roles
+      roles: state.roles.roles,
+      roleScreensControls: state.controls.controls,
+      loading: state.controls.loading
     };
   }
 
   static mapDispatchToProps(dispatch: Dispatch) {
-    return bindActionCreators({ viewRoles, addRole }, dispatch);
+    return bindActionCreators(
+      { viewRoles, addRole, tryGetRoleControlsById, tryMapRoleControlsById },
+      dispatch
+    );
   }
   componentDidMount() {
     this.props.viewRoles(this.props.location.state.id);
@@ -107,6 +150,12 @@ class UserTypeDetailsContainer extends React.Component {
                 listingType={"UserType Name Roles"}
                 onAddRole={this.props.addRole}
                 currentUserTypeId={this.props.location.state.id}
+                onConfirmMapping={this.handleOk}
+                onCancelMapping={this.handleCancel}
+                selectedRoleTobeEdited={this.state.selectedRoleTobeEdited}
+                startMapping={this.state.visible}
+                roleScreensControls={this.props.roleScreensControls}
+                loading={this.props.loading}
               />
             </Col>
           </Row>

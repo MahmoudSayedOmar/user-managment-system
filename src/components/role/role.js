@@ -4,7 +4,7 @@ import { Button, Table, Icon, Popconfirm, Tooltip } from "antd";
 import "./role.css";
 import { AddRoleForm } from "../add-role/add-role";
 import ListingComponent from "../listing/listing";
-
+import { RoleControlMapper } from "../RoleControlMapper/RoleControlMapper";
 export default class RolesListingComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -46,6 +46,18 @@ export default class RolesListingComponent extends React.Component {
           ref="addRoleForm"
           title={"Add Role"}
         />
+
+        <RoleControlMapper
+          visible={this.props.startMapping}
+          onOk={this.props.onConfirmMapping}
+          onCancel={this.props.onCancelMapping}
+          selectedRoleTobeEdited={this.props.selectedRoleTobeEdited}
+          roleScreensControls={this.props.roleScreensControls}
+          ref="mappingRoleForm"
+          title={"Map Role to Controls"}
+          loading={this.props.loading}
+        />
+
         <ListingComponent
           modalTitle={"Role"}
           columns={this.props.columns}

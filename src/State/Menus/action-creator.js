@@ -127,14 +127,14 @@ export type ON_MAP_MENU_TO_SCREENS_FAIL = { type: String };
 export async function mapMenuToScreens(menuId, newScreensIds) {
   return async (dispatch, getState) => {
     dispatch(onMapScreensToMenu());
-    // debugger;
+
     let state = getState();
     let menus = state.menus.menus;
     const response = await menusProxyService.mapMenusToScreens(
       menuId,
       newScreensIds
     );
-    // debugger;
+
     if (response.status === 200) {
       menus = menus.map(menu => {
         if (menu.id === menuId) {
@@ -142,7 +142,6 @@ export async function mapMenuToScreens(menuId, newScreensIds) {
         }
         return menu;
       });
-      // debugger;
       dispatch(onMapScreensToMenuSuccess(menus));
     } else {
       dispatch(onMapScreensToMenuFail());

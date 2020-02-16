@@ -243,3 +243,17 @@ export function onChangeActivationStatusFail(): ON_CHANGE_ACTIVATION_STATUS_FAIL
     payload: "Faild to Add application portofolio"
   };
 }
+
+/********************************* */
+export type SET_SELECTED_APPLICATIONPORTOFOLIOID_ACTION = {
+  type: String,
+  payload: Object
+};
+export function setApplicationPortofolioId(
+  id
+): SET_SELECTED_APPLICATIONPORTOFOLIOID_ACTION {
+  return {
+    type: types.SET_SELECTED_APPLICATIONPORTOFOLIOID,
+    payload: id
+  };
+}

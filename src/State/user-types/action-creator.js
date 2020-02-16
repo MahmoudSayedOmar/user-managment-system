@@ -1,5 +1,6 @@
 import * as types from "./actions";
 import { userTypesService } from "../../proxy/services";
+import { setApplicationPortofolioId } from "../ApplicationsPortofolio/action-creator";
 
 export type ON_VIEW_USER_TYPES_ACTION = { type: String };
 export type ON_VIEW_USER_TYPES_SUCCESS_ACTION = { type: String, payload: any };
@@ -46,10 +47,8 @@ export async function onViewUserTypesArray(
   appPortoflioId
 ): ON_VIEW_USER_TYPES_ARRAY_ACTION {
   return async dispatch => {
-    // debugger;
     var json = await userTypesService.getByArray(appPortoflioId);
     if (json.status === 200) {
-      // console.log(json.data, "json.data");
       dispatch(onViewUserTypesArraySuccess(json.data));
     } else {
       dispatch(onViewUserTypesArrayFail());
@@ -74,6 +73,7 @@ export async function onViewUserTypes(
   appPortoflioId
 ): ON_VIEW_USER_TYPES_ACTION {
   return async dispatch => {
+    dispatch(setApplicationPortofolioId(appPortoflioId));
     var json = await userTypesService.get(appPortoflioId);
     if (json.status === 200) {
       console.log(json.data, "json.data");
@@ -104,13 +104,11 @@ export async function onAddUserType(values, appPortoflioId) {
     dispatch({ type: types.ON_ADD_USER_TYPE_ACTION });
     let response = await userTypesService.add(values, appPortoflioId);
     if (response.status === 200) {
-      // response.data.registerationNo = response.data.registratioNo;
       userTypes.push(response.data);
       dispatch(onAddUserTypeSuccess(userTypes));
     } else {
       dispatch(onAddUserTypeFail());
     }
-    // userTypes.push(values);
   };
 }
 
@@ -130,14 +128,12 @@ export function onAddUserTypeFail(): ON_ADD_USER_TYPE_FAIL_ACTION {
 /////////////////////////////////
 
 export async function onActivateUserType(id) {
-  // debugger;
   return async (dispatch, getState) => {
     let state = getState();
 
     let response = await userTypesService.activate(id);
 
     if (response.status === 200) {
-      // debugger;
       let userTypes = state.userTypes.userTypes;
       const toEditIndex = userTypes.findIndex(
         uType => uType.id === response.data
@@ -178,7 +174,6 @@ export async function onDeactivateUserType(id) {
     let response = await userTypesService.deactivate(id);
 
     if (response.status === 200) {
-      // debugger;
       let userTypes = state.userTypes.userTypes;
       const toEditIndex = userTypes.findIndex(
         uType => uType.id === response.data
@@ -192,7 +187,6 @@ export async function onDeactivateUserType(id) {
     } else {
       dispatch(onDeactivateUserTypeFail());
     }
-    // USER_TYPES.push(values);
   };
 }
 

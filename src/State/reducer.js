@@ -8,7 +8,8 @@ import { moduleReducer } from "./ExtraModules/reducer";
 import { submitCodeReducer } from "./SubmitCode/reducer";
 import { userTypesReducer } from "./user-types/reducer";
 import { rolesReducer } from "./Roles/reducer";
-import {roleControlReducer} from "./RoleControls/reducer"
+import { roleControlReducer } from "./RoleControls/reducer";
+import { controlReducer } from "./Controls/reducer";
 
 import { initialState } from "./state";
 
@@ -28,7 +29,8 @@ export const appReducer = combineReducers({
   roles: rolesReducer,
   menus: menusReducer,
   screens: screenReducer,
-  roleControl:roleControlReducer
+  roleControl: roleControlReducer,
+  controls: controlReducer
 });
 
 export const combinedReducer = (state, action) => {

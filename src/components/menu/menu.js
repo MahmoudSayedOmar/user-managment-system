@@ -26,8 +26,7 @@ export default class MenusListingComponent extends React.Component {
 
   handleOk = menu => {
     this.props.onAddMenu(this.props.currentApplicationPortofolio, menu);
-    //console.log(menu);
-    // debugger;
+
     this.refs.addMenuForm.resetFields();
     this.setState({
       visible: false

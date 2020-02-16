@@ -1,5 +1,6 @@
 import { BASE_URL } from "../../http-client/constants";
 import { UserLoginModel, UserRegisterModel } from "../../proxy";
+import instance from "../../http-client/http-client-service";
 
 import axios from "axios";
 
@@ -88,16 +89,17 @@ export class AuthProxyService {
     });
   }
   async getUsers() {
-    return await axios({
-      method: "get",
-      url: `${BASE_URL}account/getUsers`,
-      config: {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "content-Type": "application/json"
-        }
-      }
-    });
+    return await instance.get("account/getUsers");
+    // return await axios({
+    //   method: "get",
+    //   url: `${BASE_URL}account/getUsers`,
+    //   config: {
+    //     headers: {
+    //       "Access-Control-Allow-Origin": "*",
+    //       "content-Type": "application/json"
+    //     }
+    //   }
+    // });
   }
 
   async register(user: UserRegisterModel) {
